@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================================
-    // 3. PROCESAMIENTO DEL FORMULARIO DE CONTACTO
+    // 3. PROCESAMIENTO DEL FORMULARIO DE CONTACTO (EMAILJS REAL)
     // =========================================================
     const contactForm = document.getElementById('contact-form');
     
@@ -44,36 +44,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const formStatus = document.getElementById('form-status');
             const originalText = btnLabel.innerText;
             
-            // Estado visual de carga (Seguridad/Terminal aesthetic)
+            // Estado visual de carga
             btnSubmit.classList.add('is-sending');
-            btnLabel.innerText = 'Ejecutando script...';
+            btnLabel.innerText = 'Transmitiendo datos...';
             btnSubmit.disabled = true;
             formStatus.innerText = '';
+            formStatus.style.color = "var(--text-muted)";
 
-            /* 
-             * NOTA: Aquí puedes integrar EmailJS para el envío real.
-             * Por ahora, simulamos el tiempo de respuesta del servidor (1.5 segundos)
-             * para cumplir visualmente con la rúbrica.
-             */
-            setTimeout(() => {
-                // Mensaje de éxito al estilo terminal
-                formStatus.innerText = "[+] CONEXIÓN EXITOSA: Mensaje transmitido. Respuesta automática enviada al cliente.";
-                formStatus.style.color = "var(--accent)";
-                
-                // Restaurar botón
-                btnSubmit.classList.remove('is-sending');
-                btnLabel.innerText = originalText;
-                btnSubmit.disabled = false;
-                
-                // Limpiar el formulario
-                this.reset();
+            // ENVÍO REAL MEDIANTE EMAILJS
+            emailjs.sendForm('service_nyiozsj', 'template_6igrjjh', this)
+                .then(() => {
+                    // Éxito
+                    formStatus.innerText = "[+] CONEXIÓN EXITOSA: Mensaje y autorespuesta enviados.";
+                    formStatus.style.color = "var(--accent)";
+                    
+                    // Restaurar botón y limpiar formulario
+                    btnSubmit.classList.remove('is-sending');
+                    btnLabel.innerText = originalText;
+                    btnSubmit.disabled = false;
+                    contactForm.reset();
 
-                // Borrar el mensaje de éxito después de 6 segundos
-                setTimeout(() => {
-                    formStatus.innerText = '';
-                }, 6000);
-                
-            }, 1500);
+                    // Borrar el mensaje después de 6 segundos
+                    setTimeout(() => { formStatus.innerText = ''; }, 6000);
+                }, (error) => {
+                    // Error
+                    console.log('FAILED...', error);
+                    formStatus.innerText = "[-] ERROR CRÍTICO: Fallo en la transmisión (Revisa la consola).";
+                    formStatus.style.color = "#FF5F56";
+                    
+                    btnSubmit.classList.remove('is-sending');
+                    btnLabel.innerText = originalText;
+                    btnSubmit.disabled = false;
+                });
         });
     }
 });
