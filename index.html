@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alejandro — Portafolio de Seguridad Informática</title>
+<meta name="description" content="Portafolio académico de Alejandro, estudiante de Ingeniería de Software. CNO IV — Seguridad Informática, UPSLP.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL (EXPLÍCITO PARA LA RÚBRICA) -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> sys_info --user
+      </div>
+      
+      <!-- Nombre y Alias -->
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGM Xx]</span> <span class="blink-cursor">_</span>
+      </span>
+      
+      <!-- Datos explícitos solicitados -->
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV - Seguridad Informática</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+      </div>
+    </div>
+
+    <!-- Menú de navegación -->
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="#" class="is-active">/Inicio</a></li>
+        <li><a href="parcial_1.html">/Parcial 1</a></li>
+        <li><a href="#">/Parcial 2</a></li>
+        <li><a href="#">/Parcial 3</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="row" id="presentacion" aria-labelledby="presentacion-title">
+    <div class="row-label">
+      <span class="row-index">[SYS_INIT_01]</span>
+      <h2 id="presentacion-title">Presentación</h2>
+    </div>
+    <div class="row-content data-module">
+      <p class="lede">Este portafolio documenta, de forma estructurada y verificable, el proceso de aprendizaje desarrollado durante el semestre en curso.</p>
+
+      <div class="spec-grid">
+        <article class="spec-item">
+          <span class="spec-tag">OBJ: Propósito</span>
+          <p>Registrar de manera ordenada el aprendizaje adquirido a lo largo del semestre, dejando constancia clara del progreso técnico alcanzado.</p>
+        </article>
+
+        <article class="spec-item">
+          <span class="spec-tag">TARGET: Enfoque</span>
+          <p>Seguridad informática aplicada: fundamentos de pentesting, análisis de vulnerabilidades y buenas prácticas de protección de sistemas.</p>
+        </article>
+
+        <article class="spec-item">
+          <span class="spec-tag">LOG: Importancia</span>
+          <p>Sirve como evidencia técnica profesional del dominio de herramientas, metodologías y criterio adquiridos durante la formación académica.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="row" id="perfil" aria-labelledby="perfil-title">
+    <div class="row-label">
+      <span class="row-index">[USER_BIO_02]</span>
+      <h2 id="perfil-title">Perfil</h2>
+    </div>
+    <div class="row-content data-module">
+      <p class="lede">Estudiante de Ingeniería de Software, actualmente cursando la asignatura de Seguridad Informática (UPSLP).</p>
+
+      <div class="profile-grid">
+        <div class="profile-block">
+          <span class="spec-tag">Stack_Experiencia</span>
+          <ul class="tag-list">
+            <li>> Python (FastAPI)</li>
+            <li>> Flutter</li>
+            <li>> Administración de sistemas Ubuntu</li>
+          </ul>
+        </div>
+
+        <div class="profile-block">
+          <span class="spec-tag">Vectores_de_Interés</span>
+          <ul class="tag-list">
+            <li>> Ciberseguridad</li>
+            <li>> Automatización de sistemas</li>
+            <li>> Server Hardening</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row" id="info-tecnica" aria-labelledby="info-tecnica-title">
+    <div class="row-label">
+      <span class="row-index">[ENV_SPECS_03]</span>
+      <h2 id="info-tecnica-title">Stack Técnico</h2>
+    </div>
+    <div class="row-content data-module">
+      <dl class="tech-list">
+        <div class="tech-row">
+          <dt>CORE_DEV</dt>
+          <dd>Construido de forma nativa con HTML5, CSS3 y JavaScript, arquitectura sin dependencias externas para reducir superficie de ataque.</dd>
+        </div>
+        <div class="tech-row">
+          <dt>HOSTING</dt>
+          <dd>Alojado en GitHub Pages, garantizando alta disponibilidad y encriptación en tránsito (Protocolo HTTPS).</dd>
+        </div>
+        <div class="tech-row">
+          <dt>VCS_CONTROL</dt>
+          <dd>Historial de cambios y trazabilidad del repositorio gestionados estrictamente con Git.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="row" id="contacto" aria-labelledby="contacto-title">
+    <div class="row-label">
+      <span class="row-index">[PING_REQ_04]</span>
+      <h2 id="contacto-title">Contacto</h2>
+    </div>
+    <div class="row-content data-module form-module">
+      <div class="form-header">
+        <span class="status-dot online"></span> Establecer conexión segura
+      </div>
+      <form id="contact-form" class="contact-form" novalidate>
+        <div class="field">
+          <label for="name">ID_Nombre</label>
+          <input type="text" id="name" name="name" autocomplete="name" placeholder="Ingresa tu nombre..." required>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" placeholder="usuario@dominio.com" required>
+        </div>
+
+        <div class="field">
+          <label for="message">Mensaje</label>
+          <textarea id="message" name="message" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+        </div>
+
+        <div class="form-footer">
+          <button type="submit" class="btn-submit">
+            <span class="btn-label">Ejecutar Envío</span>
+          </button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro Garcia Morales. Todos los derechos reservados.</p>
+    <p>CNO IV — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

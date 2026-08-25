@@ -1,0 +1,655 @@
+/* =========================================================
+   TOKENS (Cyber/Dark Mode Theme)
+========================================================= */
+:root {
+  --bg: #0D1117;           /* Fondo principal ultra oscuro */
+  --surface: #161B22;      /* Fondo de los módulos/tarjetas */
+  --text: #C9D1D9;         /* Texto principal claro */
+  --text-muted: #8B949E;   /* Texto secundario grisáceo */
+  --border: #30363D;       /* Bordes sutiles */
+  --accent: #3FB950;       /* Verde "Hack/Terminal" moderno */
+  --accent-glow: rgba(63, 185, 80, 0.15);
+  
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  --header-h: 70px;
+  --container: 1100px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================================================
+   RESET & BODY
+========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background-color: var(--bg);
+  /* Patrón de matriz de puntos sutil para ciberseguridad */
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, p, ul, dl, dd { margin: 0; }
+ul { list-style: none; padding: 0; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   HEADER (Flotante y Creativo)
+========================================================= */
+.site-header {
+  position: sticky;
+  top: 20px;
+  z-index: 100;
+  max-width: var(--container);
+  margin: 0 auto 40px auto;
+  width: calc(100% - 40px);
+  height: var(--header-h);
+  background: rgba(22, 27, 34, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.header-inner {
+  height: 100%;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Estilo Terminal en el Nombre */
+.identity {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.terminal-prompt {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+.prompt-user { color: var(--accent); }
+.prompt-char { color: var(--text-muted); }
+
+.identity-name {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.blink-cursor {
+  animation: blink 1s step-end infinite;
+  color: var(--accent);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Nav */
+.nav-list { display: flex; gap: 24px; }
+.nav-list a {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  transition: color 0.2s var(--ease);
+}
+.nav-list a:hover, .nav-list a.is-active { color: var(--accent); }
+
+/* =========================================================
+   LAYOUT PRINCIPAL
+========================================================= */
+main {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 32px;
+  padding: 60px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.row:last-of-type { border-bottom: none; }
+
+.row-label {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+
+.row-index {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.row-label h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+/* Tarjetas de Datos (Cyber Look) */
+.data-module {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 40px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.data-module:hover {
+  border-color: var(--accent);
+  box-shadow: 0 8px 32px var(--accent-glow);
+}
+
+.lede {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: 32px;
+}
+
+/* =========================================================
+   COMPONENTES INTERNOS
+========================================================= */
+.spec-grid { display: grid; gap: 24px; }
+.spec-item {
+  border-left: 2px solid var(--border);
+  padding-left: 20px;
+  transition: border-color 0.2s;
+}
+.spec-item:hover { border-left-color: var(--accent); }
+
+.spec-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* Perfil */
+.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.tag-list li {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.tag-list li:hover { color: var(--text); }
+
+/* Tech Stack */
+.tech-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+.tech-row:first-child { border-top: none; padding-top: 0; }
+.tech-row dt {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+/* =========================================================
+   FORMULARIO TERMINAL
+========================================================= */
+.form-header {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.contact-form { display: flex; flex-direction: column; gap: 20px; }
+
+.field label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.field input, .field textarea {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text);
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.field input:focus, .field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+  outline: none;
+}
+
+.btn-submit {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.btn-submit:hover {
+  background: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  margin-top: 80px;
+  padding: 40px 20px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 900px) {
+  .row { grid-template-columns: 1fr; padding: 40px 0; gap: 20px; }
+  .row-label { position: static; }
+  .profile-grid { grid-template-columns: 1fr; }
+  .tech-row { grid-template-columns: 1fr; gap: 4px; }
+  .site-header { width: 100%; top: 0; border-radius: 0; border-top: none; border-left: none; border-right: none; }
+  .nav-list { display: none; } /* En móvil se ocultaría para el menú hamburguesa que controlarías con JS */
+}
+
+/* =========================================================
+   ACCESIBILIDAD Y MENÚ MÓVIL (CORRECCIÓN)
+========================================================= */
+/* Oculta "Saltar al contenido" hasta que se navegue con la tecla Tab */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 12px 20px;
+  z-index: 200;
+  font-family: var(--font-mono);
+  font-weight: bold;
+}
+
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+}
+
+/* Oculta textos pensados solo para lectores de pantalla (como "Abrir menú") */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Oculta el botón hamburguesa en versión de escritorio */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+}
+
+.nav-toggle span:not(.sr-only) {
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  transition: all 0.2s var(--ease);
+}
+
+/* Muestra el botón hamburguesa solo en pantallas pequeñas */
+@media (max-width: 900px) {
+  .nav-toggle {
+    display: flex;
+  }
+}
+
+/* =========================================================
+   AJUSTES PARA EL ENCABEZADO EXPLÍCITO (RÚBRICA)
+========================================================= */
+/* Permite que el encabezado crezca para acomodar el texto extra */
+.site-header {
+  height: auto;
+  min-height: 100px;
+  padding: 16px 0;
+}
+
+/* Estilo cibernético para el alias */
+.alias-green {
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-left: 8px;
+  text-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* Formato de terminal para los datos de la institución */
+.identity-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.meta-item {
+  display: block;
+}
+
+/* =========================================================
+   EFECTO DE SCROLL (SHRINKING HEADER)
+========================================================= */
+/* Transiciones suaves para los elementos que van a cambiar */
+.site-header, 
+.terminal-prompt, 
+.identity-meta, 
+.identity-name {
+  transition: all 0.4s var(--ease);
+}
+
+.identity-meta {
+  max-height: 150px;
+  overflow: hidden;
+}
+
+/* ESTADO CUANDO SE HACE SCROLL HACIA ABAJO */
+.site-header.is-scrolled {
+  min-height: 60px;          /* Reduce la altura dramáticamente */
+  height: 60px;
+  padding: 0;                /* Quita el padding vertical */
+  border-radius: 50px;       /* Lo convierte en una barra tipo píldora */
+  width: calc(100% - 100px); /* Lo hace ligeramente más estrecho */
+  top: 15px;                 /* Lo separa un poco más del borde superior */
+  background: rgba(22, 27, 34, 0.95); /* Fondo un poco más sólido */
+}
+
+/* Ocultar los textos largos suavemente */
+.site-header.is-scrolled .identity-meta,
+.site-header.is-scrolled .terminal-prompt {
+  opacity: 0;
+  max-height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* Ajustar el nombre para que quede centrado en la barra delgada */
+.site-header.is-scrolled .identity {
+  justify-content: center;
+  height: 100%;
+}
+
+.site-header.is-scrolled .identity-name {
+  font-size: 0.95rem; /* Reduce ligeramente el tamaño del nombre */
+}
+
+/* Oculta la decoración del parpadeo en modo delgado para mantenerlo limpio */
+.site-header.is-scrolled .blink-cursor {
+  display: none;
+}
+
+/* Ajustes responsivos para pantallas pequeñas */
+@media (max-width: 900px) {
+  .site-header.is-scrolled {
+    width: calc(100% - 40px);
+    border-radius: 30px;
+  }
+}
+
+/* =========================================================
+   TARJETAS DE ACTIVIDADES (PARCIALES)
+========================================================= */
+.activities-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.activity-card {
+  /* Aprovechamos los estilos base de .data-module pero lo ajustamos a flex */
+  display: flex;
+  flex-direction: column;
+  padding: 32px 40px;
+}
+
+.activity-title {
+  font-size: 1.4rem;
+  color: #FFFFFF; /* Texto blanco brillante como pediste */
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+  margin-top: 4px;
+}
+
+.activity-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 32px; /* Espacio para separar la descripción del botón */
+  line-height: 1.7;
+}
+
+.activity-footer {
+  margin-top: auto; /* Empuja el contenedor del botón hasta el fondo */
+  display: flex;
+  justify-content: flex-end; /* Alinea el botón a la esquina inferior derecha */
+}
+
+/* Botón de la actividad */
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 10px 20px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  text-transform: uppercase;
+  transition: all 0.3s var(--ease);
+}
+
+.btn-action .arrow {
+  transition: transform 0.2s var(--ease);
+}
+
+.btn-action:hover {
+  background: var(--accent);
+  color: var(--bg);
+  box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.btn-action:hover .arrow {
+  transform: translateX(4px); /* Animación suave de la flecha */
+}
+
+
+/* =========================================================
+   VENTANA DE CÓDIGO (EDITOR STYLE)
+========================================================= */
+.code-window {
+  background: #090B10; /* Fondo más oscuro que la página */
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.code-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.code-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.code-dots .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot.close { background: #FF5F56; }
+.dot.minimize { background: #FFBD2E; }
+.dot.maximize { background: #27C93F; }
+
+.code-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.code-body {
+  padding: 20px;
+  overflow-x: auto; /* Permite scroll horizontal si el código es largo */
+}
+
+.code-body pre {
+  margin: 0;
+}
+
+.code-body code {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #C9D1D9; /* Color base del texto */
+}
+
+/* Colores simulados de sintaxis para Python */
+.code-body .keyword { color: #FF7B72; } /* Naranja/Rojo */
+.code-body .function { color: #D2A8FF; } /* Morado */
+.code-body .string { color: #A5D6FF; } /* Azul claro */
+.code-body .number { color: #79C0FF; } /* Azul más fuerte */
+
+
+/* =========================================================
+   CAJAS DE DESCARGA DE RECURSOS
+========================================================= */
+.downloads-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.download-card {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  transition: all 0.3s var(--ease);
+  text-decoration: none;
+}
+
+.download-card:hover {
+  border-color: var(--accent);
+  background: #0D1117; 
+  transform: translateY(-4px); /* Se levanta un poco */
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+
+.dl-icon {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.dl-title {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.dl-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Diseño responsivo: En celulares se apilan una sobre otra */
+@media (max-width: 768px) {
+  .downloads-grid {
+    grid-template-columns: 1fr;
+  }
+}

