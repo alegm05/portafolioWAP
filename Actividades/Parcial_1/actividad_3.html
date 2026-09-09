@@ -18,13 +18,9 @@
       <div class="terminal-prompt">
         <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> sys_info --user
       </div>
-      
-      <!-- Nombre y Alias -->
       <span class="identity-name">
         Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
       </span>
-      
-      <!-- Datos explícitos solicitados -->
       <div class="identity-meta">
         <span class="meta-item">> Asignatura: CNO IV - Seguridad Informática</span>
         <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
@@ -32,7 +28,6 @@
       </div>
     </div>
 
-    <!-- Menú de navegación -->
     <nav class="site-nav" aria-label="Navegación principal">
       <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
         <span></span><span></span><span></span>
@@ -40,15 +35,22 @@
       </button>
       <ul id="nav-list" class="nav-list">
         <li><a href="../../index.html">/Inicio</a></li>
-        <li><a href="../../parcial_1.html" class="is-active">/Parcial 1</a></li>
-        <li><a href="#">/Parcial 2</a></li>
-        <li><a href="#">/Parcial 3</a></li>
+        
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../../parcial_1.html" class="is-active">> Parcial 1</a>
+            <a href="#">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="../../Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="#">/Hall of Fame</a></li>
         <li><a href="#">/Certificados</a></li>
       </ul>
     </nav>
   </div>
 </header>
-
 <main id="main">
 
   <div style="margin-top: 40px;">
@@ -86,7 +88,7 @@
             <span class="dot minimize"></span>
             <span class="dot maximize"></span>
           </div>
-          <div class="code-title">telemetria_teclado.py</div>
+          <div class="code-title">UPSLPWare.py</div>
         </div>
         <div class="code-body">
 <pre><code><span class="keyword">from</span> pynput.keyboard <span class="keyword">import</span> Key, Listener

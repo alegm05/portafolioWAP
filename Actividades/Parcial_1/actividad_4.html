@@ -94,13 +94,9 @@
       <div class="terminal-prompt">
         <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> sys_info --user
       </div>
-      
-      <!-- Nombre y Alias -->
       <span class="identity-name">
         Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
       </span>
-      
-      <!-- Datos explícitos -->
       <div class="identity-meta">
         <span class="meta-item">> Asignatura: CNO IV - Seguridad Informática</span>
         <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
@@ -108,7 +104,6 @@
       </div>
     </div>
 
-    <!-- Menú de navegación -->
     <nav class="site-nav" aria-label="Navegación principal">
       <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
         <span></span><span></span><span></span>
@@ -116,9 +111,17 @@
       </button>
       <ul id="nav-list" class="nav-list">
         <li><a href="../../index.html">/Inicio</a></li>
-        <li><a href="../../parcial_1.html" class="is-active">/Parcial 1</a></li>
-        <li><a href="#">/Parcial 2</a></li>
-        <li><a href="#">/Parcial 3</a></li>
+        
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../../parcial_1.html" class="is-active">> Parcial 1</a>
+            <a href="#">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="../../Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="#">/Hall of Fame</a></li>
         <li><a href="#">/Certificados</a></li>
       </ul>
     </nav>
@@ -133,46 +136,92 @@
     </a>
   </div>
 
-  <!-- [DOC_01] DESCRIPCIÓN Y OBJETIVOS -->
+  <!-- [DOC_01] OBJETIVO Y DESCRIPCIÓN DEL ESCENARIO -->
   <section class="row">
     <div class="row-label">
       <span class="row-index">[DOC_01]</span>
-      <h2>Descripción</h2>
+      <h2>Escenario</h2>
     </div>
     <div class="row-content data-module">
-      <h3 class="activity-title" style="color: var(--accent);">Actividad 4: Una página demasiado convincente</h3>
-      <p class="lede">Simulación controlada de ingeniería social mediante <strong>Social-Engineer Toolkit (SET)</strong> y el método <strong>Credential Harvester</strong>.</p>
+      <h3 class="activity-title" style="color: var(--accent);">Actividad 04: Una página demasiado convincente</h3>
+      <p class="lede">Simulación de ingeniería social mediante <strong>Social-Engineer Toolkit (SET)</strong> en un entorno de laboratorio controlado.</p>
       
-      <p style="color: var(--text-muted); margin-top: 15px;">
-        Esta práctica analiza técnica y visualmente cómo opera la recolección de credenciales apócrifas en una red corporativa. Utilizando la empresa ficticia <strong>Zboz Corp</strong>, se implementó un portal con alerta de sesión expirada para capturar solicitudes HTTP POST en texto claro, evaluando a su vez los indicadores de fraude y los controles defensivos requeridos para mitigar este vector.
-      </p>
-
-      <div class="spec-grid" style="margin-top: 25px;">
+      <div class="spec-grid" style="margin-bottom: 25px;">
         <div class="spec-item">
-          <span class="spec-tag">OBJETIVO GENERAL</span>
+          <span class="spec-tag">1.1. OBJETIVO GENERAL</span>
           <p style="font-size: 0.9rem; color: var(--text);">
-            Implementar y analizar en un entorno de laboratorio controlado una simulación de phishing mediante SET y una página web personalizada, reconociendo el flujo de transmisión de parámetros y los mecanismos de detección temprana.
-          </p>
-        </div>
-        <div class="spec-item">
-          <span class="spec-tag">TOPOLOGÍA DE RED</span>
-          <p style="font-size: 0.9rem; color: var(--text); font-family: var(--font-mono);">
-            Atacante (Kali Linux): 192.168.0.191 (Puerto TCP 80)<br>
-            Víctima (Windows Host): 192.168.0.108 / 192.168.0.107 (Adaptador Puente)
+            Realizar una simulación de ingeniería social mediante Social-Engineer Toolkit (SET) en un entorno de laboratorio controlado, utilizando una página web ficticia para comprender el funcionamiento de una técnica de captura de información y reconocer los elementos técnicos y visuales que permiten identificar un intento de phishing.
           </p>
         </div>
       </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 8px;">2.1. Caso Institucional</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        El equipo de seguridad informática de una organización ficticia identificó una serie de notificaciones emitidas por empleados respecto a la recepción de correos electrónicos sospechosos. Dichos mensajes notificaban a los usuarios sobre una supuesta <em>"expiración de sesión"</em> e incluían un hipervínculo que los dirigía a un portal de autenticación institucional aparentemente auténtico.
+      </p>
+      <p style="color: var(--text-muted); margin-bottom: 25px;">
+        La interfaz del portal fraudulento incluye la identidad visual corporativa (logotipo, tipografía, paleta de colores institucional), campos de captura para usuario y contraseña, y un banner preventivo indicando: <strong>"Su sesión ha expirado. Inicie sesión nuevamente para continuar."</strong> A pesar de que los elementos visuales transmiten legitimidad, el portal está alojado en una dirección de red ajena a la infraestructura oficial y tiene como único fin interceptar los datos de acceso para obtener un vector de entrada a la red empresarial.
+      </p>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 8px;">2.2. Fundamentos Teóricos: ¿Qué es un Credential Harvester y cuál es su función en una campaña de phishing?</h4>
+      <p style="color: var(--text-muted);">
+        Es un servicio o script malicioso configurado para interceptar, extraer y persistir identificadores de acceso (nombres de usuario, correos electrónicos, contraseñas en texto claro) que una víctima ingresa en un formulario web.
+      </p>
+      <p style="color: var(--text-muted); margin-top: 10px;">
+        Dentro de una campaña de phishing, el Credential Harvester cumple el rol de fase de recolección de credenciales para acceso inicial. Su función no es explotar vulnerabilidades de software en el navegador ni forzar algoritmos criptográficos, sino abusar de la confianza del usuario mediante la suplantación de identidad, capturando las credenciales exactamente en el formato en que son enviadas por el protocolo HTTP antes de que lleguen a cualquier sistema legítimo.
+      </p>
     </div>
   </section>
 
-  <!-- [SRC_02] CÓDIGO FUENTE DE LA PÁGINA FICTICIA -->
+  <!-- [LAB_02] CONFIGURACIÓN DEL LABORATORIO Y CÓDIGO -->
   <section class="row">
     <div class="row-label">
-      <span class="row-index">[SRC_02]</span>
-      <h2>Portal Web</h2>
+      <span class="row-index">[LAB_02]</span>
+      <h2>Laboratorio</h2>
     </div>
-    <div class="row-content">
-      
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">3.1. Topología y Entorno de Red</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        El laboratorio se estructuró mediante un enlace directo de red local entre dos entornos:
+      </p>
+      <ul class="tag-list" style="gap: 10px; margin-bottom: 20px;">
+        <li><strong style="color: var(--accent);">> Máquina Atacante (Servidor SET):</strong> Máquina virtual con Kali Linux (IP asignada: <code>192.168.0.191</code>), configurada con interfaz de red en modo Adaptador Puente para obtener una IP en el mismo segmento.</li>
+        <li><strong style="color: var(--accent);">> Máquina Víctima (Cliente):</strong> Sistema operativo Windows conectado a la misma red local (IP asignada: <code>192.168.0.107</code> / <code>192.168.0.108</code>), utilizando un navegador web estándar para acceder a la URL suministrada.</li>
+        <li><strong style="color: var(--accent);">> Puerto de Escucha:</strong> Puerto TCP <code>80</code> (HTTP estándar).</li>
+      </ul>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_4/red_virtualbox.png" alt="Configuración de Adaptador Puente en VirtualBox">
+        <p class="evidence-caption">>_ Configuración del Adaptador de Red 1 en modo Adaptador Puente con Modo Promiscuo Denegado.</p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 25px 0 10px;">3.2. Herramientas y Tecnologías Utilizadas</h4>
+      <ul class="tag-list" style="gap: 10px; margin-bottom: 25px;">
+        <li><strong style="color: var(--accent);">> Sistema Operativo Atacante:</strong> Kali Linux 2026 / GNU/Linux.</li>
+        <li><strong style="color: var(--accent);">> Framework de Ingeniería Social:</strong> Social-Engineer Toolkit (SET) versión 8.0.3.</li>
+        <li><strong style="color: var(--accent);">> Lenguajes de Marcado y Estilo:</strong> HTML5 y CSS3 nativo con gráficos vectoriales SVG escalables integrados (utilizados para crear un logo directamente en el código HTML con fondo transparente).</li>
+      </ul>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">3.3. Implementación de la Página Web Ficticia y Funcionamiento del Código</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Para cumplir con las restricciones éticas del laboratorio, se programó desde cero un portal institucional para la empresa ficticia <strong>Zboz (Zboz Systems)</strong>.
+      </p>
+      <ul class="tag-list" style="gap: 14px; margin-bottom: 25px;">
+        <li>
+          <strong style="color: var(--accent);">Estructura Semántica y Encabezado (&lt;header&gt; y SVG):</strong> Se usó un elemento <code>&lt;svg&gt;</code> inline con fondo transparente para renderizar el isotipo corporativo de Zboz de forma vectorial. Esto garantiza que la imagen cargue instantáneamente y sin requerir solicitudes HTTP secundarias a otros archivos de imagen.
+        </li>
+        <li>
+          <strong style="color: var(--accent);">Mensaje de Expiración (.alert-box):</strong> Se colocó un bloque visual con colores de alerta (<code>#fff8c5</code>, borde <code>#bf8700</code>) simulando una sesión caducada para inducir sentido de urgencia psicológica.
+        </li>
+        <li>
+          <strong style="color: var(--accent);">Formulario de Captura (&lt;form&gt;):</strong>
+          <br>• <code>method="POST"</code>: Define que los datos viajen encapsulados en el cuerpo de la solicitud HTTP en lugar de quedar expuestos en la URL.
+          <br>• <code>action=""</code>: Al estar vacío, el navegador envía el formulario a la misma dirección IP y recurso desde el cual se cargó el sitio (<code>http://192.168.0.191/</code>), donde SET está escuchando activamente.
+          <br>• <strong>Campos de Entrada (&lt;input&gt;):</strong> Se definieron los atributos <code>name="username"</code> y <code>name="password"</code>. El valor del atributo name es fundamental, ya que SET analiza e identifica estas etiquetas estándar para extraer automáticamente el texto ingresado.
+        </li>
+      </ul>
+
+      <!-- CÓDIGO HTML INTEGRADO -->
       <div class="code-window">
         <div class="code-header">
           <div class="code-dots">
@@ -180,7 +229,7 @@
             <span class="dot minimize"></span>
             <span class="dot maximize"></span>
           </div>
-          <div class="code-title">index.html (Zboz Secure Access)</div>
+          <div class="code-title">index.html (Plantilla Zboz Secure Access)</div>
         </div>
         <div class="code-body">
 <pre><code><span class="keyword">&lt;!DOCTYPE</span> <span class="string">html</span><span class="keyword">&gt;</span>
@@ -188,34 +237,24 @@
 <span class="keyword">&lt;head&gt;</span>
     <span class="keyword">&lt;meta</span> <span class="function">charset</span>=<span class="string">"UTF-8"</span><span class="keyword">&gt;</span>
     <span class="keyword">&lt;title&gt;</span>Sistema de Autenticación Institucional - Zboz<span class="keyword">&lt;/title&gt;</span>
-    <span class="keyword">&lt;style&gt;</span>
-        <span class="function">body</span> { <span class="keyword">background</span>: <span class="string">#0f1411</span>; <span class="keyword">display</span>: flex; <span class="keyword">justify-content</span>: center; <span class="keyword">align-items</span>: center; <span class="keyword">min-height</span>: <span class="number">100vh</span>; }
-        <span class="function">.login-wrapper</span> { <span class="keyword">background</span>: <span class="string">#ffffff</span>; <span class="keyword">border-radius</span>: <span class="number">8px</span>; <span class="keyword">width</span>: <span class="number">400px</span>; <span class="keyword">padding</span>: <span class="number">35px</span>; }
-        <span class="function">.alert-box</span> { <span class="keyword">background</span>: <span class="string">#fff8c5</span>; <span class="keyword">border-left</span>: <span class="number">4px</span> solid <span class="string">#bf8700</span>; <span class="keyword">color</span>: <span class="string">#5c4300</span>; <span class="keyword">padding</span>: <span class="number">10px</span>; <span class="keyword">font-size</span>: <span class="number">13px</span>; }
-    <span class="keyword">&lt;/style&gt;</span>
 <span class="keyword">&lt;/head&gt;</span>
 <span class="keyword">&lt;body&gt;</span>
     <span class="keyword">&lt;div</span> <span class="function">class</span>=<span class="string">"login-wrapper"</span><span class="keyword">&gt;</span>
-        <span class="comment">&lt;!-- Vector SVG In-line para isotipo de Zboz con fondo transparente --&gt;</span>
         <span class="keyword">&lt;div</span> <span class="function">class</span>=<span class="string">"header-brand"</span><span class="keyword">&gt;</span>
+            <span class="comment">&lt;!-- Vector SVG con fondo transparente --&gt;</span>
             <span class="keyword">&lt;svg</span> <span class="function">viewBox</span>=<span class="string">"0 0 200 200"</span> <span class="function">width</span>=<span class="string">"44"</span> <span class="function">height</span>=<span class="string">"44"</span><span class="keyword">&gt;</span>
                 <span class="keyword">&lt;polygon</span> <span class="function">points</span>=<span class="string">"100,10 70,78 120,55"</span> <span class="function">fill</span>=<span class="string">"#4fa84e"</span><span class="keyword">/&gt;</span>
                 <span class="keyword">&lt;polygon</span> <span class="function">points</span>=<span class="string">"50,115 10,185 70,185 70,140"</span> <span class="function">fill</span>=<span class="string">"#3b7d42"</span><span class="keyword">/&gt;</span>
                 <span class="keyword">&lt;text</span> <span class="function">x</span>=<span class="string">"100"</span> <span class="function">y</span>=<span class="string">"145"</span> <span class="function">font-size</span>=<span class="string">"52"</span> <span class="function">font-weight</span>=<span class="string">"900"</span> <span class="function">fill</span>=<span class="string">"#1b421a"</span> <span class="function">text-anchor</span>=<span class="string">"middle"</span><span class="keyword">&gt;</span>Z<span class="keyword">&lt;/text&gt;</span>
             <span class="keyword">&lt;/svg&gt;</span>
-            <span class="keyword">&lt;h3&gt;</span>Zboz Secure Access<span class="keyword">&lt;/h3&gt;</span>
+            <span class="keyword">&lt;div&gt;</span>Zboz Secure Access<span class="keyword">&lt;/div&gt;</span>
         <span class="keyword">&lt;/div&gt;</span>
 
         <span class="keyword">&lt;div</span> <span class="function">class</span>=<span class="string">"alert-box"</span><span class="keyword">&gt;</span>⚠️ Su sesión ha expirado. Inicie sesión nuevamente para continuar.<span class="keyword">&lt;/div&gt;</span>
 
-        <span class="comment">&lt;!-- Formulario configurado para captura de SET --&gt;</span>
         <span class="keyword">&lt;form</span> <span class="function">method</span>=<span class="string">"POST"</span> <span class="function">action</span>=<span class="string">""</span><span class="keyword">&gt;</span>
-            <span class="keyword">&lt;label&gt;</span>Usuario:<span class="keyword">&lt;/label&gt;</span>
-            <span class="keyword">&lt;input</span> <span class="function">type</span>=<span class="string">"text"</span> <span class="function">name</span>=<span class="string">"username"</span> <span class="function">required</span><span class="keyword">&gt;</span>
-            
-            <span class="keyword">&lt;label&gt;</span>Contraseña:<span class="keyword">&lt;/label&gt;</span>
-            <span class="keyword">&lt;input</span> <span class="function">type</span>=<span class="string">"password"</span> <span class="function">name</span>=<span class="string">"password"</span> <span class="function">required</span><span class="keyword">&gt;</span>
-            
+            <span class="keyword">&lt;input</span> <span class="function">type</span>=<span class="string">"text"</span> <span class="function">name</span>=<span class="string">"username"</span> <span class="function">placeholder</span>=<span class="string">"identificador institucional"</span> <span class="function">required</span><span class="keyword">&gt;</span>
+            <span class="keyword">&lt;input</span> <span class="function">type</span>=<span class="string">"password"</span> <span class="function">name</span>=<span class="string">"password"</span> <span class="function">placeholder</span>=<span class="string">"••••••••••••"</span> <span class="function">required</span><span class="keyword">&gt;</span>
             <span class="keyword">&lt;button</span> <span class="function">type</span>=<span class="string">"submit"</span><span class="keyword">&gt;</span>Iniciar Sesión<span class="keyword">&lt;/button&gt;</span>
         <span class="keyword">&lt;/form&gt;</span>
     <span class="keyword">&lt;/div&gt;</span>
@@ -227,108 +266,138 @@
     </div>
   </section>
 
-  <!-- [ANALYSIS_03] FLUJO Y DISTINCIÓN TÉCNICA -->
+  <!-- [EXEC_03] EVIDENCIAS Y DESCRIPCIÓN DEL FUNCIONAMIENTO -->
   <section class="row">
     <div class="row-label">
-      <span class="row-index">[ANALYSIS_03]</span>
-      <h2>Flujo Técnico</h2>
-    </div>
-    <div class="row-content data-module">
-      
-      <p style="color: var(--text); font-weight: 500;">
-        Diagrama del ciclo de intercepción HTTP y recolección de parámetros:
-      </p>
-
-      <div class="diagram-terminal">[1. Víctima] ---> (HTTP GET: http://192.168.0.191) ---> [Servidor SET]
-[1. Víctima] &lt;--- (HTTP 200 OK: index.html) &lt;--- [Servidor SET]
-    |
-    v (Lectura de alerta psicológica: "Sesión Expirada")
-[1. Víctima] ---> (HTTP POST: username=usuario123&password=prueba1) ---> [Servidor SET]
-                                                                             |
-                                     [Impresión en Terminal Kali] &lt;----------+
-                                     [Registro XML en /root/.set/reports/] &lt;-+</div>
-
-      <ul class="tag-list" style="gap: 16px; margin-top: 20px;">
-        <li>
-          <strong style="color: var(--accent);">Captura de Credenciales (Credential Harvesting):</strong> 
-          Ataque de suplantación e ingeniería social. No vulnera hashes criptográficos ni compromete servidores centrales; es la víctima quien envía sus datos en texto claro voluntariamente debido al engaño contextual.
-        </li>
-        <li>
-          <strong style="color: var(--accent);">Vulneración de Contraseñas (Password Cracking):</strong> 
-          Ataque criptoanalítico o de fuerza bruta (ej. Hashcat, John the Ripper) dirigido a revertir volcados de hashes comprometidos en bases de datos.
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- [EXEC_04] EVIDENCIAS DE LABORATORIO -->
-  <section class="row">
-    <div class="row-label">
-      <span class="row-index">[EXEC_04]</span>
+      <span class="row-index">[EXEC_03]</span>
       <h2>Evidencias</h2>
     </div>
     <div class="row-content data-module">
-      <p style="color: var(--text-muted); margin-bottom: 25px;">
-        Secuencia de evidencias técnicas obtenidas durante la configuración, despliegue e intercepción en el entorno de laboratorio.
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">4.1. Ejecución del Módulo Credential Harvester en SET</h4>
+      <p style="color: var(--text-muted); margin-bottom: 12px;">
+        Se inició la herramienta en Kali Linux mediante el comando <code>sudo setoolkit</code>. Después, se seleccionaron las siguientes opciones del menú interactivo en el orden en que aparecen:
+      </p>
+      <pre style="background: #090B10; border: 1px solid var(--border); padding: 14px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); margin-bottom: 18px;">
+1) Social-Engineering Attacks
+2) Website Attack Vectors
+3) Credential Harvester Attack Method
+3) Custom Import</pre>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Se especificó la dirección IP local de la máquina (<code>192.168.0.191</code>) como destino de retorno del POST, y se proporcionó la ruta del directorio local que contiene el archivo index.html desarrollado (<code>/home/kali/Documents/Act_4/</code>).
       </p>
 
-      <!-- Evidencia 1 -->
       <div class="evidence-box">
-        <img src="Archivos/Actividad_4/red_virtualbox.png" alt="Configuración de Red en Adaptador Puente">
-        <p class="evidence-caption">
-          >_ Fig 1. Configuración de interfaz en modo Adaptador Puente con Modo Promiscuo denegado.
-        </p>
+        <img src="Archivos/Actividad_4/set_configuracion.png" alt="Opciones de SET Credential Harvester">
+        <p class="evidence-caption">>_ Despliegue de SET con Custom Import e indicación del socket de escucha en el puerto 80.</p>
       </div>
 
-      <!-- Evidencia 2 -->
-      <div class="evidence-box">
-        <img src="Archivos/Actividad_4/set_configuracion.png" alt="Configuración de SET Custom Import">
-        <p class="evidence-caption">
-          >_ Fig 2. Despliegue de Social-Engineer Toolkit mediante Custom Import apuntando al directorio local.
-        </p>
-      </div>
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">4.2. Visualización e Interacción desde el Cliente Víctima</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Desde la máquina anfitriona (Windows), se ingresó al navegador web dirigiéndose a la dirección <code>http://192.168.0.191</code>. Se introdujeron datos ficticios de prueba en el formulario para validar la transmisión:
+        <br><strong style="color: var(--text); font-family: var(--font-mono);">> Usuario / Matrícula: usuario123</strong>
+        <br><strong style="color: var(--text); font-family: var(--font-mono);">> Contraseña: prueba1</strong>
+      </p>
 
-      <!-- Evidencia 3 -->
       <div class="evidence-box">
         <img src="Archivos/Actividad_4/portal_victima.png" alt="Portal Ficticio Zboz Secure Access">
-        <p class="evidence-caption">
-          >_ Fig 3. Portal institucional falso renderizado en el navegador Windows con advertencia de sesión expirada.
-        </p>
+        <p class="evidence-caption">>_ Renderizado del portal institucional de Zboz en Windows con el mensaje de sesión caducada.</p>
       </div>
 
-      <!-- Evidencia 4 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">4.3. Interceptación de Parámetros HTTP POST en Tiempo Real</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Al hacer clic en el botón "Iniciar Sesión", el navegador envió la solicitud al servidor web montado por SET. En la terminal de Kali Linux se observó la recepción inmediata de la petición POST, registrando la IP de procedencia de la víctima y extrayendo en texto claro los parámetros <code>username</code> y <code>password</code>.
+      </p>
+
       <div class="evidence-box">
-        <img src="Archivos/Actividad_4/captura_consola.png" alt="Captura en Consola de SET">
-        <p class="evidence-caption">
-          >_ Fig 4. Interceptación en tiempo real en Kali Linux de los parámetros 'username=usuario123' y 'password=prueba1'.
-        </p>
+        <img src="Archivos/Actividad_4/captura_consola.png" alt="Captura de credenciales en consola de SET">
+        <p class="evidence-caption">>_ Salida en pantalla: "WE GOT A HIT!" extrayendo usuario123 y prueba1.</p>
       </div>
 
-      <!-- Evidencia 5 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">4.4. Persistencia y Almacenamiento de los Datos en Archivo Local</h4>
+      <p style="color: var(--text-muted); margin-bottom: 12px;">
+        Una vez terminada la demostración, se finalizó el listener presionando <code>Ctrl + C</code>. SET procesó la sesión y generó automáticamente un reporte persistente dentro del directorio de reportes (<code>/root/.set/reports/</code>).
+      </p>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Para comprobar que los datos se conservan íntegros después de la ejecución, se consultó el archivo de reporte generado en la terminal ejecutando <code>sudo cat /root/.set/reports/*.xml</code> (o <code>*.txt</code>).
+      </p>
+
       <div class="evidence-box">
-        <img src="Archivos/Actividad_4/reporte_xml.png" alt="Persistencia de reporte XML">
-        <p class="evidence-caption">
-          >_ Fig 5. Persistencia del reporte generado en '/root/.set/reports/' tras finalizar la ejecución.
-        </p>
+        <img src="Archivos/Actividad_4/reporte_xml.png" alt="Persistencia de reporte XML en Kali Linux">
+        <p class="evidence-caption">>_ Figura 5. Verificación de la persistencia de datos mediante el reporte exportado por SET.</p>
       </div>
-
     </div>
   </section>
 
-  <!-- [SEC_05] INDICADORES Y CONTROLES DEFENSIVOS -->
+  <!-- [FLOW_04] EXPLICACIÓN DEL FLUJO DE CAPTURA DE INFORMACIÓN -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[FLOW_04]</span>
+      <h2>Flujo Técnico</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 15px;">5.1. Diagrama de Flujo del Ataque</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Representación secuencial de las tres fases del ataque: entrega e interacción, captura de parámetros mediante petición HTTP POST y posterior procesamiento, persistencia y redirección en el servidor atacante.
+      </p>
+
+      <!-- IMAGEN DEL DIAGRAMA DE SECUENCIA INCORPORADA -->
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_4/diagrama_secuencia.png" alt="Diagrama de Secuencia del Ataque Harvester">
+        <p class="evidence-caption">>_ Diagrama de interacción: Víctima (Windows) &lt;---&gt; Navegador Web &lt;---&gt; Servidor SET (192.168.0.191:80) &lt;---&gt; Almacenamiento Local.</p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">5.2. Desglose del Ciclo de Petición-Respuesta HTTP</h4>
+      <ul class="tag-list" style="gap: 14px; margin-bottom: 25px;">
+        <li>
+          <strong style="color: var(--accent);">Fase de Entrega (HTTP GET):</strong> El navegador web solicita el recurso raíz <code>/</code> al servidor web en la IP <code>192.168.0.191</code>. SET responde con un código de estado <code>HTTP 200 OK</code> y transfiere el contenido del archivo <code>index.html</code>.
+        </li>
+        <li>
+          <strong style="color: var(--accent);">Fase de Entrada de Datos e Interacción:</strong> La víctima visualiza la página, la cual emula la identidad institucional. El mensaje de sesión expirada persuade al usuario para reingresar sus credenciales sin verificar la autenticidad del origen.
+        </li>
+        <li>
+          <strong style="color: var(--accent);">Fase de Transmisión (HTTP POST):</strong> Al oprimir el botón de envío, el navegador empaqueta los valores dentro de los campos <code>&lt;input&gt;</code> bajo el estándar <code>application/x-www-form-urlencoded</code>. Debido a que la conexión viaja sobre el protocolo HTTP, la trama viaja en texto legible a través del canal de red.
+        </li>
+        <li>
+          <strong style="color: var(--accent);">Fase de Extracción y Volcado:</strong> SET recibe la carga útil, extrae las llaves coincidentes con nombres comunes de autenticación y las registra tanto en el buffer de la consola como en el sistema de archivos del sistema operativo atacante (<code>/root/.set/reports/</code>).
+        </li>
+      </ul>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">5.3. Distinción Técnica: Captura de Credenciales vs. Vulneración / Ruptura de Contraseñas</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Es indispensable establecer una distinción técnica clara entre ambos conceptos:
+      </p>
+      <div class="control-card-sub">
+        <div class="control-title">Captura de Credenciales (Credential Harvesting)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Es un ataque basado en <strong>suplantación de identidad e ingeniería social</strong>. El atacante no requiere vulnerar bases de datos, romper hashes criptográficos ni adivinar combinaciones mediante fuerza bruta. Es el propio usuario autorizado que, engañado por el contexto y la apariencia visual, entrega voluntariamente sus credenciales en texto plano al servidor ilegítimo.
+        </p>
+      </div>
+      <div class="control-card-sub">
+        <div class="control-title">Vulneración de Contraseñas (Password Cracking)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Es un ataque de carácter <strong>criptoanalítico o de fuerza bruta</strong>. Consiste en atacar un repositorio de autenticación previamente comprometido para revertir o descifrar la contraseña original mediante ataques de diccionario, tablas arcoíris o computación acelerada por GPU (utilizando herramientas como Hashcat o John the Ripper).
+        </p>
+      </div>
+      <p style="color: var(--text-muted); margin-top: 15px;">
+        En esta práctica se demostró que el error humano y la ausencia de controles criptográficos de transporte e identidad permiten la recolección de credenciales sin necesidad de alterar la seguridad interna de los sistemas organizacionales.
+      </p>
+    </div>
+  </section>
+
+  <!-- [SEC_05] CONTROLES DE SEGURIDAD E INDICADORES -->
   <section class="row">
     <div class="row-label">
       <span class="row-index">[SEC_05]</span>
       <h2>Seguridad</h2>
     </div>
     <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">6.1. Cinco Indicadores para Reconocer una Página Fraudulenta</h4>
       
-      <h3 class="activity-title" style="color: var(--accent); font-size: 1.1rem;">Indicadores de Detección de Phishing</h3>
       <table class="custom-table">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Indicador</th>
+            <th>N</th>
+            <th>Indicador de Phishing</th>
             <th>Tipo</th>
             <th>Descripción Técnica / Visual</th>
           </tr>
@@ -336,91 +405,101 @@
         <tbody>
           <tr>
             <td>1</td>
-            <td>Dirección IP Directa</td>
+            <td>Dirección IP directa o Dominio Discrepante</td>
             <td>Técnico</td>
-            <td>Acceso vía IP (<code>http://192.168.0.191</code>) en lugar del FQDN legítimo (<code>login.zboz.com</code>).</td>
+            <td>El portal se accede mediante una dirección IP directa (ej. <code>http://192.168.0.190</code>) o un dominio con una letra diferente en lugar del nombre de dominio normal (ej. <code>microsuft.com</code>).</td>
           </tr>
           <tr>
             <td>2</td>
-            <td>Ausencia de HTTPS</td>
+            <td>Ausencia de Protocolo HTTPS / Certificado Inválido</td>
             <td>Técnico</td>
-            <td>Tráfico en texto claro (puerto 80) y advertencia de "No seguro" en el navegador.</td>
+            <td>El navegador marca el sitio como "No seguro" debido a la carencia de un certificado TLS emitido por una Autoridad Certificadora (CA) de confianza.</td>
           </tr>
           <tr>
             <td>3</td>
-            <td>Pretexto de Urgencia</td>
-            <td>Contextual</td>
-            <td>Uso de alertas alarmistas ("Su sesión ha expirado") para apresurar al usuario.</td>
+            <td>Urgencia Injustificada</td>
+            <td>Visual / Contextual</td>
+            <td>Utilización de mensajes alarmistas no solicitados ("Su sesión ha expirado", "Acceso bloqueado en 24h") para precipitar la acción del usuario.</td>
           </tr>
           <tr>
             <td>4</td>
-            <td>Fallo Post-Login</td>
-            <td>Funcional</td>
-            <td>El portal recarga o genera un error 404 tras el envío en lugar de iniciar sesión.</td>
+            <td>Comportamiento Anómalo tras el Envío</td>
+            <td>Técnico / Funcional</td>
+            <td>Al enviar el formulario, la página no inicia sesión real: recarga la misma pantalla, genera un error 404 o redirige a un sitio genérico sin preservar el estado de la sesión.</td>
           </tr>
           <tr>
             <td>5</td>
-            <td>Incompatibilidad Password Manager</td>
+            <td>Incompatibilidad con Gestores de Contraseñas</td>
             <td>Técnico</td>
-            <td>Los gestores no autocompletan datos debido a la discrepancia de dominio raíz (Origin binding).</td>
+            <td>Los gestores de contraseñas de los navegadores vinculan las credenciales al dominio raíz. Si el sitio es falso, el gestor no ofrece la función de autocompletado para ese portal.</td>
           </tr>
         </tbody>
       </table>
 
-      <h3 class="activity-title" style="color: var(--accent); font-size: 1.1rem; margin-top: 35px; margin-bottom: 20px;">Controles de Seguridad Propuestos</h3>
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 35px 0 15px;">6.2. Cinco Controles de Seguridad Propuestos</h4>
 
       <div class="control-card-sub">
-        <div class="control-title">1. Autenticación Multifactor Resistente a Phishing (FIDO2 / WebAuthn)</div>
+        <div class="control-title">1. Autenticación Multifactor Resistente al Phishing (FIDO2 / WebAuthn)</div>
         <p style="font-size: 0.85rem; color: var(--text-muted);">
-          <strong style="color: var(--accent);">Alcance:</strong> Invalida las credenciales capturadas al exigir una llave de hardware o token biométrico vinculado al dominio real.<br>
-          <strong style="color: var(--text);">Limitación:</strong> Costos de adquisición de llaves físicas y compatibilidad en plataformas heredadas.
+          <strong style="color: var(--accent);">Justificación:</strong> Requiere que el usuario presente un segundo factor criptográfico vinculado al dominio legítimo antes de autorizar el acceso.<br>
+          <strong style="color: var(--accent);">Alcance:</strong> Neutraliza de raíz el ataque de recolección de credenciales. Aunque el atacante obtenga el usuario y la contraseña en texto plano, no podrá autenticarse en los sistemas de la empresa al carecer de la llave de seguridad de hardware o del token biométrico.<br>
+          <strong style="color: var(--text);">Limitaciones:</strong> Costo elevado de despliegue de llaves físicas, resistencia inicial al cambio por parte de los usuarios y necesidad de compatibilidad en todos los sistemas legados institucionales.
         </p>
       </div>
 
       <div class="control-card-sub">
-        <div class="control-title">2. Filtrado DNS y Pasarelas Web Seguras (SWG)</div>
+        <div class="control-title">2. Filtrado DNS y Pasarelas Web Seguras (Secure Web Gateway - SWG)</div>
         <p style="font-size: 0.85rem; color: var(--text-muted);">
-          <strong style="color: var(--accent);">Alcance:</strong> Bloquea conexiones perimetrales hacia IPs numéricas y dominios recién registrados.<br>
-          <strong style="color: var(--text);">Limitación:</strong> Ineficaz en dispositivos BYOD sin agente corporativo administrado.
+          <strong style="color: var(--accent);">Justificación:</strong> Inspección y bloqueo a nivel de red de conexiones dirigidas a direcciones IP directas, dominios de reciente creación o categorías sospechosas.<br>
+          <strong style="color: var(--accent);">Alcance:</strong> Impide que los equipos corporativos dentro de la red o conectados mediante VPN puedan resolver o abrir URLs alojadas en servidores maliciosos o atacantes no categorizados.<br>
+          <strong style="color: var(--text);">Limitaciones:</strong> Resulta ineficaz si el empleado accede desde un dispositivo personal fuera del perímetro corporativo sin un agente de seguridad instalado, o si el atacante aloja el formulario en un servicio en la nube reputado (ej. formularios de Google, Microsoft Forms).
         </p>
       </div>
 
       <div class="control-card-sub">
-        <div class="control-title">3. Protocolos de Correo Estrictos (SPF, DKIM y DMARC)</div>
+        <div class="control-title">3. Protocolos de Autenticación de Correo Electrónico (SPF, DKIM y DMARC)</div>
         <p style="font-size: 0.85rem; color: var(--text-muted);">
-          <strong style="color: var(--accent);">Alcance:</strong> DMARC con regla <code>p=reject</code> descarta correos que suplantan los dominios institucionales oficiales.<br>
-          <strong style="color: var(--text);">Limitación:</strong> No detiene vectores originados en mensajería instantánea o dominios homógrafos.
+          <strong style="color: var(--accent);">Justificación:</strong> Implementación estricta de políticas DMARC con regla de rechazo (<code>p=reject</code>) para validar el origen y la integridad de los correos corporativos.<br>
+          <strong style="color: var(--accent);">Alcance:</strong> Bloquea correos electrónicos que intenten suplantar la identidad de la organización antes de que ingresen a la bandeja de entrada de los empleados.<br>
+          <strong style="color: var(--text);">Limitaciones:</strong> No previene ataques donde el adversario utiliza dominios parecidos pero diferentes ni cuando el vector de contacto inicial ocurre por canales externos (ej. SMS).
         </p>
       </div>
 
       <div class="control-card-sub">
-        <div class="control-title">4. Gestores de Contraseñas con Vinculación Estricta de Dominio</div>
+        <div class="control-title">4. Uso Obligatorio de Gestores de Contraseñas Corporativos con Vinculación Estricta de Dominio</div>
         <p style="font-size: 0.85rem; color: var(--text-muted);">
-          <strong style="color: var(--accent);">Alcance:</strong> Impide el llenado automático en páginas fraudulentas o direcciones IP no registradas.<br>
-          <strong style="color: var(--text);">Limitación:</strong> El usuario puede evadir la protección copiando y pegando su contraseña de forma manual.
+          <strong style="color: var(--accent);">Justificación:</strong> Los gestores de contraseñas validan criptográficamente la URL antes de permitir el llenado automático de credenciales.<br>
+          <strong style="color: var(--accent);">Alcance:</strong> Si el usuario accede a una página clonada que opera bajo una IP o un dominio falso, el gestor se rehúsa a autocompletar la contraseña, alertando al usuario de que el portal no coincide con el registro legítimo.<br>
+          <strong style="color: var(--text);">Limitaciones:</strong> El control puede ser evadido si el usuario ignora la advertencia y copia y pega manualmente sus credenciales desde el gestor hacia los campos del formulario.
         </p>
       </div>
 
       <div class="control-card-sub">
-        <div class="control-title">5. Concientización Continua y Simulaciones Periódicas</div>
+        <div class="control-title">5. Programas Continuos de Concientización y Simulaciones de Phishing</div>
         <p style="font-size: 0.85rem; color: var(--text-muted);">
-          <strong style="color: var(--accent);">Alcance:</strong> Entrena al personal para inspeccionar URLs, validar certificados HTTPS y reportar anomalías.<br>
-          <strong style="color: var(--text);">Limitación:</strong> Existe un riesgo residual inevitable derivado de la fatiga o sesgo humano.
+          <strong style="color: var(--accent);">Justificación:</strong> Entrenamiento periódico del personal mediante ejercicios simulados basados en técnicas reales de ingeniería social.<br>
+          <strong style="color: var(--accent);">Alcance:</strong> Capacita a los colaboradores para reconocer elementos sospechosos en enlaces, verificar certificados de seguridad y reportar oportunamente los incidentes al área de ciberseguridad.<br>
+          <strong style="color: var(--text);">Limitaciones:</strong> El sesgo humano impide alcanzar una efectividad del 100%; un porcentaje residual de usuarios siempre será susceptible a señuelos altamente dirigidos (spear phishing).
         </p>
       </div>
-
     </div>
   </section>
 
-  <!-- [CONC_06] CONCLUSIONES -->
+  <!-- [CONC_06] CONCLUSIÓN -->
   <section class="row">
     <div class="row-label">
       <span class="row-index">[CONC_06]</span>
-      <h2>Conclusiones</h2>
+      <h2>Conclusión</h2>
     </div>
     <div class="row-content data-module">
+      <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 15px;">
+        La realización de esta práctica permitió comprender de manera directa el funcionamiento técnico de las técnicas de recolección de credenciales mediante el uso de herramientas de ingeniería social como <strong>Social-Engineer Toolkit (SET)</strong>. Se comprobó que el vector de ataque analizado explota una vulnerabilidad inherente a la naturaleza humana: la tendencia a responder con rapidez ante mensajes de urgencia (como la expiración de una sesión) dentro de entornos de trabajo dinámicos.
+      </p>
+      <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 15px;">
+        Desde la perspectiva técnica, el ejercicio demostró que un atacante no requiere romper algoritmos de cifrado ni comprometer los servidores centrales de una empresa para obtener credenciales válidas; basta con replicar los elementos visuales de una interfaz y canalizar el tráfico a través de peticiones HTTP POST estándar para capturar información confidencial en texto plano.
+      </p>
       <p style="color: var(--text-muted); line-height: 1.7;">
-        La práctica evidenció cómo la ingeniería social y las herramientas automatizadas como SET explotan la confianza visual y los sesgos de urgencia para obtener accesos legítimos sin necesidad de vulnerar la infraestructura criptográfica de la entidad. Frente a este escenario, la protección institucional no puede descansar únicamente en el criterio del usuario, sino en una arquitectura de <strong>Defensa en Profundidad</strong> que articule mecanismos multifactor resistentes a phishing, filtros web perimetrales y monitoreo continuo.
+        Por consiguiente, se concluye que la seguridad informática organizacional no puede depender exclusivamente del criterio de los usuarios ni de una única barrera perimetral. Resulta indispensable adoptar un enfoque de <strong>Defensa en Profundidad</strong>, donde el entrenamiento continuo del factor humano se complemente de manera obligatoria con controles tecnológicos robustos, tales como la autenticación multifactor (2FA), el filtrado web automatizado y políticas rigurosas de autenticación de correo.
       </p>
     </div>
   </section>
@@ -432,32 +511,30 @@
       <h2>Recursos</h2>
     </div>
     <div class="row-content">
-      
       <div class="downloads-grid">
         
-        <!-- Recurso 1: Código HTML del Portal -->
+        <!-- Recurso 1: Código del Portal Ficticio -->
         <a href="Archivos/Actividad_4/index.html" download class="download-card">
           <div class="dl-icon">[&lt;/&gt;]</div>
           <span class="dl-title">Código del Portal</span>
           <span class="dl-meta">index.html (Zboz)</span>
         </a>
 
-        <!-- Recurso 2: Informe Completo -->
-        <a href="Archivos/Actividad_4/183793_Act4.docx" download class="download-card">
+        <!-- Recurso 2: Informe Completo Word -->
+        <a href="Archivos/Actividad_4/183793_Act4.pdf" download class="download-card">
           <div class="dl-icon">[DOC]</div>
           <span class="dl-title">Informe de Práctica</span>
-          <span class="dl-meta">183793_Act4.docx</span>
+          <span class="dl-meta">183793_Act4.pdf</span>
         </a>
 
-        <!-- Recurso 3: Reporte XML generado -->
-        <a href="Archivos/Actividad_4/reporte_sesion.xml" download class="download-card">
-          <div class="dl-icon">[XML]</div>
-          <span class="dl-title">Reporte SET</span>
-          <span class="dl-meta">reporte_sesion.xml</span>
+        <!-- Recurso 3: Diagrama de Secuencia -->
+        <a href="Archivos/Actividad_4/diagrama_secuencia.png" download class="download-card">
+          <div class="dl-icon">[IMG]</div>
+          <span class="dl-title">Diagrama de Secuencia</span>
+          <span class="dl-meta">diagrama_secuencia.png</span>
         </a>
 
       </div>
-
     </div>
   </section>
   
@@ -466,7 +543,7 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
-    <p>CNO IV — Seguridad Informática | UPSLP</p>
+    <p>CNO IV (T37A) — Seguridad Informática | UPSLP</p>
   </div>
 </footer>
 

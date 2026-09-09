@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyecto 1: Walkthrough Snakeoil | Portafolio de Seguridad Informática</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  /* Integración de menú en columna y estilos específicos para el proyecto */
+  .site-nav .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .nav-column-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .parciales-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65);
+    border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .parciales-stack a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    transition: color 0.2s var(--ease), padding-left 0.2s var(--ease);
+    text-decoration: none;
+  }
+
+  .parciales-stack a:hover {
+    color: var(--accent);
+    padding-left: 3px;
+  }
+
+  .site-header.is-scrolled .parciales-stack {
+    flex-direction: row;
+    gap: 8px;
+    padding: 3px 8px;
+  }
+
+  /* Contenedor adaptativo 16:9 para video de YouTube */
+  .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* Relación 16:9 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+    background: #090B10;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* Ficha técnica y tablas */
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin-top: 15px;
+  }
+  .custom-table th, .custom-table td {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  .custom-table th {
+    background: #090B10;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .custom-table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .custom-table td {
+    color: var(--text);
+  }
+
+  .evidence-box {
+    border: 1px dashed var(--border);
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    background: var(--bg);
+    margin-bottom: 24px;
+  }
+  .evidence-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .evidence-caption {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+  }
+
+  .control-card-sub {
+    border-left: 2px solid var(--border);
+    padding-left: 18px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .control-card-sub:hover {
+    border-left-color: var(--accent);
+  }
+  .control-title {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> run_project --id snakeoil
+      </div>
+      
+      <!-- Nombre y Alias -->
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
+      </span>
+      
+      <!-- Metadatos de Asignatura -->
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV - Seguridad Informática</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+      </div>
+    </div>
+
+    <!-- Menú de navegación principal -->
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="../index.html">/Inicio</a></li>
+        
+        <!-- Pila vertical de Parciales -->
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../parcial_1.html">> Parcial 1</a>
+            <a href="#">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="proyecto_1.html" class="is-active">/Proyectos</a></li>
+        <li><a href="#">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div style="margin-top: 40px;">
+    <a href="../index.html" class="btn-action" style="border: none; padding: 0;">
+       &lt;- Volver al Inicio
+    </a>
+  </div>
+
+  <!-- [PRJ_01] DESCRIPCIÓN GENERAL Y METODOLOGÍA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[PRJ_01]</span>
+      <h2>Ficha Técnica</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent);">De la teoría a la práctica: walkthrough en acción (guía y video)</h3>
+      <p class="lede">
+        Demostración práctica de las técnicas y metodologías utilizadas para evaluar y vulnerar la máquina virtual <strong>"digitalworld.local: Snakeoil"</strong> en un entorno controlado.
+      </p>
+      
+      <p style="color: var(--text-muted); margin-top: 15px;">
+        El proceso abarca desde la recolección inicial de información hasta el compromiso total del sistema, logrando acceso administrativo (root) e ilustrando los riesgos asociados a las configuraciones vulnerables y la falta de sanitización de entradas en servicios web.
+      </p>
+
+      <div class="spec-grid" style="margin-top: 25px;">
+        <div class="spec-item">
+          <span class="spec-tag">OBJETIVO DE EVALUACIÓN</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            Máquina Virtual "Snakeoil" (Debian 10)<br>
+            Descarga VulnHub: <a href="https://www.vulnhub.com/entry/digitalworldlocal-snakeoil,738/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">digitalworldlocal-snakeoil (v738)</a>
+          </p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-tag">TOPOLOGÍA DEL LABORATORIO</span>
+          <p style="font-size: 0.9rem; color: var(--text); font-family: var(--font-mono);">
+            • Máquina Atacante: Kali Linux (Modo Host-Only / Solo anfitrión)<br>
+            • Máquina Víctima: Snakeoil VM (Debian 10)<br>
+            • Aislamiento: Red virtual privada sin acceso a infraestructuras externas
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [MEDIA_02] DEMOSTRACIÓN EN VIDEO -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[MEDIA_02]</span>
+      <h2>Demostración</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent); font-size: 1.15rem;">Walkthrough en Video: Procedimiento Paso a Paso</h3>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Demostración audiovisual completa del reconocimiento perimetral, interacción con el backend web y escalada interna en la máquina objetivo.
+      </p>
+
+      <!-- CONTENEDOR DE YOUTUBE -->
+      <div class="video-container">
+        <!-- Reemplaza VIDEO_ID_AQUI con el ID de tu video de YouTube -->
+        <iframe 
+          src="https://www.youtube-nocookie.com/embed/VIDEO_ID_AQUI" 
+          title="Walkthrough digitalworld.local: Snakeoil - Alejandro García Morales" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 15px; font-family: var(--font-mono);">
+        >_ Nota: El video detalla la ejecución en tiempo real de los comandos, la interpretación de códigos HTTP y la remediación defensiva.
+      </p>
+    </div>
+  </section>
+
+  <!-- [PHASES_03] FASES DE EJECUCIÓN TÉCNICA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[PHASES_03]</span>
+      <h2>Walkthrough</h2>
+    </div>
+    <div class="row-content data-module">
+      
+      <!-- Fase 1 -->
+      <div class="control-card-sub">
+        <div class="control-title">1. Reconocimiento y Enumeración</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
+          Descubrimiento del segmento de red e identificación de puertos y versiones de servicios activos mediante herramientas de escaneo perimetral:
+        </p>
+        
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Puerto</th>
+              <th>Protocolo</th>
+              <th>Servicio</th>
+              <th>Versión Detectada / Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>22</td>
+              <td>TCP</td>
+              <td>SSH</td>
+              <td>OpenSSH 7.9p1 (Debian)</td>
+            </tr>
+            <tr>
+              <td>80</td>
+              <td>TCP</td>
+              <td>HTTP</td>
+              <td>Nginx Web Server</td>
+            </tr>
+            <tr>
+              <td>8080</td>
+              <td>TCP</td>
+              <td>HTTP-Alt</td>
+              <td>Nginx (Portal Good Tech Inc.'s Snake Oil Project)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Fase 2 -->
+      <div class="control-card-sub" style="margin-top: 25px;">
+        <div class="control-title">2. Análisis de Vulnerabilidades</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+          Exploración de directorios mediante herramientas de fuerza bruta (Gobuster) que expuso los endpoints <code>/users</code> (revelando nombres de usuario y hashes PBKDF2) y el endpoint administrativo <code>/run</code>, el cual presentó vectores de inyección de comandos en el backend al procesar parámetros HTTP POST no sanitizados.
+        </p>
+      </div>
+
+      <!-- Fase 3 -->
+      <div class="control-card-sub" style="margin-top: 25px;">
+        <div class="control-title">3. Explotación y Acceso Inicial</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+          Construcción del vector de inyección de comandos mediante peticiones POST dirigidas hacia el servicio web, logrando la ejecución arbitraria de comandos en el sistema operativo y el posterior establecimiento de una reverse shell interactiva hacia el equipo atacante.
+        </p>
+      </div>
+
+      <!-- Fase 4 -->
+      <div class="control-card-sub" style="margin-top: 25px;">
+        <div class="control-title">4. Post-Explotación y Escalada de Privilegios</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+          Inspección interna de la máquina virtual (Debian 10) orientada a detectar configuraciones deficientes, permisos inapropiados o debilidades de elevación local para alcanzar el nivel de superusuario (<code>root</code>) y validar el compromiso total del sistema.
+        </p>
+      </div>
+
+      <!-- Imagen de la máquina -->
+      <div class="evidence-box" style="margin-top: 30px;">
+        <img src="Archivos/login_snakeoil.png" alt="Pantalla de inicio de sesión de Snakeoil en Debian 10">
+        <p class="evidence-caption">
+          >_ Interfaz de autenticación de la máquina virtual Snakeoil (Debian 10) en VirtualBox.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [CONC_04] FUNDAMENTOS TEÓRICOS Y CONCLUSIÓN -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[CONC_04]</span>
+      <h2>Conclusión</h2>
+    </div>
+    <div class="row-content data-module">
+      <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 15px;">
+        El desarrollo de este walkthrough evidenció que la explotación de entornos reales demanda una metodología técnica sistemática y flexible. Cuando el análisis criptoanalítico sobre hashes complejos consume tiempo o capacidad de procesamiento inviable, el analista debe pivotar hacia fallos de validación en la lógica de negocio y en las interfaces de comunicación.
+      </p>
+      <p style="color: var(--text-muted); line-height: 1.7;">
+        Las brechas identificadas en la máquina Snakeoil ratifican que la robustez de un sistema no depende únicamente del uso de algoritmos criptográficos modernos, sino de la sanitización exhaustiva de cada parámetro de entrada, el principio de menor privilegio en los servicios expuestos y la actualización periódica de la infraestructura corporativa.
+      </p>
+    </div>
+  </section>
+
+  <!-- [DWN_05] RECURSOS DE DESCARGA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DWN_05]</span>
+      <h2>Entregables</h2>
+    </div>
+    <div class="row-content">
+      
+      <div class="downloads-grid">
+        
+        <!-- Recurso 1: Informe en PDF -->
+        <a href="Archivos/Reporte_proyecto1.pdf" download class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Informe Técnico</span>
+          <span class="dl-meta">Reporte_proyecto1.pdf</span>
+        </a>
+
+        <!-- Recurso 2: Objetivo VulnHub -->
+        <a href="https://www.vulnhub.com/entry/digitalworldlocal-snakeoil,738/" target="_blank" rel="noopener" class="download-card">
+          <div class="dl-icon">[VM]</div>
+          <span class="dl-title">Máquina Snakeoil</span>
+          <span class="dl-meta">Descarga OVA VulnHub</span>
+        </a>
+
+        <!-- Recurso 3: Script de Prueba -->
+        <a href="#" class="download-card">
+          <div class="dl-icon">[SH]</div>
+          <span class="dl-title">Comandos de Apoyo</span>
+          <span class="dl-meta">recon_commands.txt</span>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+  
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
+    <p>CNO IV — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

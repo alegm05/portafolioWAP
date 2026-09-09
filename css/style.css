@@ -653,3 +653,52 @@ main {
     grid-template-columns: 1fr;
   }
 }
+
+/* Alineación de los elementos de navegación */
+.site-nav .nav-list {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Columna vertical para los parciales */
+.nav-column-item {
+  display: flex;
+  align-items: center;
+}
+
+.parciales-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px 12px;
+  background: rgba(13, 17, 23, 0.6);
+  border-left: 2px solid var(--accent);
+  border-right: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.parciales-stack a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+  transition: color 0.2s var(--ease), padding-left 0.2s var(--ease);
+}
+
+.parciales-stack a:hover {
+  color: var(--accent);
+  padding-left: 3px;
+}
+
+.parciales-stack a.is-active {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Modo barra compacta al hacer scroll */
+.site-header.is-scrolled .parciales-stack {
+  flex-direction: row;
+  gap: 8px;
+  padding: 3px 8px;
+}

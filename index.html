@@ -4,17 +4,68 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alejandro — Portafolio de Seguridad Informática</title>
-<meta name="description" content="Portafolio académico de Alejandro, estudiante de Ingeniería de Software. CNO IV — Seguridad Informática, UPSLP.">
+<meta name="description" content="Portafolio académico de Alejandro, estudiante de Ingeniería en Tecnologías de la Información. CNO IV — Seguridad Informática, UPSLP.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+
+<style>
+  /* Estilos complementarios para la columna vertical de Parciales */
+  .site-nav .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .nav-column-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .parciales-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65);
+    border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .parciales-stack a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    transition: color 0.2s var(--ease), padding-left 0.2s var(--ease);
+    text-decoration: none;
+  }
+
+  .parciales-stack a:hover {
+    color: var(--accent);
+    padding-left: 3px;
+  }
+
+  .parciales-stack a.is-active {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* Modo barra compacta al hacer scroll */
+  .site-header.is-scrolled .parciales-stack {
+    flex-direction: row;
+    gap: 8px;
+    padding: 3px 8px;
+  }
+</style>
 </head>
 <body>
 
 <a class="skip-link" href="#main">Saltar al contenido</a>
 
-<!-- ENCABEZADO FLOTANTE TIPO TERMINAL (EXPLÍCITO PARA LA RÚBRICA) -->
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL -->
 <header class="site-header">
   <div class="header-inner">
     <div class="identity">
@@ -42,10 +93,20 @@
         <span class="sr-only">Abrir menú</span>
       </button>
       <ul id="nav-list" class="nav-list">
-        <li><a href="#" class="is-active">/Inicio</a></li>
-        <li><a href="parcial_1.html">/Parcial 1</a></li>
-        <li><a href="#">/Parcial 2</a></li>
-        <li><a href="#">/Parcial 3</a></li>
+        <li><a href="index.html" class="is-active">/Inicio</a></li>
+        
+        <!-- Columna vertical de Parciales -->
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="parcial_1.html">> Parcial 1</a>
+            <a href="#">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+
+        <!-- Ruta temporal a proyecto_1.html -->
+        <li><a href="Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="#">/Hall of Fame</a></li>
         <li><a href="#">/Certificados</a></li>
       </ul>
     </nav>
@@ -87,7 +148,7 @@
       <h2 id="perfil-title">Perfil</h2>
     </div>
     <div class="row-content data-module">
-      <p class="lede">Estudiante de Ingeniería en Tecnologías de la Informacion en la Universidad Politécnica de San Luis Potosi.</p>
+      <p class="lede">Estudiante de Ingeniería en Tecnologías de la Información en la Universidad Politécnica de San Luis Potosí.</p>
 
       <div class="profile-grid">
         <div class="profile-block">
@@ -177,6 +238,7 @@
     <p>CNO IV — Seguridad Informática | UPSLP</p>
   </div>
 </footer>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script type="text/javascript">
    (function(){
