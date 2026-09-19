@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hall of Fame | Portafolio de Seguridad Informática</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+  /* Menú de navegación */
+  .site-nav .nav-list { display: flex; align-items: center; gap: 18px; }
+  .nav-column-item { display: flex; align-items: center; }
+  .parciales-stack {
+    display: flex; flex-direction: column; gap: 3px;
+    padding: 5px 10px; background: rgba(13, 17, 23, 0.65);
+    border-left: 2px solid var(--accent); border-right: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .parciales-stack a {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);
+    line-height: 1.25; transition: color 0.2s var(--ease), padding-left 0.2s var(--ease); text-decoration: none;
+  }
+  .parciales-stack a:hover { color: var(--accent); padding-left: 3px; }
+  .site-header.is-scrolled .parciales-stack { flex-direction: row; gap: 8px; padding: 3px 8px; }
+
+  /* =========================================================
+     SISTEMA DE PANAL (FLAT-TOPPED S-CURVE)
+     ========================================================= */
+  .fame-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 0 100px 0;
+  }
+
+  .fame-container {
+    position: relative;
+    width: 760px;
+    height: 414px;
+    transform-origin: top center;
+    transition: transform 0.3s ease;
+  }
+
+  .hex-item {
+    position: absolute;
+    width: 160px;
+    height: 138px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hex-item:hover {
+    z-index: 50; 
+  }
+
+  /* Coordenadas absolutas de la cadena de hexágonos */
+  .node-1 { left: 0px; top: 69px; }
+  .node-2 { left: 120px; top: 138px; }
+  .node-3 { left: 240px; top: 69px; }
+  .node-4 { left: 360px; top: 138px; }
+  .node-5 { left: 480px; top: 69px; }
+  .node-6 { left: 600px; top: 138px; }
+  .node-7 { left: 600px; top: 276px; }
+
+  /* =========================================================
+     DISEÑO DEL HEXÁGONO BASE
+     ========================================================= */
+  .hex-card {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(79, 168, 78, 0.4); 
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s ease;
+  }
+
+  .hex-card::before {
+    content: "";
+    position: absolute;
+    top: 2px; left: 2px; right: 2px; bottom: 2px; 
+    background: #090B10; 
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    transition: background 0.3s ease;
+  }
+
+  .hex-content {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .hex-default {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .hex-default .act-num {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .hex-default p {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin: 5px 0 0 0;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .hex-item:not(.locked):hover .hex-card::before {
+    background: var(--accent); 
+  }
+  .hex-item:not(.locked):hover .hex-card {
+    background: var(--accent);
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(79, 168, 78, 0.6));
+  }
+  .hex-item:not(.locked):hover .hex-default .act-num,
+  .hex-item:not(.locked):hover .hex-default p {
+    color: #000000; 
+    font-weight: 800;
+  }
+
+  /* =========================================================
+     TARJETA TOOLTIP (EL CUADRO DESCRIPTIVO)
+     ========================================================= */
+  .hex-tooltip {
+    position: absolute;
+    bottom: 90%; 
+    left: 60%; 
+    width: 260px;
+    background: #0d1117; 
+    border-radius: 6px;
+    padding: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 0 1px var(--border); 
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 1000; 
+    text-align: left;
+    pointer-events: none; 
+  }
+
+  .hex-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 24px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #0d1117 transparent transparent transparent;
+    z-index: 2;
+  }
+  .hex-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 23px;
+    border-width: 11px;
+    border-style: solid;
+    border-color: var(--border) transparent transparent transparent;
+    z-index: 1;
+  }
+
+  .hex-item.tooltip-left .hex-tooltip { left: auto; right: 60%; }
+  .hex-item.tooltip-left .hex-tooltip::after { left: auto; right: 24px; }
+  .hex-item.tooltip-left .hex-tooltip::before { left: auto; right: 23px; }
+
+  .hex-item:hover .hex-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto; 
+  }
+
+  .tt-tag {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-family: var(--font-mono);
+  }
+  .tt-title {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    line-height: 1.3;
+  }
+  .tt-desc {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 18px;
+  }
+  
+  /* Botones del Tooltip */
+  .tt-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .tt-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .tt-btn.primary {
+    flex: 1; 
+    background: var(--accent);
+    color: #000000;
+    border: 1px solid var(--accent);
+  }
+  .tt-btn.primary:hover { 
+    background: #5cdb7a; 
+    box-shadow: 0 0 10px rgba(79, 168, 78, 0.4);
+  }
+  .tt-btn.icon-only {
+    flex: 0 0 auto; 
+    padding: 8px 12px;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+  .tt-btn.icon-only:hover { 
+    background: rgba(79, 168, 78, 0.15); 
+  }
+  .tt-btn.icon-only svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* =========================================================
+     EFECTO LLUVIA DIGITAL HACKER CONTINUA (Bucle Infinito)
+     ========================================================= */
+  .matrix-rain {
+    position: absolute;
+    bottom: -90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 160px;
+    overflow: hidden;
+    z-index: -1;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .matrix-rain span {
+    display: block;
+    flex-shrink: 0;
+    color: var(--accent); 
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.1;
+    word-break: break-all;
+    text-align: center;
+    text-shadow: 0 0 5px var(--accent);
+    animation: rainFall 8s linear infinite;
+  }
+
+  .hex-item:nth-child(odd) .matrix-rain span { animation-duration: 9s; color: #3eb56b; }
+  .hex-item:nth-child(even) .matrix-rain span { animation-duration: 7s; }
+  .hex-item:nth-child(3n) .matrix-rain span { animation-duration: 11s; }
+
+  .hex-item:hover .matrix-rain { opacity: 0.8; }
+
+  @keyframes rainFall { 
+    0% { transform: translateY(-100%); } 
+    100% { transform: translateY(0); } 
+  }
+
+  /* =========================================================
+     NODO 7 LEYENDA (PRÓXIMAMENTE BLOQUEADO)
+     ========================================================= */
+  .hex-item.locked .hex-card { background: rgba(255, 255, 255, 0.1); }
+  .hex-item.locked .hex-card::before { background: #090B10; }
+  .hex-item.locked .act-num { color: #52525b; }
+  .hex-item.locked p { color: #52525b; }
+  
+  .hex-item.locked:hover .hex-card { 
+    transform: scale(1.02); 
+    background: rgba(255, 255, 255, 0.2); 
+  }
+  
+  .hex-item.locked .hex-tooltip { background: #090B10; border-color: rgba(255, 255, 255, 0.1); }
+  .hex-item.locked .hex-tooltip::after { border-top-color: #090B10; }
+  .hex-item.locked .hex-tooltip::before { border-top-color: rgba(255, 255, 255, 0.1); }
+  
+  .hex-item.locked .tt-title { color: #a1a1aa; text-align: center;}
+  .hex-item.locked .tt-desc { color: #52525b; text-align: center; font-family: var(--font-mono); font-size: 0.75rem;}
+  
+  .lock-icon { font-size: 1.8rem; text-align: center; margin-bottom: 8px; color: #52525b;}
+  .hex-item.locked .matrix-rain span { color: #555; text-shadow: none; animation-duration: 15s; }
+
+  /* =========================================================
+     RESPONSIVIDAD PERFECTA MEDIANTE ESCALADO
+     ========================================================= */
+  @media (max-width: 800px) { .fame-container { transform: scale(0.85); margin-bottom: -60px;} }
+  @media (max-width: 650px) { .fame-container { transform: scale(0.70); margin-bottom: -120px;} }
+  @media (max-width: 500px) { .fame-container { transform: scale(0.55); margin-bottom: -180px;} }
+  @media (max-width: 400px) { .fame-container { transform: scale(0.45); margin-bottom: -220px;} }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> cd /opt/hall_of_fame/
+      </div>
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
+      </span>
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV - Seguridad Informática</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="index.html">/Inicio</a></li>
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="parcial_1.html">> Parcial 1</a>
+            <a href="#">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+        <li><a href="Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="hall_of_fame.html" class="is-active">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="row" id="fame" aria-labelledby="fame-title">
+    <div class="row-label">
+      <span class="row-index">[FAME_VAULT]</span>
+      <h2 id="fame-title">Hall of Fame</h2>
+    </div>
+    
+    <div class="row-content data-module">
+      <p class="lede">
+        Este módulo organiza y presenta evidencias técnicas, reportes descargables y análisis profundos de vulnerabilidades web —como File Path Traversal—, demostrando paso por paso cómo se logró vulnerar la pagina web de cada laboratorio.      
+      </p>
+      <div class="fame-wrapper">
+        <div class="fame-container">
+
+          <!-- ==========================================
+               NODO 1: Actividad 7
+               ========================================== -->
+          <div class="hex-item node-1">
+            <div class="matrix-rain">
+              <span>010110011010110101100110101101011001101010101001010110011</span>
+              <span>010110011010110101100110101101011001101010101001010110011</span>
+            </div>
+            <div class="hex-card"></div>
+            <div class="hex-content">
+              <div class="hex-default">
+                <span class="act-num">07</span>
+                <p>Act 07</p>
+              </div>
+            </div>
+            <div class="hex-tooltip">
+              <div class="tt-tag">Actividad 07</div>
+              <h4 class="tt-title">File path traversal: simple case</h4>
+              <p class="tt-desc">Explotación básica navegando por los directorios del servidor mediante secuencias de subida (<code>../../../</code>) para lograr acceso y lectura de archivos sensibles como <code>/etc/passwd</code>.</p>
+              <div class="tt-actions">
+                <a href="Hall_of_fame/Actividades/actividad_7.html" class="tt-btn primary">Ver web</a>
+                <a href="Archivos/Actividad_7/183793_Act7.pdf" download class="tt-btn icon-only" title="Descargar Reporte PDF">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               NODO 2: Actividad 8
+               ========================================== -->
+          <div class="hex-item node-2">
+            <div class="matrix-rain">
+              <span>110010101011011100101010110111001010101101011100110010101</span>
+              <span>110010101011011100101010110111001010101101011100110010101</span>
+            </div>
+            <div class="hex-card"></div>
+            <div class="hex-content">
+              <div class="hex-default">
+                <span class="act-num">08</span>
+                <p>Act 08</p>
+              </div>
+            </div>
+            <div class="hex-tooltip">
+              <div class="tt-tag">Actividad 08</div>
+              <h4 class="tt-title">Traversal sequences blocked with absolute path bypass</h4>
+              <p class="tt-desc">La aplicación bloquea los patrones estándar, pero es vulnerable al uso directo de rutas absolutas completas partiendo desde la raíz del sistema operativo.</p>
+              <div class="tt-actions">
+                <a href="Hall_of_fame/Actividades/actividad_8.html" class="tt-btn primary">Ver web</a>
+                <a href="Archivos/Actividad_8/183793_Act8.pdf" download class="tt-btn icon-only" title="Descargar Reporte PDF">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               NODO 3: Actividad 9
+               ========================================== -->
+          <div class="hex-item node-3">
+            <div class="matrix-rain">
+              <span>101010010101001010100101010010101001010100101010101010010</span>
+              <span>101010010101001010100101010010101001010100101010101010010</span>
+            </div>
+            <div class="hex-card"></div>
+            <div class="hex-content">
+              <div class="hex-default">
+                <span class="act-num">09</span>
+                <p>Act 09</p>
+              </div>
+            </div>
+            <div class="hex-tooltip">
+              <div class="tt-tag">Actividad 09</div>
+              <h4 class="tt-title">Traversal sequences stripped non-recursively</h4>
+              <p class="tt-desc">El servidor elimina intentos obvios de escalada, pero falla al no realizar una limpieza recursiva, permitiendo el bypass mediante secuencias anidadas como <code>....//</code>.</p>
+              <div class="tt-actions">
+                <a href="Hall_of_fame/Actividades/actividad_9.html" class="tt-btn primary">Ver web</a>
+                <a href="Archivos/Actividad_9/183793_Act9.pdf" download class="tt-btn icon-only" title="Descargar Reporte PDF">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               NODO 4: Actividad 10
+               ========================================== -->
+          <div class="hex-item node-4">
+            <div class="matrix-rain">
+              <span>001101011001010011010110010100110101100101001101001101011</span>
+              <span>001101011001010011010110010100110101100101001101001101011</span>
+            </div>
+            <div class="hex-card"></div>
+            <div class="hex-content">
+              <div class="hex-default">
+                <span class="act-num">10</span>
+                <p>Act 10</p>
+              </div>
+            </div>
+            <div class="hex-tooltip">
+              <div class="tt-tag">Actividad 10</div>
+              <h4 class="tt-title">Traversal sequences stripped with superfluous URL-decode</h4>
+              <p class="tt-desc">Evasión de filtros mediante codificación URL doble (<code>%252e%252e%252f</code>), aprovechando la decodificación redundante del servidor antes de procesar la entrada.</p>
+              <div class="tt-actions">
+                <a href="Hall_of_fame/Actividades/actividad_10.html" class="tt-btn primary">Ver web</a>
+                <a href="Archivos/Actividad_10/183793_Act10.pdf" download class="tt-btn icon-only" title="Descargar Reporte PDF">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               NODO 5: Actividad 11
+               ========================================== -->
+          <div class="hex-item node-5 tooltip-left">
+            <div class="matrix-rain">
+              <span>101001101001011010011010010110100110100101101001101001101</span>
+              <span>101001101001011010011010010110100110100101101001101001101</span>
+            </div>
+            <div class="hex-card"></div>
+            <div class="hex-content">
+              <div class="hex-default">
+                <span class="act-num">11</span>
+                <p>Act 11</p>
+              </div>
+            </div>
+            <div class="hex-tooltip">
+              <div class="tt-tag">Actividad 11</div>
+              <h4 class="tt-title">Validation of start of path</h4>
+              <p class="tt-desc">El servidor verifica que la ruta inicie con un directorio base válido, pero omite validar el resto de la cadena, posibilitando inyectar saltos de directorio posteriormente.</p>
+              <div class="tt-actions">
+                <a href="Hall_of_fame/Actividades/actividad_11.html" class="tt-btn primary">Ver web</a>
+                <a href="Archivos/Actividad_11/183793_Act11.pdf" download class="tt-btn icon-only" title="Descargar Reporte PDF">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               NODO 6: Actividad 12
+               ========================================== -->
+          <div class="hex-item node-6 tooltip-left">
+            <div class="matrix-rain">
+              <span>110101001010011101010010100111010100101001110101110101001</span>
+              <span>110101001010011101010010100111010100101001110101110101001</span>
+            </div>
+            <div class="hex-card"></div>
+            <div class="hex-content">
+              <div class="hex-default">
+                <span class="act-num">12</span>
+                <p>Act 12</p>
+              </div>
+            </div>
+            <div class="hex-tooltip">
+              <div class="tt-tag">Actividad 12</div>
+              <h4 class="tt-title">Validation of file extension with null byte bypass</h4>
+              <p class="tt-desc">Se burla la comprobación forzada de extensión de archivo insertando bytes nulos (<code>%00</code>) que truncan la validación real de la ruta en la lectura a nivel del sistema.</p>
+              <div class="tt-actions">
+                <a href="Hall_of_fame/Actividades/actividad_12.html" class="tt-btn primary">Ver web</a>
+                <a href="Archivos/Actividad_12/183793_Act12.pdf" download class="tt-btn icon-only" title="Descargar Reporte PDF">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               NODO 7: PRÓXIMAMENTE (Bloqueado)
+               ========================================== -->
+          <div class="hex-item node-7 locked tooltip-left">
+            <div class="matrix-rain">
+              <span>000101000100000010100010000001010001000000101000000101000</span>
+              <span>000101000100000010100010000001010001000000101000000101000</span>
+            </div>
+            <div class="hex-card"></div>
+            <div class="hex-content">
+              <div class="hex-default">
+                <span class="act-num">13</span>
+                <p>Bloqueado</p>
+              </div>
+            </div>
+            <div class="hex-tooltip">
+              <div class="lock-icon">🔒</div>
+              <h4 class="tt-title">Nivel Restringido</h4>
+              <p class="tt-desc">>_ ESTADO: PENDIENTE<br>Vector de ataque en desarrollo...</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
+    <p>CNO IV — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

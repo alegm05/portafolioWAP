@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 07: Path Traversal Simple Case | Hall of Fame</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+
+<style>
+  /* Menú de navegación en columna vertical para parciales */
+  .site-nav .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .nav-column-item {
+    display: flex;
+    align-items: center;
+  }
+  .parciales-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65);
+    border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .parciales-stack a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    transition: color 0.2s var(--ease), padding-left 0.2s var(--ease);
+    text-decoration: none;
+  }
+  .parciales-stack a:hover { color: var(--accent); padding-left: 3px; }
+  .parciales-stack a.is-active { color: var(--accent); font-weight: 700; }
+  .site-header.is-scrolled .parciales-stack { flex-direction: row; gap: 8px; padding: 3px 8px; }
+
+  /* Tablas de datos técnicos */
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin-top: 15px;
+  }
+  .custom-table th, .custom-table td {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  .custom-table th { background: #090B10; color: var(--accent); font-weight: 700; }
+  .custom-table tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+  .custom-table td { color: var(--text); }
+
+  /* Contenedores de evidencias gráficas */
+  .evidence-box {
+    border: 1px dashed var(--border);
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    background: var(--bg);
+    margin-top: 20px;
+    margin-bottom: 24px;
+  }
+  .evidence-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .evidence-caption {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+  }
+
+  /* Módulos de controles y definiciones */
+  .control-card-sub {
+    border-left: 2px solid var(--border);
+    padding-left: 18px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .control-card-sub:hover { border-left-color: var(--accent); }
+  .control-title {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> cd /opt/hall_of_fame/act_07
+      </div>
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
+      </span>
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV (T37A) - Seguridad Informática</span>
+        <span class="meta-item">> Docente: Mtro. Servando López Contreras</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="../../index.html">/Inicio</a></li>
+        
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../../parcial_1.html">> Parcial 1</a>
+            <a href="#">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="../../Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="../../hall_of_fame.html" class="is-active">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div style="margin-top: 40px;">
+    <a href="../../hall_of_fame.html" class="btn-action" style="border: none; padding: 0;">
+       &lt;- Volver al Hall of Fame
+    </a>
+  </div>
+
+  <!-- [DOC_01] OBJETIVO Y FICHA TÉCNICA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DOC_01]</span>
+      <h2>Ficha Técnica</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent);">Actividad 07: Lab: File path traversal, simple case</h3>
+      <p class="lede">
+        Laboratorio de evaluación ofensiva centrado en la explotación de secuencias de escape de directorio (<em>Directory Traversal</em>) en un entorno de PortSwigger sin mecanismos de sanitización.
+      </p>
+      
+      <div class="spec-grid" style="margin-top: 25px;">
+        <div class="spec-item">
+          <span class="spec-tag">NIVEL / TIPO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            <strong>Dificultad:</strong> Apprentice<br>
+            <strong>Vulnerabilidad:</strong> CWE-22 (Improper Limitation of a Pathname to a Restricted Directory)
+          </p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-tag">OBJETIVO TÉCNICO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            Identificar la falta de sanitización en el parámetro de carga de imágenes y evadir la restricción del directorio base mediante secuencias relativas (<code>../</code>) para exfiltrar el archivo <code>/etc/passwd</code>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [THEORY_02] MARCO TEÓRICO -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[THEORY_02]</span>
+      <h2>Marco Teórico</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Fundamentación de la Vulnerabilidad</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Según el estándar OWASP Top 10:2021, esta falla se clasifica como <strong>A01:2021 - Broken Access Control</strong>. Ocurre cuando el backend concatena directamente la entrada de un usuario (ej. <code>filename=producto.jpg</code>) a un directorio base (ej. <code>/var/www/images/</code>) sin validar la presencia de caracteres especiales de navegación jerárquica.
+      </p>
+
+      <div class="control-card-sub">
+        <div class="control-title">Análisis de Impacto (Tríada CIA)</div>
+        <ul class="tag-list" style="gap: 10px; margin-top: 10px;">
+          <li><strong style="color: var(--accent);">> Confidencialidad (Crítico):</strong> Exposición de archivos arbitrarios (claves SSH, tokens, logs, código fuente y `/etc/passwd`).</li>
+          <li><strong style="color: var(--accent);">> Integridad (Nulo a Alto):</strong> Dependiendo del vector, si permite escritura (Upload), puede sobreescribir archivos críticos del sistema.</li>
+          <li><strong style="color: var(--accent);">> Disponibilidad (Medio a Potencial):</strong> La lectura de descriptores de archivos virtuales (/dev/urandom) puede generar denegación de servicio (DoS).</li>
+        </ul>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Comportamiento del Kernel Unix/Linux</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          El carácter <code>..</code> (punto doble) asciende al directorio padre. Por diseño del núcleo de Linux, intentar subir un nivel desde el directorio raíz (<code>/..</code>) ancla el puntero en la propia raíz <code>/</code>. Esto permite inyectar secuencias redundantes masivas (ej. <code>../../../../../../</code>) con la certeza de aterrizar en la raíz antes de descender al directorio deseado como <code>etc/passwd</code>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [EXEC_03] PROCEDIMIENTO Y EVIDENCIAS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[EXEC_03]</span>
+      <h2>Procedimiento</h2>
+    </div>
+    <div class="row-content data-module">
+      
+      <!-- Paso 1 al 3 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Fase 1: Configuración e Interceptación</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Se accedió a la plataforma Web Security Academy para desplegar la instancia dinámica. Utilizando <strong>Burp Suite Community Edition</strong>, se configuró el entorno de auditoría iniciando el navegador integrado mediante la pestaña <code>Proxy > HTTP history</code>, garantizando la intercepción pasiva de todo el tráfico.
+      </p>
+
+      <div class="evidence-box">
+        <img src="../../Archivos/Actividad_7/evidencia_02.png" alt="Historial HTTP en Burp Suite">
+        <p class="evidence-caption">>_ Evidencia 02: Preparación del módulo Proxy e historial HTTP para capturar la navegación sobre el objetivo comercial "WE LIKE TO SHOP".</p>
+      </div>
+
+      <!-- Paso 4 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 2: Mapeo y Aislamiento del Parámetro</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Al inspeccionar el tráfico en el historial, se identificó que la carga de recursos multimedia operaba mediante un parámetro GET no sanitizado. Se envió la solicitud vulnerable (<code>GET /image?filename=5.jpg HTTP/2</code>) al módulo <strong>Repeater</strong> (Ctrl+R) para su análisis exhaustivo.
+      </p>
+
+      <div class="evidence-box">
+        <img src="../../Archivos/Actividad_7/evidencia_04.png" alt="Solicitud en HTTP History enviada a Repeater">
+        <p class="evidence-caption">>_ Evidencia 04: Selección de la petición de extracción de imágenes y envío al módulo Repeater para manipulación.</p>
+      </div>
+
+      <!-- Paso 5 y 6 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 3: Inyección del Payload y Exfiltración</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Dentro de Repeater, se reemplazó el valor estático del parámetro <code>filename</code> por la secuencia de escape de directorios: <code>../../../etc/passwd</code>. Al enviar la petición modificada, el servidor devolvió un código <strong>HTTP/2 200 OK</strong> que exponía el contenido del archivo administrativo del sistema Linux subyacente.
+      </p>
+
+      <div class="evidence-box">
+        <img src="../../Archivos/Actividad_7/evidencia_06.png" alt="Exfiltración exitosa en el módulo Repeater">
+        <p class="evidence-caption">>_ Evidencia 06: Módulo Repeater mostrando la inyección (izquierda) y la exfiltración íntegra de cuentas del sistema como root y www-data (derecha).</p>
+      </div>
+
+      <!-- Paso 7 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 4: Confirmación del Compromiso</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        La extracción exitosa de <code>/etc/passwd</code> cumplió con las condiciones de evaluación del entorno, confirmando el compromiso de lectura arbitraria en la máquina objetivo.
+      </p>
+
+      <div class="evidence-box">
+        <img src="../../Archivos/Actividad_7/evidencia_07.png" alt="Laboratorio resuelto en PortSwigger">
+        <p class="evidence-caption">>_ Evidencia 07: El banner de la plataforma Web Security Academy se actualiza a color verde confirmando el estado "Lab Solved".</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [PAYLOAD_04] ANÁLISIS DEL PAYLOAD Y MITIGACIÓN -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[PAYLOAD_04]</span>
+      <h2>Análisis Téc.</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Mecánica del Payload de Evasión</h4>
+      
+      <div class="code-window" style="margin-bottom: 20px;">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="dot close"></span>
+            <span class="dot minimize"></span>
+            <span class="dot maximize"></span>
+          </div>
+          <div class="code-title">HTTP Request - Directory Traversal</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="keyword">GET</span> <span class="string">/image?filename=../../../etc/passwd</span> <span class="keyword">HTTP/2</span>
+Host: 0a2400ab03dab9fe...web-security-academy.net
+Accept: image/webp, image/apng, image/*
+Sec-Fetch-Site: same-origin</code></pre>
+        </div>
+      </div>
+
+      <ul class="tag-list" style="gap: 12px; margin-bottom: 30px;">
+        <li><strong style="color: var(--accent);">Primer ../</strong> Sale del directorio <code>images/</code> y aterriza en <code>/var/www/</code>.</li>
+        <li><strong style="color: var(--accent);">Segundo ../</strong> Sale de <code>www/</code> y aterriza en <code>/var/</code>.</li>
+        <li><strong style="color: var(--accent);">Tercer ../</strong> Sale de <code>var/</code> y alcanza el directorio raíz absoluto <code>/</code>.</li>
+        <li><strong style="color: var(--accent);">etc/passwd:</strong> Desciende hacia la carpeta de configuraciones del sistema operativo y selecciona el archivo objetivo de cuentas de usuario. Al no existir validación tipo <em>Whitelist</em> ni <em>Canonicalización</em>, el servidor devuelve el fichero en el cuerpo de la respuesta HTTP.</li>
+      </ul>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Defensa en Profundidad y Remediación</h4>
+      <div class="control-card-sub">
+        <div class="control-title">1. Listas Blancas (Allowlisting) y Eliminación de Entrada Directa</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          No deben pasarse datos enviados por el usuario de forma directa a las APIs del sistema de archivos. Si es estrictamente necesario, verificar la entrada contra una lista blanca rígida o aplicar una expresión regular alfanumérica limitante (ej. <code>^[a-zA-Z0-9_-]+\.(jpg|png)$</code>).
+        </p>
+      </div>
+      <div class="control-card-sub">
+        <div class="control-title">2. Canonicalización de Rutas (Path Canonicalization)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Antes de interactuar con el descriptor de archivo, el backend debe resolver la ruta absoluta real utilizando APIs nativas (como <code>realpath()</code> en PHP o <code>getCanonicalPath()</code> en Java) y verificar que esta ruta comience inequívocamente dentro del directorio base designado.
+        </p>
+      </div>
+      <div class="control-card-sub">
+        <div class="control-title">3. Hardening y Enjaulamiento (Principio de Menor Privilegio)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Asegurar que el proceso del servidor web (<code>www-data</code>) cuente exclusivamente con permisos de lectura en el directorio de la aplicación, y encapsular la ejecución mediante <em>chroot jails</em>, contenedores Docker o políticas estrictas de SELinux / AppArmor para bloquear el acceso a la raíz del host.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [DWN_05] RECURSOS DE DESCARGA Y REFERENCIAS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DWN_05]</span>
+      <h2>Recursos</h2>
+    </div>
+    <div class="row-content">
+      
+      <div class="downloads-grid" style="margin-bottom: 30px;">
+        <!-- Informe Completo PDF -->
+        <a href="../../Archivos/Actividad_7/183793_Act7.pdf" download class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Documentación Técnica</span>
+          <span class="dl-meta">183793_Act7.pdf</span>
+        </a>
+
+        <!-- Plataforma Externa -->
+        <a href="https://portswigger.net/web-security/file-path-traversal/lab-simple" target="_blank" rel="noopener" class="download-card">
+          <div class="dl-icon">[WEB]</div>
+          <span class="dl-title">Laboratorio PortSwigger</span>
+          <span class="dl-meta">Entorno interactivo</span>
+        </a>
+      </div>
+
+      <h4 style="color: #fff; font-size: 0.95rem; margin-bottom: 12px; font-family: var(--font-mono);">Referencias Bibliográficas</h4>
+      <ul class="tag-list" style="gap: 12px; flex-direction: column; align-items: flex-start;">
+        <li style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          > MITRE Corporation. (2024). <em>CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')</em>. Common Weakness Enumeration.
+        </li>
+        <li style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          > Open Web Application Security Project. (2021). <em>A01:2021 - Broken Access Control</em>. OWASP Top 10.
+        </li>
+        <li style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          > PortSwigger. (s. f.). <em>Directory traversal (File path traversal)</em>. Web Security Academy.
+        </li>
+      </ul>
+
+    </div>
+  </section>
+  
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
+    <p>CNO IV (T37A) — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>
