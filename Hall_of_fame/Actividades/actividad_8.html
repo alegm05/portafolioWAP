@@ -229,7 +229,7 @@
       </p>
 
       <div class="evidence-box">
-        <img src="../../Archivos/Actividad_8/evidencia_02.png" alt="Historial HTTP vacío en Burp Suite listo para capturar tráfico">
+        <img src="Archivos/Actividad_8/evidencia_02.png" alt="Historial HTTP vacío en Burp Suite listo para capturar tráfico">
         <p class="evidence-caption">>_ Evidencia 02: Preparación del módulo Proxy con el historial limpio y el entorno configurado para iniciar la auditoría web.</p>
       </div>
 
@@ -240,18 +240,18 @@
       </p>
 
       <div class="evidence-box">
-        <img src="../../Archivos/Actividad_8/evidencia_04.png" alt="Solicitud enviada al módulo Repeater desde HTTP History">
+        <img src="Archivos/Actividad_8/evidencia_04.png" alt="Solicitud enviada al módulo Repeater desde HTTP History">
         <p class="evidence-caption">>_ Evidencia 04: Selección y derivación al entorno Repeater del endpoint encargado de la carga de imágenes basado en el parámetro 'filename'.</p>
       </div>
 
       <!-- Fase 3 -->
       <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 3: Evasión (Bypass) y Exfiltración</h4>
       <p style="color: var(--text-muted); margin-bottom: 15px;">
-        En el entorno Repeater, se comprobó que las secuencias relativas (<code>../../../</code>) eran bloqueadas por el servidor. Como técnica de evasión, se inyectó directamente una ruta absoluta: <code>filename=/etc/passwd</code>. El servidor procesó la ruta descartando su directorio base predeterminado y devolvió un <strong>HTTP/2 200 OK</strong> exponiendo el contenido íntegro del fichero del sistema de Linux.
+        En el entorno Repeater, se comprobó que las secuencias relativas (<code>../</code>) eran bloqueadas por el servidor. Como técnica de evasión, se inyectó directamente una ruta absoluta: <code>filename=/etc/passwd</code>. El servidor procesó la ruta descartando su directorio base predeterminado y devolvió un <strong>HTTP/2 200 OK</strong> exponiendo el contenido íntegro del fichero del sistema de Linux.
       </p>
 
       <div class="evidence-box">
-        <img src="../../Archivos/Actividad_8/evidencia_06.png" alt="Ataque Absolute Path Bypass exitoso en Repeater">
+        <img src="Archivos/Actividad_8/evidencia_06.png" alt="Ataque Absolute Path Bypass exitoso en Repeater">
         <p class="evidence-caption">>_ Evidencia 06: Módulo Repeater evidenciando el Bypass. Izquierda: Parámetro modificado a una ruta absoluta (/etc/passwd). Derecha: Respuesta HTTP con usuarios de Linux.</p>
       </div>
 
@@ -262,7 +262,7 @@
       </p>
 
       <div class="evidence-box">
-        <img src="../../Archivos/Actividad_8/evidencia_07.png" alt="Reto solucionado en la plataforma de PortSwigger">
+        <img src="Archivos/Actividad_8/evidencia_07.png" alt="Reto solucionado en la plataforma de PortSwigger">
         <p class="evidence-caption">>_ Evidencia 07: Confirmación gráfica de la plataforma indicando el estado en verde "Lab Solved" tras explotar la lectura arbitraria de archivos.</p>
       </div>
 
@@ -273,7 +273,7 @@
   <section class="row">
     <div class="row-label">
       <span class="row-index">[PAYLOAD_04]</span>
-      <h2>Análisis Téc.</h2>
+      <h2>Análisis Técnico</h2>
     </div>
     <div class="row-content data-module">
       <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Mecánica del Payload de Evasión</h4>
@@ -332,7 +332,7 @@ Sec-Fetch-Site: same-origin</code></pre>
       
       <div class="downloads-grid" style="margin-bottom: 30px;">
         <!-- Informe Completo PDF -->
-        <a href="../../Archivos/Actividad_8/183793_Act8.pdf" download class="download-card">
+        <a href="Archivos/Actividad_8/183793_Act8.pdf" download class="download-card">
           <div class="dl-icon">[PDF]</div>
           <span class="dl-title">Documentación Técnica</span>
           <span class="dl-meta">183793_Act8.pdf</span>
