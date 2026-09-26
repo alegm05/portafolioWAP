@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parcial 2 — Portafolio de Seguridad Informática</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+  /* Menú de navegación en columna vertical para parciales */
+  .site-nav .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .nav-column-item {
+    display: flex;
+    align-items: center;
+  }
+  .parciales-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65);
+    border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .parciales-stack a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    transition: color 0.2s var(--ease), padding-left 0.2s var(--ease);
+    text-decoration: none;
+  }
+  .parciales-stack a:hover {
+    color: var(--accent);
+    padding-left: 3px;
+  }
+  .parciales-stack a.is-active {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .site-header.is-scrolled .parciales-stack {
+    flex-direction: row;
+    gap: 8px;
+    padding: 3px 8px;
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> sys_info --user
+      </div>
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
+      </span>
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV - Seguridad Informática</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="index.html">/Inicio</a></li>
+        
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="parcial_1.html">> Parcial 1</a>
+            <!-- Marcado como is-active para el Parcial 2 -->
+            <a href="parcial_2.html" class="is-active">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="hall_of_fame.html">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header> 
+
+<main id="main">
+
+  <section class="row" id="parcial2" aria-labelledby="parcial2-title">
+    <div class="row-label">
+      <span class="row-index">[MODULE_P2]</span>
+      <h2 id="parcial2-title">Segundo Parcial</h2>
+    </div>
+    
+    <div class="row-content">
+      <p class="lede">Registro de prácticas, laboratorios e infografías estratégicas desarrolladas durante el segundo parcial.</p>
+
+      <div class="activities-grid">
+        
+        <!-- ACTIVIDAD 14 -->
+        <article class="activity-card data-module">
+          <span class="spec-tag">Actividad 14</span>
+          <h3 class="activity-title">Protección de Datos y Privacidad</h3>
+          <p class="activity-desc">Diseño de una infografía profesional que sintetiza visualmente los fundamentos de protección de datos abordados en el curso de Cisco Networking Academy. El recurso explica de manera estructurada los riesgos de seguridad (Ingeniería Social, Exposición), impacto y contramedidas (Cifrado, MFA) orientado a la concienciación organizacional y comunicación estratégica.</p>
+          <div class="activity-footer">
+            <a href="Actividades/Parcial_2/actividad_14.html" class="btn-action">Ver Actividad <span class="arrow">-></span></a>
+          </div>
+        </article>
+
+        <!-- ESPACIOS PARA FUTURAS ACTIVIDADES DEL PARCIAL 2 -->
+        <!--
+        <article class="activity-card data-module">
+          <span class="spec-tag">Actividad 15</span>
+          <h3 class="activity-title">[Título de la Actividad]</h3>
+          <p class="activity-desc">Breve descripción técnica de los objetivos, metodologías aplicadas y aprendizajes obtenidos en esta práctica.</p>
+          <div class="activity-footer">
+            <a href="#" class="btn-action">Ver Actividad <span class="arrow">-></span></a>
+          </div>
+        </article>
+        -->
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro Garcia Morales. Todos los derechos reservados.</p>
+    <p>CNO IV — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
