@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 10: Superfluous URL-decode | Hall of Fame</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+
+<style>
+  /* Menú de navegación en columna vertical para parciales */
+  .site-nav .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .nav-column-item {
+    display: flex;
+    align-items: center;
+  }
+  .parciales-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65);
+    border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .parciales-stack a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    transition: color 0.2s var(--ease), padding-left 0.2s var(--ease);
+    text-decoration: none;
+  }
+  .parciales-stack a:hover { color: var(--accent); padding-left: 3px; }
+  .parciales-stack a.is-active { color: var(--accent); font-weight: 700; }
+  .site-header.is-scrolled .parciales-stack { flex-direction: row; gap: 8px; padding: 3px 8px; }
+
+  /* Tablas de datos técnicos */
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin-top: 15px;
+  }
+  .custom-table th, .custom-table td {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  .custom-table th { background: #090B10; color: var(--accent); font-weight: 700; }
+  .custom-table tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+  .custom-table td { color: var(--text); }
+
+  /* Contenedores de evidencias gráficas */
+  .evidence-box {
+    border: 1px dashed var(--border);
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    background: var(--bg);
+    margin-top: 20px;
+    margin-bottom: 24px;
+  }
+  .evidence-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .evidence-caption {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+  }
+
+  /* Módulos de controles y definiciones */
+  .control-card-sub {
+    border-left: 2px solid var(--border);
+    padding-left: 18px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .control-card-sub:hover { border-left-color: var(--accent); }
+  .control-title {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> cd /opt/hall_of_fame/act_10
+      </div>
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
+      </span>
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV (T37A) - Seguridad Informática</span>
+        <span class="meta-item">> Docente: Mtro. Servando López Contreras</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="../../index.html">/Inicio</a></li>
+        
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../../parcial_1.html">> Parcial 1</a>
+            <a href="../../parcial_2.html">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="../../Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="../../hall_of_fame.html" class="is-active">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div style="margin-top: 40px;">
+    <a href="../../hall_of_fame.html" class="btn-action" style="border: none; padding: 0;">
+       &lt;- Volver al Hall of Fame
+    </a>
+  </div>
+
+  <!-- [DOC_01] OBJETIVO Y FICHA TÉCNICA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DOC_01]</span>
+      <h2>Ficha Técnica</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent);">Actividad 10: Lab: File path traversal, traversal sequences stripped with superfluous URL-decode</h3>
+      <p class="lede">
+        Laboratorio de evaluación ofensiva enfocado en la evasión de filtros (WAF Bypass) mediante <em>Double URL Encoding</em>, explotando la desincronización entre la validación de entrada y la decodificación superflua en el backend.
+      </p>
+      
+      <div class="spec-grid" style="margin-top: 25px;">
+        <div class="spec-item">
+          <span class="spec-tag">NIVEL / TIPO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            <strong>Dificultad:</strong> Practitioner<br>
+            <strong>Vulnerabilidad:</strong> CWE-22 (Improper Limitation of a Pathname to a Restricted Directory)
+          </p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-tag">OBJETIVO TÉCNICO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            La aplicación bloquea entradas que contienen saltos de directorio (<code>../</code>), pero ejecuta una decodificación URL superflua posterior. El objetivo es enviar un payload doblemente codificado para burlar el filtro inicial y extraer <code>/etc/passwd</code>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [THEORY_02] MARCO TEÓRICO -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[THEORY_02]</span>
+      <h2>Marco Teórico</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Fundamentación de la Vulnerabilidad</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Clasificada bajo el estándar OWASP (A01:2021 - Broken Access Control), esta falla se magnifica por un error lógico de "validación pre-decodificación". La validación de seguridad siempre debe realizarse sobre los datos en su formato final decodificado.
+      </p>
+
+      <div class="control-card-sub">
+        <div class="control-title">Mecánica del Double URL Encoding</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Consiste en codificar el carácter <code>%</code> resultante de una primera codificación URL. Por ejemplo, el texto <code>../</code> se convierte primero en <code>%2e%2e%2f</code>. Al aplicar una segunda capa, el <code>%</code> se vuelve <code>%25</code>, resultando en <code>%252e%252e%252f</code>.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">¿Por qué burla los filtros? (Desincronización WAF-Backend)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          El filtro perimetral recibe el payload doblemente codificado y lo decodifica una sola vez, viendo <code>%2e%2e%2f</code>. Como esto no coincide con <code>../</code>, lo deja pasar. Posteriormente, el backend, debido a un error de diseño, aplica una decodificación secundaria "superflua", restaurando el ataque original antes de interactuar con el sistema de archivos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [EXEC_03] PROCEDIMIENTO Y EVIDENCIAS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[EXEC_03]</span>
+      <h2>Procedimiento</h2>
+    </div>
+    <div class="row-content data-module">
+      
+      <!-- Fase 1 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Fase 1: Identificación del Filtro</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Tras interceptar el tráfico en Burp Suite, se aisló la solicitud <code>GET /image?filename=40.jpg</code> en el módulo Repeater. Al inyectar el payload en texto claro (<code>../../../etc/passwd</code>), el servidor respondió con un <strong>HTTP/2 400 Bad Request</strong>, confirmando que existe un mecanismo defensivo bloqueando el Path Traversal estándar.
+      </p>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_10/evidencia_06.png" alt="Petición bloqueada con error 400 Bad Request en Repeater">
+        <p class="evidence-caption">>_ Evidencia: Demostración del filtro activo bloqueando el payload estándar en texto claro y devolviendo un error de sintaxis.</p>
+      </div>
+
+      <!-- Fase 2 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 2: Construcción del Payload (Double Encoding)</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Para evadir el filtro, se utilizó la herramienta nativa de conversión de Burp Suite. Seleccionando la cadena maliciosa, se aplicó <code>Convert selection > URL > URL-encode all characters</code> en dos iteraciones consecutivas, transformando el texto en una cadena hexadecimal anidada.
+      </p>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_10/evidencia_08.png" alt="Proceso de Doble Codificación en Burp Suite">
+        <p class="evidence-caption">>_ Evidencia: Aplicación de la segunda iteración de codificación (Double Encoding) sobre el texto ya cifrado usando el menú contextual.</p>
+      </div>
+
+      <!-- Fase 3 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 3: Evasión (Bypass) y Exfiltración</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Se inyectó el payload doblemente codificado (<code>%2532%65...</code>). El filtro de entrada lo permitió al no reconocer la firma, y la función superflua del backend lo decodificó restaurando la amenaza. El servidor procesó la ruta y devolvió un <strong>HTTP/2 200 OK</strong> con el volcado completo de cuentas de usuario.
+      </p>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_10/evidencia_09.png" alt="Ataque exitoso mostrando el payload codificado y el volcado de Linux">
+        <p class="evidence-caption">>_ Evidencia: Ataque exitoso en Repeater mostrando el payload doblemente codificado a la izquierda y el volcado de /etc/passwd a la derecha.</p>
+      </div>
+
+      <!-- Fase 4 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 4: Verificación de Compromiso</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        El éxito del ataque corrobora la desincronización del procesamiento. La plataforma de PortSwigger registra la extracción correcta del archivo crítico.
+      </p>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_10/evidencia_10.png" alt="Reto solucionado en la plataforma de PortSwigger">
+        <p class="evidence-caption">>_ Evidencia: Confirmación visual del estado "Lab Solved" validando la evasión del filtro y la resolución del reto.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [PAYLOAD_04] ANÁLISIS DEL PAYLOAD Y MITIGACIÓN -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[PAYLOAD_04]</span>
+      <h2>Análisis Téc.</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Mecánica del Payload de Evasión</h4>
+      
+      <div class="code-window" style="margin-bottom: 20px;">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="dot close"></span>
+            <span class="dot minimize"></span>
+            <span class="dot maximize"></span>
+          </div>
+          <div class="code-title">HTTP Request - Double URL Encoding</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="keyword">GET</span> <span class="string">/image?filename=%2532%65%2532%65%2532%66%2532%65%2532%65...etc%2fpasswd</span> <span class="keyword">HTTP/2</span>
+Host: 0a61004e04fdfa...web-security-academy.net
+Accept: image/webp, image/apng, image/*
+Sec-Fetch-Site: same-origin</code></pre>
+        </div>
+      </div>
+
+      <ul class="tag-list" style="gap: 12px; margin-bottom: 30px;">
+        <li><strong style="color: var(--accent);">Evasión del WAF:</strong> El filtro lee la cadena decodificándola una vez (obteniendo <code>%2e%2e%2f</code>). Al no ver el patrón <code>../</code> bloqueado, permite el paso.</li>
+        <li><strong style="color: var(--accent);">El Error de Backend:</strong> El backend de la aplicación, por una mala práctica de programación, somete esta entrada a un URL-decode secundario, transformando <code>%2e%2e%2f</code> nuevamente en <code>../</code> y materializando la exfiltración.</li>
+      </ul>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Defensa en Profundidad y Remediación</h4>
+      <div class="control-card-sub">
+        <div class="control-title">1. Regla de Oro: Decode First, Validate Later</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          El ciclo de vida correcto para procesar entradas exige aplicar todas las decodificaciones necesarias (URL, base64) hasta llegar al texto plano absoluto <strong>antes</strong> de ejecutar cualquier filtro de seguridad, sanitización o lista blanca.
+        </p>
+      </div>
+      <div class="control-card-sub">
+        <div class="control-title">2. Eliminación de Funciones Superfluas</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Los servidores web y balanceadores modernos ya realizan automáticamente la primera decodificación URL de los parámetros antes de entregarlos al código base. Añadir llamadas manuales a funciones como <code>urldecode()</code> o <code>URLDecoder.decode()</code> en la lógica del negocio suele ser redundante y es la causa directa de este tipo de vulnerabilidades.
+        </p>
+      </div>
+      <div class="control-card-sub">
+        <div class="control-title">3. Abstracción Segura (Canonicalización)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Para mitigar definitivamente el Path Traversal no se debe confiar en el filtrado de cadenas. Se debe abstraer el sistema de ficheros de la entrada del usuario usando identificadores seguros en bases de datos o, en su defecto, resolver la ruta absoluta con <code>getCanonicalPath()</code> y verificar el directorio origen autorizado.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [DWN_05] RECURSOS DE DESCARGA Y REFERENCIAS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DWN_05]</span>
+      <h2>Recursos</h2>
+    </div>
+    <div class="row-content">
+      
+      <div class="downloads-grid" style="margin-bottom: 30px;">
+        <!-- Informe Completo PDF -->
+        <a href="../../Archivos/Actividad_10/183793_Act10.pdf" download class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Documentación Técnica</span>
+          <span class="dl-meta">183793_Act10.pdf</span>
+        </a>
+
+        <!-- Plataforma Externa -->
+        <a href="https://portswigger.net/web-security/file-path-traversal/lab-superfluous-url-decode" target="_blank" rel="noopener" class="download-card">
+          <div class="dl-icon">[WEB]</div>
+          <span class="dl-title">Laboratorio PortSwigger</span>
+          <span class="dl-meta">Entorno interactivo</span>
+        </a>
+      </div>
+
+      <h4 style="color: #fff; font-size: 0.95rem; margin-bottom: 12px; font-family: var(--font-mono);">Referencias Bibliográficas</h4>
+      <ul class="tag-list" style="gap: 12px; flex-direction: column; align-items: flex-start;">
+        <li style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          > MITRE Corporation. (2024). <em>CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')</em>. Common Weakness Enumeration.
+        </li>
+        <li style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          > Open Web Application Security Project. (2021). <em>A01:2021 - Broken Access Control</em>. OWASP Top 10.
+        </li>
+        <li style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          > PortSwigger. (s. f.). <em>Lab: File path traversal, traversal sequences stripped with superfluous URL-decode</em>. Web Security Academy.
+        </li>
+      </ul>
+
+    </div>
+  </section>
+  
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
+    <p>CNO IV (T37A) — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>
