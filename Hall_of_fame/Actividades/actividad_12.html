@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 12: Validation of File Extension with Null Byte Bypass | Hall of Fame</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+
+<style>
+  /* Menú de navegación en columna vertical para parciales */
+  .site-nav .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .nav-column-item {
+    display: flex;
+    align-items: center;
+  }
+  .parciales-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65);
+    border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .parciales-stack a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    transition: color 0.2s var(--ease), padding-left 0.2s var(--ease);
+    text-decoration: none;
+  }
+  .parciales-stack a:hover { color: var(--accent); padding-left: 3px; }
+  .parciales-stack a.is-active { color: var(--accent); font-weight: 700; }
+  .site-header.is-scrolled .parciales-stack { flex-direction: row; gap: 8px; padding: 3px 8px; }
+
+  /* Tablas de datos técnicos */
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin-top: 15px;
+  }
+  .custom-table th, .custom-table td {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  .custom-table th { background: #090B10; color: var(--accent); font-weight: 700; }
+  .custom-table tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+  .custom-table td { color: var(--text); }
+
+  /* Contenedores de evidencias gráficas */
+  .evidence-box {
+    border: 1px dashed var(--border);
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    background: var(--bg);
+    margin-top: 20px;
+    margin-bottom: 24px;
+  }
+  .evidence-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .evidence-caption {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+  }
+
+  /* Módulos de controles y definiciones */
+  .control-card-sub {
+    border-left: 2px solid var(--border);
+    padding-left: 18px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .control-card-sub:hover { border-left-color: var(--accent); }
+  .control-title {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> cd /opt/hall_of_fame/act_12
+      </div>
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
+      </span>
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV (T37A) - Seguridad Informática</span>
+        <span class="meta-item">> Docente: Mtro. Servando López Contreras</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="../../index.html">/Inicio</a></li>
+        
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../../parcial_1.html">> Parcial 1</a>
+            <a href="../../parcial_2.html">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="../../Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <!-- Enlace activo apuntando al Hall of Fame general -->
+        <li><a href="../../Hall_of_fame.html" class="is-active">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div style="margin-top: 40px;">
+    <!-- Botón para regresar al index de laboratorios -->
+    <a href="../../Hall_of_fame.html" class="btn-action" style="border: none; padding: 0;">
+       &lt;- Volver al Hall of Fame
+    </a>
+  </div>
+
+  <!-- [DOC_01] OBJETIVO Y FICHA TÉCNICA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DOC_01]</span>
+      <h2>Ficha Técnica</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent);">Actividad 12: Lab: File path traversal, validation of file extension with null byte bypass</h3>
+      <p class="lede">
+        Laboratorio centrado en la evasión de validación de extensiones de archivo mediante la inyección de un Byte Nulo (<code>%00</code>), explotando el comportamiento de terminación de cadenas en APIs nativas escritas en C/C++[cite: 15].
+      </p>
+      
+      <div class="spec-grid" style="margin-top: 25px;">
+        <div class="spec-item">
+          <span class="spec-tag">NIVEL / TIPO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            <strong>Dificultad:</strong> Practitioner[cite: 15]<br>
+            <strong>Vulnerabilidad:</strong> CWE-22 (Path Traversal) & CWE-626 (Null Byte Injection)[cite: 15]
+          </p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-tag">OBJETIVO TÉCNICO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            Evadir el filtro de la aplicación agregando la extensión requerida al final del payload, separándola de la ruta maliciosa utilizando un byte nulo (<code>%00</code>) para truncar la cadena a nivel de sistema operativo y recuperar <code>/etc/passwd</code>[cite: 15].
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [THEORY_02] MARCO TEÓRICO -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[THEORY_02]</span>
+      <h2>Marco Teórico</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Fundamentación de la Vulnerabilidad</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Esta vulnerabilidad combina Path Traversal con una debilidad clásica de manejo de cadenas conocida como inyección de Byte Nulo. Ocurre cuando componentes de software de alto nivel interactúan con funciones nativas del sistema operativo escritas en C/C++[cite: 15].
+      </p>
+
+      <div class="control-card-sub">
+        <div class="control-title">Mecánica del Null Byte (%00)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          En los lenguajes basados en C, las cadenas no tienen longitud predefinida; usan un carácter de terminación explícito (el byte nulo, <code>NUL</code> o <code>%00</code>). Al encontrarlo, el sistema asume inmediatamente que la cadena ha terminado, descartando cualquier texto a su derecha[cite: 15].
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Fallo Lógico en Validación de Extensiones</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          La Capa de Validación (Alto Nivel) lee toda la cadena y confirma que termina en <code>.jpg</code>. Sin embargo, en la Capa de Ejecución (Bajo Nivel), el kernel del SO encuentra el <code>%00</code>, ignora la extensión <code>.jpg</code> y abre únicamente el archivo inyectado antes del byte nulo[cite: 15].
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [EXEC_03] PROCEDIMIENTO Y EVIDENCIAS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[EXEC_03]</span>
+      <h2>Procedimiento</h2>
+    </div>
+    <div class="row-content data-module">
+      
+      <!-- Fase 1 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Fase 1: Interceptación e Identificación del Parámetro</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Tras inicializar el entorno y capturar el tráfico en Burp Suite, se localizó la petición GET responsable de solicitar los recursos gráficos: <code>GET /image?filename=36.jpg</code>. La petición fue derivada al módulo Repeater para su análisis[cite: 15].
+      </p>
+
+      <div class="evidence-box">
+        <img src="../../Archivos/Actividad_12/evidencia_04.png" alt="Historial mostrando la solicitud GET enviada a Repeater">
+        <p class="evidence-caption">>_ Evidencia 04: Identificación de la solicitud GET hacia filename=36.jpg y su derivación al entorno Repeater[cite: 15].</p>
+      </div>
+
+      <!-- Fase 2 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 2: Comprobación del Comportamiento Base</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        En Repeater, se corroboró que la petición inalterada con la extensión legítima devuelve un HTTP 200 OK. El envío del payload directo (<code>../../../etc/passwd</code>) resulta en error por carecer de la extensión autorizada[cite: 15].
+      </p>
+
+      <div class="evidence-box">
+        <img src="../../Archivos/Actividad_12/evidencia_05.png" alt="Comportamiento base devolviendo un 200 OK con la extensión correcta">
+        <p class="evidence-caption">>_ Evidencia 05: Petición original mostrando el comportamiento validado de la aplicación al recibir la extensión esperada[cite: 15].</p>
+      </div>
+
+      <!-- Fase 3 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 3: Inyección del Null Byte y Exfiltración</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Se construyó el payload combinando el salto de directorio, el objetivo, el truncador y la falsa extensión: <code>filename=../../../etc/passwd%0036.jpg</code>. El filtro aprobó el final del string, pero a nivel de sistema, el byte <code>%00</code> truncó la cadena, devolviendo los usuarios del sistema[cite: 15].
+      </p>
+
+      <div class="evidence-box">
+        <img src="../../Archivos/Actividad_12/evidencia_06.png" alt="Ataque exitoso en Repeater con el payload Null Byte">
+        <p class="evidence-caption">>_ Evidencia 06: Ataque exitoso en Repeater mostrando el payload de Byte Nulo (%00) evadiendo la validación y revelando /etc/passwd[cite: 15].</p>
+      </div>
+
+      <!-- Fase 4 -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 4: Verificación de Compromiso</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        La plataforma PortSwigger validó la correcta ejecución de la inyección de Byte Nulo, cambiando el estado a resuelto[cite: 15].
+      </p>
+
+      <div class="evidence-box">
+        <img src="../../Archivos/Actividad_12/evidencia_07.png" alt="Reto solucionado en la plataforma de PortSwigger">
+        <p class="evidence-caption">>_ Evidencia 07: Confirmación visual del estado "Lab Solved", ratificando la resolución de la vulnerabilidad[cite: 15].</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [PAYLOAD_04] ANÁLISIS DEL PAYLOAD Y MITIGACIÓN -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[PAYLOAD_04]</span>
+      <h2>Análisis Téc.</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Mecánica del Payload de Evasión</h4>
+      
+      <div class="code-window" style="margin-bottom: 20px;">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="dot close"></span>
+            <span class="dot minimize"></span>
+            <span class="dot maximize"></span>
+          </div>
+          <div class="code-title">HTTP Request - Null Byte Injection</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="keyword">GET</span> <span class="string">/image?filename=../../../etc/passwd%0036.jpg</span> <span class="keyword">HTTP/2</span>
+Host: 0ae10009038e6a...web-security-academy.net
+Accept: image/webp, image/apng, image/*
+Sec-Fetch-Site: same-origin</code></pre>
+        </div>
+      </div>
+
+      <ul class="tag-list" style="gap: 12px; margin-bottom: 30px;">
+        <li><strong style="color: var(--accent);">Salto de Directorio:</strong> <code>../../../etc/passwd</code> instruye al SO ascender a la raíz e ingresar al archivo de configuración de cuentas[cite: 15].</li>
+        <li><strong style="color: var(--accent);">Null Byte Injection:</strong> <code>%00</code> actúa como un marcador de "fin de línea" para las funciones base escritas en C/C++[cite: 15].</li>
+        <li><strong style="color: var(--accent);">Falsa Extensión:</strong> <code>36.jpg</code> actúa como cebo para aprobar el filtro de alto nivel de la aplicación web[cite: 15].</li>
+      </ul>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Defensa en Profundidad y Remediación</h4>
+      
+      <div class="control-card-sub">
+        <div class="control-title">1. Modernización de Entornos de Ejecución</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Mantener actualizados los frameworks, los lenguajes de programación del backend y el kernel del SO. Las versiones modernas implementan protección intrínseca contra este vector, arrojando excepciones si detectan un byte nulo en la ruta de un archivo[cite: 15].
+        </p>
+      </div>
+      
+      <div class="control-card-sub">
+        <div class="control-title">2. Sanitización Estricta de la Entrada (Allowlisting)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          No se debe confiar en la validación del final de una cadena (<code>endsWith</code>). Se deben usar expresiones regulares que restrinjan el contenido a caracteres estrictamente alfanuméricos, bloqueando la inyección de secuencias no imprimibles como <code>%00</code> o caracteres de navegación[cite: 15].
+        </p>
+      </div>
+      
+      <div class="control-card-sub">
+        <div class="control-title">3. Uso de APIs de Obtención de Nombre de Archivo</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          La aplicación debe procesar la entrada mediante una función nativa de extracción que ignore las rutas, como <code>basename()</code>. Esto garantiza que la aplicación solo operará sobre la última porción de la cadena, neutralizando el recorrido por el sistema de archivos[cite: 15].
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [DWN_05] RECURSOS DE DESCARGA Y REFERENCIAS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DWN_05]</span>
+      <h2>Recursos</h2>
+    </div>
+    <div class="row-content">
+      
+      <div class="downloads-grid" style="margin-bottom: 30px;">
+        <!-- Informe Completo PDF -->
+        <a href="../../Archivos/Actividad_12/183793_Act12.pdf" download class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Documentación Técnica</span>
+          <span class="dl-meta">183793_Act12.pdf</span>
+        </a>
+
+        <!-- Plataforma Externa -->
+        <a href="https://portswigger.net/web-security/file-path-traversal/lab-validate-file-extension-null-byte-bypass" target="_blank" rel="noopener" class="download-card">
+          <div class="dl-icon">[WEB]</div>
+          <span class="dl-title">Laboratorio PortSwigger</span>
+          <span class="dl-meta">Entorno interactivo</span>
+        </a>
+      </div>
+
+      <h4 style="color: #fff; font-size: 0.95rem; margin-bottom: 12px; font-family: var(--font-mono);">Referencias Bibliográficas</h4>
+      <ul class="tag-list" style="gap: 12px; flex-direction: column; align-items: flex-start;">
+        <li style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          > MITRE Corporation. (2024). <em>CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')</em>. Common Weakness Enumeration[cite: 15].
+        </li>
+        <li style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          > MITRE Corporation. (2024). <em>CWE-626: Null Byte Injection</em>. Common Weakness Enumeration[cite: 15].
+        </li>
+        <li style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          > Open Web Application Security Project. (2021). <em>A01:2021 - Broken Access Control</em>. OWASP Top 10[cite: 15].
+        </li>
+        <li style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+          > PortSwigger. (s. f.). <em>Lab: File path traversal, validation of file extension with null byte bypass</em>. Web Security Academy[cite: 15].
+        </li>
+      </ul>
+
+    </div>
+  </section>
+  
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
+    <p>CNO IV (T37A) — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>
