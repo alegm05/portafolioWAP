@@ -229,29 +229,29 @@
       </p>
 
       <div class="evidence-box">
-        <img src="../../Archivos/Actividad_12/evidencia_04.png" alt="Historial mostrando la solicitud GET enviada a Repeater">
+        <img src="Archivos/Actividad_12/evidencia_04.png" alt="Historial mostrando la solicitud GET enviada a Repeater">
         <p class="evidence-caption">>_ Evidencia 04: Identificación de la solicitud GET hacia filename=36.jpg y su derivación al entorno Repeater[cite: 15].</p>
       </div>
 
       <!-- Fase 2 -->
       <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 2: Comprobación del Comportamiento Base</h4>
       <p style="color: var(--text-muted); margin-bottom: 15px;">
-        En Repeater, se corroboró que la petición inalterada con la extensión legítima devuelve un HTTP 200 OK. El envío del payload directo (<code>../../../etc/passwd</code>) resulta en error por carecer de la extensión autorizada[cite: 15].
+        En Repeater, se corroboró que la petición inalterada con la extensión legítima devuelve un HTTP 200 OK. El envío del payload directo (<code>../../etc/passwd</code>) resulta en error por carecer de la extensión autorizada[cite: 15].
       </p>
 
       <div class="evidence-box">
-        <img src="../../Archivos/Actividad_12/evidencia_05.png" alt="Comportamiento base devolviendo un 200 OK con la extensión correcta">
+        <img src="Archivos/Actividad_12/evidencia_05.png" alt="Comportamiento base devolviendo un 200 OK con la extensión correcta">
         <p class="evidence-caption">>_ Evidencia 05: Petición original mostrando el comportamiento validado de la aplicación al recibir la extensión esperada[cite: 15].</p>
       </div>
 
       <!-- Fase 3 -->
       <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Fase 3: Inyección del Null Byte y Exfiltración</h4>
       <p style="color: var(--text-muted); margin-bottom: 15px;">
-        Se construyó el payload combinando el salto de directorio, el objetivo, el truncador y la falsa extensión: <code>filename=../../../etc/passwd%0036.jpg</code>. El filtro aprobó el final del string, pero a nivel de sistema, el byte <code>%00</code> truncó la cadena, devolviendo los usuarios del sistema[cite: 15].
+        Se construyó el payload combinando el salto de directorio, el objetivo, el truncador y la falsa extensión: <code>filename=../etc/passwd%0036.jpg</code>. El filtro aprobó el final del string, pero a nivel de sistema, el byte <code>%00</code> truncó la cadena, devolviendo los usuarios del sistema[cite: 15].
       </p>
 
       <div class="evidence-box">
-        <img src="../../Archivos/Actividad_12/evidencia_06.png" alt="Ataque exitoso en Repeater con el payload Null Byte">
+        <img src="Archivos/Actividad_12/evidencia_06.png" alt="Ataque exitoso en Repeater con el payload Null Byte">
         <p class="evidence-caption">>_ Evidencia 06: Ataque exitoso en Repeater mostrando el payload de Byte Nulo (%00) evadiendo la validación y revelando /etc/passwd[cite: 15].</p>
       </div>
 
@@ -262,7 +262,7 @@
       </p>
 
       <div class="evidence-box">
-        <img src="../../Archivos/Actividad_12/evidencia_07.png" alt="Reto solucionado en la plataforma de PortSwigger">
+        <img src="Archivos/Actividad_12/evidencia_07.png" alt="Reto solucionado en la plataforma de PortSwigger">
         <p class="evidence-caption">>_ Evidencia 07: Confirmación visual del estado "Lab Solved", ratificando la resolución de la vulnerabilidad[cite: 15].</p>
       </div>
 
@@ -337,7 +337,7 @@ Sec-Fetch-Site: same-origin</code></pre>
       
       <div class="downloads-grid" style="margin-bottom: 30px;">
         <!-- Informe Completo PDF -->
-        <a href="../../Archivos/Actividad_12/183793_Act12.pdf" download class="download-card">
+        <a href="Archivos/Actividad_12/183793_Act12.pdf" download class="download-card">
           <div class="dl-icon">[PDF]</div>
           <span class="dl-title">Documentación Técnica</span>
           <span class="dl-meta">183793_Act12.pdf</span>
