@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyecto 2: Gobernanza y Cumplimiento | Portafolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+
+<style>
+  .site-nav .nav-list { display: flex; align-items: center; gap: 18px; }
+  .nav-column-item { display: flex; align-items: center; }
+  .parciales-stack {
+    display: flex; flex-direction: column; gap: 3px; padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65); border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border); border-radius: 4px;
+  }
+  .parciales-stack a {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);
+    line-height: 1.25; transition: color 0.2s, padding-left 0.2s; text-decoration: none;
+  }
+  .parciales-stack a:hover { color: var(--accent); padding-left: 3px; }
+  .parciales-stack a.is-active { color: var(--accent); font-weight: 700; }
+  .site-header.is-scrolled .parciales-stack { flex-direction: row; gap: 8px; padding: 3px 8px; }
+
+  .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .spec-item { background: #090B10; padding: 15px; border-radius: 6px; border: 1px solid var(--border); }
+  .spec-tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); font-weight: 700; display: block; margin-bottom: 8px; }
+
+  .control-card-sub {
+    border-left: 2px solid var(--border); padding-left: 18px; margin-bottom: 20px; transition: border-color 0.2s;
+  }
+  .control-card-sub:hover { border-left-color: var(--accent); }
+  .control-title { font-family: var(--font-mono); font-size: 0.95rem; color: #fff; font-weight: 700; margin-bottom: 6px; }
+
+  .downloads-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+  .download-card {
+    background: #090B10; border: 1px solid var(--border); padding: 15px; border-radius: 6px;
+    display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s, border-color 0.2s;
+  }
+  .download-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .dl-icon { font-family: var(--font-mono); color: var(--accent); font-weight: bold; margin-bottom: 8px; }
+  .dl-title { color: #fff; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+  .dl-meta { color: var(--text-muted); font-size: 0.75rem; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> cd /opt/proyectos/pr_02
+      </div>
+      <span class="identity-name">Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span></span>
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV (T37A) - Seguridad Informática</span>
+        <span class="meta-item">> Docente: Mtro. Servando López Contreras</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="../index.html">/Inicio</a></li>
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../parcial_1.html">> Parcial 1</a>
+            <a href="../parcial_2.html">> Parcial 2</a>
+            <a href="#">> Parcial 3</a>
+          </div>
+        </li>
+        <li><a href="proyecto_1.html" class="is-active">/Proyectos</a></li>
+        <li><a href="../hall_of_fame.html">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div style="margin-top: 40px;">
+    <a href="proyecto_1.html" class="btn-action" style="border: none; padding: 0;">&lt;- Ver Índice de Proyectos</a>
+  </div>
+
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[PR_02]</span>
+      <h2>Ficha Técnica</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent);">PR02 - Blindando la información: gobernanza y cumplimiento</h3>
+      <p class="lede">
+        El proyecto se desarrolla sobre INTERAFAS-LAB, un entorno académico controlado que representa una organización ficticia responsable de servicios de infraestructura crítica. Evalúa integralmente la postura de ciberseguridad mediante auditoría ofensiva y establece una respuesta estratégica a incidentes y crisis operacionales.
+      </p>
+      
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="spec-tag">ESTRUCTURA DE EVALUACIÓN</span>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+            <strong>Duración aprox:</strong> 18 a 22 horas de trabajo.<br>
+            <strong>Rol asumido:</strong> Auditor de seguridad inicialmente, transitando hacia una perspectiva de gobernanza y gestión de crisis.<br>
+            <strong>Enfoque:</strong> Identificación de vulnerabilidades, análisis de impacto y diseño de políticas de respuesta.
+          </p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-tag">OBJETIVOS PRINCIPALES</span>
+          <ul class="tag-list" style="gap: 5px; flex-direction: column; align-items: flex-start; margin-top: 10px;">
+            <li style="font-size: 0.8rem; color: var(--text-muted);">> Identificar y documentar 20 vulnerabilidades (banderas, logs, causa raíz).</li>
+            <li style="font-size: 0.8rem; color: var(--text-muted);">> Relacionar hallazgos técnicos con la evolución de una crisis mediática.</li>
+            <li style="font-size: 0.8rem; color: var(--text-muted);">> Proponer controles y responsabilidades basados en ISO/IEC 27001 y metodologías CISA.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DELIVER]</span>
+      <h2>Entregables</h2>
+    </div>
+    <div class="row-content data-module">
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Para acreditar la evaluación de este proyecto integrador, se desarrollaron cinco productos empaquetados, abarcando desde la recolección de evidencia técnica hasta la planeación ejecutiva de la respuesta al incidente.
+      </p>
+
+      <div class="control-card-sub">
+        <div class="control-title">01. Recolección de Evidencias (Logs)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Archivo comprimido (<code>01.matricula.zip</code>) generado al finalizar el laboratorio. Contiene las bitácoras, el registro de las 20 banderas y las evidencias de auditoría del recorrido realizado dentro de INTERAFAS-LAB, garantizando la secuencia temporal de las acciones.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">02. Informe de Seguridad Ofensiva</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Documentación estructurada del inventario de 20 vulnerabilidades identificadas. Incluye la explicación técnica, impacto (CIA), mitigaciones viables y la reconstrucción de la cadena de ataque, relacionando cómo una vulnerabilidad habilita etapas posteriores hasta comprometer la infraestructura crítica.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">03. Propuesta ISO/IEC 27001 (SGSI)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Diseño documental de un Sistema de Gestión de Seguridad de la Información (SGSI). Abarca la definición del contexto organizacional (20 activos), políticas funcionales, evaluación de riesgos, roles (Matriz RACI) y lineamientos de mejora continua basados en la norma.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">04. Plan de Comunicación de Crisis</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Estrategia institucional para gestionar la reputación durante el incidente. Define vocerías, escalamiento, manejo de desinformación mediática y productos clave de comunicación (como el <em>holding statement</em> inicial y comunicados de recuperación).
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">05. Plan de Respuesta ante Incidentes</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Procedimientos estratégicos para la preparación, triaje, contención, erradicación y recuperación frente a amenazas. Incluye cinco playbooks operativos derivados de los escenarios de INTERAFAS-LAB, alineados a la metodología de CISA.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[FRAME]</span>
+      <h2>Marcos y Normas</h2>
+    </div>
+    <div class="row-content data-module">
+      <div class="spec-grid" style="margin-top:0;">
+        <div class="spec-item">
+          <div class="control-title" style="color: var(--accent);">ISO/IEC 27001:2022</div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+            Normativa principal para el SGSI. El proyecto implementa la estructura actualizada que consolida 93 controles de seguridad clasificados en cuatro temas: organizacionales (37), personas (8), físicos (14) y tecnológicos (34).
+          </p>
+        </div>
+        <div class="spec-item">
+          <div class="control-title" style="color: var(--accent);">CISA Incident Response</div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+            Metodología de referencia para el desarrollo de los Playbooks (Federal Government Cybersecurity Incident and Vulnerability Response Playbooks) que guía la fase operativa y la toma de decisiones en el Plan de Respuesta.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[ARCHIVES]</span>
+      <h2>Recursos</h2>
+    </div>
+    <div class="row-content">
+      <div class="downloads-grid">
+        <a href="../Archivos/Proyecto_2/01.matricula.zip" class="download-card">
+          <div class="dl-icon">[ZIP]</div>
+          <span class="dl-title">Evidencias y Logs</span>
+          <span class="dl-meta">01.matricula.zip</span>
+        </a>
+        <a href="../Archivos/Proyecto_2/02_InformeSeguridadOfensiva.pdf" class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Informe Ofensivo</span>
+          <span class="dl-meta">Evaluación de Vulnerabilidades</span>
+        </a>
+        <a href="../Archivos/Proyecto_2/03_ISO27.pdf" class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Propuesta SGSI</span>
+          <span class="dl-meta">Gobernanza y Cumplimiento</span>
+        </a>
+        <a href="../Archivos/Proyecto_2/04_PlanComunicacionCrisis.pdf" class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Plan de Crisis</span>
+          <span class="dl-meta">Comunicación Institucional</span>
+        </a>
+        <a href="../Archivos/Proyecto_2/05_PlanRespuestaAnteIncidentes.pdf" class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Plan de Respuesta</span>
+          <span class="dl-meta">Playbooks (CISA Framework)</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
+    <p>CNO IV (T37A) — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
