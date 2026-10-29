@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 15: Extracción de Metadatos y GPS | Hall of Fame</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+
+<style>
+  /* Menú de navegación en columna vertical para parciales */
+  .site-nav .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .nav-column-item {
+    display: flex;
+    align-items: center;
+  }
+  .parciales-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65);
+    border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .parciales-stack a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.25;
+    transition: color 0.2s var(--ease), padding-left 0.2s var(--ease);
+    text-decoration: none;
+  }
+  .parciales-stack a:hover { color: var(--accent); padding-left: 3px; }
+  .parciales-stack a.is-active { color: var(--accent); font-weight: 700; }
+  .site-header.is-scrolled .parciales-stack { flex-direction: row; gap: 8px; padding: 3px 8px; }
+
+  /* Módulos de controles y definiciones */
+  .control-card-sub {
+    border-left: 2px solid var(--border);
+    padding-left: 18px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .control-card-sub:hover { border-left-color: var(--accent); }
+  .control-title {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  /* Contenedores de evidencias gráficas */
+  .evidence-box {
+    border: 1px dashed var(--border);
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    background: var(--bg);
+    margin-top: 20px;
+    margin-bottom: 24px;
+  }
+  .evidence-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .evidence-caption {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+  }
+  
+  .terminal-code {
+    background: #000;
+    color: #0f0;
+    font-family: var(--font-mono);
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+  }
+  .terminal-code .command { color: #fff; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> cd /opt/parcial_3/act_15
+      </div>
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
+      </span>
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: Informática Criminológica</span>
+        <span class="meta-item">> Institución: Universidad Autónoma de San Luis Potosí</span>
+        <span class="meta-item">> Facultad: Facultad de Derecho Abogado Ponciano Arriaga Leija</span>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="../../index.html">/Inicio</a></li>
+        
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../../parcial_1.html">> Parcial 1</a>
+            <a href="../../parcial_2.html">> Parcial 2</a>
+            <a href="../../parcial_3.html" class="is-active">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="../../Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="../../hall_of_fame.html">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div style="margin-top: 40px;">
+    <!-- Botón de regreso apuntando al menú del parcial 3 -->
+    <a href="../../parcial_3.html" class="btn-action" style="border: none; padding: 0;">
+       &lt;- Volver al Parcial 3
+    </a>
+  </div>
+
+  <!-- [DOC_01] OBJETIVO Y FICHA TÉCNICA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DOC_01]</span>
+      <h2>Ficha Técnica</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent);">Actividad 15: La fotografía como testigo</h3>
+      <p class="lede">
+        Extracción de metadatos GPS para geolocalización. Práctica forense digital centrada en la recolección, interpretación y purgado de datos ocultos (EXIF) en documentos ofimáticos e imágenes digitales utilizando ExifTool.
+      </p>
+      
+      <div class="spec-grid" style="margin-top: 25px;">
+        <div class="spec-item">
+          <span class="spec-tag">HERRAMIENTAS</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            <strong>Software:</strong> ExifTool (CLI / GUI)<br>
+            <strong>Muestras:</strong> WOA database application form.docx, XiaomiMiA2Lite.jpg
+          </p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-tag">OBJETIVO TÉCNICO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            Extraer metadatos para perfilar la autoría de un documento (fechas, creadores, plantillas) y extraer coordenadas GPS incrustadas en una fotografía para realizar una geolocalización inversa (OSINT). Finalmente, aplicar técnicas de sanitización de archivos (borrado de metadatos).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [PART_I] ANÁLISIS DOCUMENTAL -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[PART_I]</span>
+      <h2>Análisis .DOCX</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Parte I: Fichero "WOA database application form.docx"</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Evaluación de las propiedades internas del documento de Word para rastrear su origen y ciclo de edición.
+      </p>
+
+      <div class="control-card-sub">
+        <div class="control-title">1. Categorización del archivo INTERPOL</div>
+        <div class="terminal-code">
+          <span class="command">exiftool -InterpolClassification "infocrim\WOA database application form.docx"</span><br>
+          InterpolClassification : Unclassified
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);"><strong>R=</strong> Unclassified</p>
+      </div>
+      
+      <div class="control-card-sub">
+        <div class="control-title">2. Plantilla (Template) utilizada</div>
+        <div class="terminal-code">
+          <span class="command">exiftool -Template "infocrim\WOA database application form.docx"</span><br>
+          Template : G03 Basic Doc SP.dotx
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);"><strong>R=</strong> G03 Basic Doc SP.dotx</p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">3. Tiempo total de edición</div>
+        <div class="terminal-code">
+          <span class="command">exiftool -TotalEditTime "infocrim\WOA database application form.docx"</span><br>
+          Total Edit Time : 45 minutes
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);"><strong>R=</strong> 45 minutos</p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">4. Compañía propietaria y Autoría</div>
+        <div class="terminal-code">
+          <span class="command">exiftool -Company "infocrim\WOA database application form.docx"</span><br>
+          Company : OIPC - INTERPOL<br><br>
+          <span class="command">exiftool -Creator "infocrim\WOA database application form.docx"</span><br>
+          Creator : Carolyn Lejeune<br><br>
+          <span class="command">exiftool -LastModifiedBy "infocrim\WOA database application form.docx"</span><br>
+          Last Modified By : Carolyn Lejeune
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);"><strong>R=</strong> Compañía: OIPC - INTERPOL. Creador y última modificación: Carolyn Lejeune.</p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">5. Fecha de creación original</div>
+        <div class="terminal-code">
+          <span class="command">exiftool -CreateDate "infocrim\WOA database application form.docx"</span><br>
+          Create Date : 2019:05:03 15:35:00Z
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);"><strong>R=</strong> 03 de mayo del 2019</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [PART_II] ANÁLISIS FOTOGRÁFICO Y GPS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[PART_II]</span>
+      <h2>Metadatos EXIF</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Parte II: Fichero "XiaomiMiA2Lite.jpg"</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Extracción de huellas digitales de hardware, configuraciones de cámara y coordenadas geoespaciales ocultas en la imagen.
+      </p>
+
+      <div class="control-card-sub">
+        <div class="control-title">Parámetros de Captura</div>
+        <ul class="tag-list" style="gap: 10px; margin-top: 10px;">
+          <li><strong style="color: var(--accent);">> ISO:</strong> 100</li>
+          <li><strong style="color: var(--accent);">> Longitud Focal:</strong> 3.8 mm</li>
+          <li><strong style="color: var(--accent);">> Flash:</strong> Off, Did not fire</li>
+          <li><strong style="color: var(--accent);">> Dispositivo:</strong> Xiaomi Mi A2 Lite</li>
+          <li><strong style="color: var(--accent);">> Fecha de captura:</strong> 28 de mayo del 2020 (2020:05:28 18:11:41)</li>
+        </ul>
+      </div>
+
+      <!-- Geolocalización -->
+      <div class="control-card-sub">
+        <div class="control-title">Extracción de Coordenadas GPS</div>
+        <div class="terminal-code">
+          <span class="command">exiftool -GPSPosition "infocrim\XiaomiMiA2Lite.jpg"</span><br>
+          GPS Position : 51 deg 15' 12.99" N, 0 deg 32' 21.93" W
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);"><strong>R=</strong> 51° 15' 12.99" N, 0° 32' 21.93" W</p>
+      </div>
+
+      <div class="evidence-box">
+        <img src="../../Archivos/Actividad_15/mapa_gps.png" alt="Geolocalización Inversa en Google Maps">
+        <p class="evidence-caption">>_ OSINT: Trazado de las coordenadas GPS extraídas en Google Maps (Guildford, Reino Unido).</p>
+      </div>
+
+      <!-- Sanitización -->
+      <h4 style="color: #fff; font-size: 1.1rem; margin-top: 30px; margin-bottom: 12px;">Sanitización de Archivos</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Para garantizar la privacidad y prevenir fugas de información, se procede a eliminar la totalidad de los metadatos incrustados en la fotografía.
+      </p>
+      
+      <div class="terminal-code">
+        <span class="command">exiftool -all= "infocrim\XiaomiMiA2Lite.jpg"</span><br>
+        1 image files updated
+      </div>
+      
+      <p style="font-size: 0.85rem; color: var(--text-muted);">
+        Tras la ejecución del comando, una verificación posterior confirma que atributos como la fecha original, GPS, fabricante y modelo de cámara han sido eliminados de la estructura del archivo, reduciendo el tamaño del fichero a información puramente gráfica.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- [DWN_03] RECURSOS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DWN_03]</span>
+      <h2>Recursos</h2>
+    </div>
+    <div class="row-content">
+      
+      <div class="downloads-grid" style="margin-bottom: 30px;">
+        <!-- Informe Completo PDF -->
+        <a href="../../Archivos/Actividad_15/GarciaMoralesAlejandro_ACT15.pdf" download class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Reporte de Análisis</span>
+          <span class="dl-meta">GarciaMoralesAlejandro_ACT15.pdf</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+  
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
+    <p>Informática Criminológica | UASLP</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>
