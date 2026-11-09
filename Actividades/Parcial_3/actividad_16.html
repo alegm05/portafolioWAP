@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 16: Adquisición Forense con FTK Imager | Hall of Fame</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+
+<style>
+  .site-nav .nav-list { display: flex; align-items: center; gap: 18px; }
+  .nav-column-item { display: flex; align-items: center; }
+  .parciales-stack {
+    display: flex; flex-direction: column; gap: 3px; padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65); border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border); border-radius: 4px;
+  }
+  .parciales-stack a {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);
+    line-height: 1.25; transition: color 0.2s, padding-left 0.2s; text-decoration: none;
+  }
+  .parciales-stack a:hover { color: var(--accent); padding-left: 3px; }
+  .parciales-stack a.is-active { color: var(--accent); font-weight: 700; }
+  .site-header.is-scrolled .parciales-stack { flex-direction: row; gap: 8px; padding: 3px 8px; }
+
+  .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .spec-item { background: #090B10; padding: 15px; border-radius: 6px; border: 1px solid var(--border); }
+  .spec-tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); font-weight: 700; display: block; margin-bottom: 8px; }
+
+  .control-card-sub {
+    border-left: 2px solid var(--border); padding-left: 18px; margin-bottom: 20px; transition: border-color 0.2s;
+  }
+  .control-card-sub:hover { border-left-color: var(--accent); }
+  .control-title { font-family: var(--font-mono); font-size: 0.95rem; color: #fff; font-weight: 700; margin-bottom: 6px; }
+
+  .evidence-box {
+    border: 1px dashed var(--border); padding: 20px; text-align: center;
+    border-radius: 8px; background: var(--bg); margin-top: 20px; margin-bottom: 24px;
+  }
+  .evidence-box img {
+    max-width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .evidence-caption { color: var(--text-muted); font-size: 0.85rem; margin-top: 12px; font-family: var(--font-mono); }
+
+  .downloads-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+  .download-card {
+    background: #090B10; border: 1px solid var(--border); padding: 15px; border-radius: 6px;
+    display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s, border-color 0.2s;
+  }
+  .download-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .dl-icon { font-family: var(--font-mono); color: var(--accent); font-weight: bold; margin-bottom: 8px; }
+  .dl-title { color: #fff; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+  .dl-meta { color: var(--text-muted); font-size: 0.75rem; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> cd /opt/parcial_3/act_16
+      </div>
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
+      </span>
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV (T37A) - Seguridad Informática</span>
+        <span class="meta-item">> Docente: Mtro. Servando López Contreras</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="../../index.html">/Inicio</a></li>
+        
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../../parcial_1.html">> Parcial 1</a>
+            <a href="../../parcial_2.html">> Parcial 2</a>
+            <a href="../../parcial_3.html" class="is-active">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="../../Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="../../hall_of_fame.html">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div style="margin-top: 40px;">
+    <a href="../../parcial_3.html" class="btn-action" style="border: none; padding: 0;">
+       &lt;- Volver al Parcial 3
+    </a>
+  </div>
+
+  <!-- [DOC_01] OBJETIVO Y FICHA TÉCNICA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DOC_01]</span>
+      <h2>Ficha Técnica</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent);">Actividad 16: La verdad en los bits</h3>
+      <p class="lede">
+        Adquisición forense con FTK Imager. Laboratorio centrado en la creación de copias exactas (bit a bit) de dispositivos físicos, garantizando la inalterabilidad de la evidencia para su uso en respuestas a incidentes y marcos legales.
+      </p>
+      
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="spec-tag">HERRAMIENTAS</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            <strong>Software:</strong> AccessData FTK Imager 4.3.1.1<br>
+            <strong>Evidencia:</strong> Kingston DataTraveler 3.0 USB Device (14.7 GB)
+          </p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-tag">CONTEXTO DEL CASO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            <strong>Expediente:</strong> InfoCrim-01_21.11.2023<br>
+            <strong>Descripción:</strong> CNO IV - análisis de incidente de fraude bancario
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [THEORY_02] METODOLOGÍA FORENSE -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[THEORY_02]</span>
+      <h2>Metodología</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 12px;">Fases del Análisis Forense Digital</h4>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">
+        Para asegurar que la muestra preserva su estado original y alinear los procedimientos con estándares internacionales, el análisis forense se estructura en cinco fases principales que facilitan la verificabilidad y reproducibilidad.
+      </p>
+
+      <ul class="tag-list" style="flex-direction: column; align-items: flex-start; gap: 15px;">
+        <li><strong style="color: var(--accent);">1. Adquisición:</strong> Obtención de copias de la información vinculada al incidente. Se deben realizar copias bit a bit para evitar cualquier modificación.</li>
+        <li><strong style="color: var(--accent);">2. Preservación:</strong> Salvaguardar la copia y su integridad a lo largo del tiempo.</li>
+        <li><strong style="color: var(--accent);">3. Análisis:</strong> Examen de los datos utilizando herramientas especializadas sobre las copias generadas.</li>
+        <li><strong style="color: var(--accent);">4. Documentación:</strong> Registro de hallazgos, procedimientos y cadena de custodia.</li>
+        <li><strong style="color: var(--accent);">5. Presentación:</strong> Exposición de resultados con soporte legal.</li>
+      </ul>
+      
+      <div class="control-card-sub" style="margin-top: 25px;">
+        <div class="control-title">Formatos de Adquisición</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">
+          <strong>Raw (dd):</strong> Formato de imagen cruda bit a bit. Consiste en una copia exacta y directa sin compresión ni metadatos internos, requiriendo que los hashes se almacenen en un archivo de texto separado.
+        </p>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>E01 (Encase Image Format):</strong> A diferencia de Raw, E01 encapsula la copia junto con los metadatos del caso (investigador, fecha, notas) y los valores hash (MD5/SHA-1) dentro del mismo archivo, soportando además compresión sin pérdida.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [EXEC_03] PROCEDIMIENTO DE ADQUISICIÓN -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[EXEC_03]</span>
+      <h2>Procedimiento</h2>
+    </div>
+    <div class="row-content data-module">
+      
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Configuración y Creación de Imagen</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Se conectó el dispositivo USB a la estación de trabajo forense y se utilizó la función "Create Disk Image" en FTK Imager. Se seleccionó "Physical Drive" para garantizar la copia completa de la memoria Kingston.
+      </p>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_16/evidencia_01.png" alt="Selección del dispositivo físico en FTK Imager">
+        <p class="evidence-caption">>_ Evidencia: Selección de la unidad física (PHYSICALDRIVE1) para la adquisición.</p>
+      </div>
+
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Se configuró el formato de salida como Raw (dd) y se ingresaron los metadatos del caso (InfoCrim-01_21.11.2023). Debido al límite de fragmentación establecido en 1500 MB, la herramienta generó múltiples archivos segmentados.
+      </p>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_16/evidencia_02.png" alt="Información de la evidencia y configuración del destino">
+        <p class="evidence-caption">>_ Evidencia: Registro de metadatos del caso y configuración de la fragmentación de la imagen.</p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 10px;">Proceso y Validación</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        La adquisición inició a las 20:07 y finalizó a las 20:11, con un tiempo total de 4 minutos y 10 segundos. Al finalizar, FTK Imager calculó los hashes MD5 y SHA-1 de la imagen generada.
+      </p>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_16/evidencia_03.png" alt="Validación de hashes exitosa">
+        <p class="evidence-caption">>_ Evidencia: Reporte de verificación de imagen indicando coincidencia exacta (Match) en los hashes MD5 y SHA1.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [RESULTS_04] ANÁLISIS DE RESULTADOS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[RESULTS_04]</span>
+      <h2>Resultados</h2>
+    </div>
+    <div class="row-content data-module">
+      
+      <div class="control-card-sub">
+        <div class="control-title">Verificación de Integridad de la Evidencia</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          El proceso de adquisición fue validado matemáticamente. Los hashes calculados originalmente para la memoria (Computed hashes) coinciden exactamente con los hashes de la imagen resultante (Report hashes). Esta coincidencia bidireccional garantiza el principio de inalterabilidad, afirmando que la copia es idéntica bit a bit y no sufrió manipulaciones.
+        </p>
+        <ul class="tag-list" style="margin-top: 10px;">
+          <li><strong style="color: var(--accent);">Sectores copiados:</strong> 30218842</li>
+          <li><strong style="color: var(--accent);">MD5:</strong> 4e91c8d7509cea76c60175df6046a7d0</li>
+          <li><strong style="color: var(--accent);">SHA-1:</strong> 01101f9ef780be1023d584ed23a02c3649a6ee11</li>
+        </ul>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Análisis del Contexto del Incidente</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          El dispositivo de ~14.7 GB posee capacidad suficiente para haber transportado bases de datos bancarias completas o herramientas de ataque ejecutadas en los sistemas de la víctima, alineándose con el escenario de fraude bancario investigado.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">Líneas de Investigación a Seguir</div>
+        <ul class="tag-list" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+          <li><strong style="color: var(--accent);">Recuperación de Archivos (Carving):</strong> Utilizar herramientas para buscar cabeceras de archivos eliminados en el espacio no asignado (slack space).</li>
+          <li><strong style="color: var(--accent);">Análisis de Metadatos (MAC times):</strong> Investigar la MFT o FAT para determinar la línea de tiempo de creación, modificación y acceso, correlacionándola con los horarios del fraude.</li>
+          <li><strong style="color: var(--accent);">Búsqueda de Malware:</strong> Analizar la memoria en busca de ejecutables ocultos, scripts (.bat, PowerShell) o utilidades que hayan facilitado la exfiltración.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [DWN_05] RECURSOS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DWN_05]</span>
+      <h2>Recursos</h2>
+    </div>
+    <div class="row-content">
+      
+      <div class="downloads-grid" style="margin-bottom: 30px;">
+        <a href="Archivos/Actividad_16/GarciaMoralesAlejandro_Act16.pdf" download class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Reporte de Adquisición</span>
+          <span class="dl-meta">GarciaMoralesAlejandro_Act16.pdf</span>
+        </a>
+        <a href="Archivos/Actividad_16/infocrim_GarciaMoralesAlejandro.001.txt" download class="download-card">
+          <div class="dl-icon">[TXT]</div>
+          <span class="dl-title">Log de Adquisición</span>
+          <span class="dl-meta">infocrim_GarciaMoralesAlejandro.001.txt</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+  
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
+    <p>CNO IV (T37A) — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>

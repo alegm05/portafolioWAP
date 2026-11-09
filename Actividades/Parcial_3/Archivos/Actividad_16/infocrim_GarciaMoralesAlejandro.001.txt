@@ -1,0 +1,54 @@
+﻿Created By AccessData® FTK® Imager 4.3.1.1 
+
+Case Information: 
+Acquired using: ADI4.3.1.1
+Case Number: InfoCrim-01_21.11.2023
+Evidence Number: 00 (Original Adq)
+Unique description: CNO IV - análisis de incidente de fraude bancario
+Examiner: GarciaMoralesAlejandro
+Notes: Adquisición realizada en LIF de la UPSLP
+
+--------------------------------------------------------------
+
+Information for C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro:
+
+Physical Evidentiary Item (Source) Information:
+[Device Info]
+ Source Type: Physical
+[Drive Geometry]
+ Cylinders: 1,881
+ Tracks per Cylinder: 255
+ Sectors per Track: 63
+ Bytes per Sector: 512
+ Sector Count: 30,218,842
+[Physical Drive Information]
+ Drive Model: Kingston DataTraveler 3.0 USB Device
+ Drive Serial Number: 0
+ Drive Interface Type: USB
+ Removable drive: True
+ Source data size: 14755 MB
+ Sector count:    30218842
+[Computed Hashes]
+ MD5 checksum:    4e91c8d7509cea76c60175df6046a7d0
+ SHA1 checksum:   01101f9ef780be1023d584ed23a02c3649a6ee11
+
+Image Information:
+ Acquisition started:   Sun Nov  8 20:07:19 2026
+ Acquisition finished:  Sun Nov  8 20:11:29 2026
+ Segment list:
+  C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro.001
+  C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro.002
+  C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro.003
+  C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro.004
+  C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro.005
+  C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro.006
+  C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro.007
+  C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro.008
+  C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro.009
+  C:\Users\Usuario\Desktop\InfoCrim13\infocrim_GarciaMoralesAlejandro.010
+
+Image Verification Results:
+ Verification started:  Sun Nov  8 20:11:29 2026
+ Verification finished: Sun Nov  8 20:12:45 2026
+ MD5 checksum:    4e91c8d7509cea76c60175df6046a7d0 : verified
+ SHA1 checksum:   01101f9ef780be1023d584ed23a02c3649a6ee11 : verified
