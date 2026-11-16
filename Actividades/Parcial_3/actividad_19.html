@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 19: Adquisición Forense en Vivo | Portafolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+
+<style>
+  .site-nav .nav-list { display: flex; align-items: center; gap: 18px; }
+  .nav-column-item { display: flex; align-items: center; }
+  .parciales-stack {
+    display: flex; flex-direction: column; gap: 3px; padding: 5px 10px;
+    background: rgba(13, 17, 23, 0.65); border-left: 2px solid var(--accent);
+    border-right: 1px solid var(--border); border-radius: 4px;
+  }
+  .parciales-stack a {
+    font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);
+    line-height: 1.25; transition: color 0.2s, padding-left 0.2s; text-decoration: none;
+  }
+  .parciales-stack a:hover { color: var(--accent); padding-left: 3px; }
+  .parciales-stack a.is-active { color: var(--accent); font-weight: 700; }
+  .site-header.is-scrolled .parciales-stack { flex-direction: row; gap: 8px; padding: 3px 8px; }
+
+  .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .spec-item { background: #090B10; padding: 15px; border-radius: 6px; border: 1px solid var(--border); }
+  .spec-tag { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); font-weight: 700; display: block; margin-bottom: 8px; }
+
+  .control-card-sub {
+    border-left: 2px solid var(--border); padding-left: 18px; margin-bottom: 22px; transition: border-color 0.2s;
+  }
+  .control-card-sub:hover { border-left-color: var(--accent); }
+  .control-title { font-family: var(--font-mono); font-size: 0.95rem; color: #fff; font-weight: 700; margin-bottom: 6px; }
+
+  .custom-table {
+    width: 100%; border-collapse: collapse; font-family: var(--font-mono);
+    font-size: 0.82rem; margin-top: 15px; margin-bottom: 20px;
+  }
+  .custom-table th, .custom-table td {
+    padding: 12px 14px; border: 1px solid var(--border); text-align: left; vertical-align: top;
+  }
+  .custom-table th { background: #090B10; color: var(--accent); font-weight: 700; }
+  .custom-table tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+  .custom-table td { color: var(--text); line-height: 1.5; }
+
+  .evidence-box {
+    border: 1px dashed var(--border); padding: 20px; text-align: center;
+    border-radius: 8px; background: var(--bg); margin-top: 20px; margin-bottom: 24px;
+  }
+  .evidence-box img {
+    max-width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  }
+  .evidence-caption { color: var(--text-muted); font-size: 0.85rem; margin-top: 12px; font-family: var(--font-mono); }
+
+  .downloads-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+  .download-card {
+    background: #090B10; border: 1px solid var(--border); padding: 15px; border-radius: 6px;
+    display: flex; flex-direction: column; text-decoration: none; transition: transform 0.2s, border-color 0.2s;
+  }
+  .download-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .dl-icon { font-family: var(--font-mono); color: var(--accent); font-weight: bold; margin-bottom: 8px; }
+  .dl-title { color: #fff; font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+  .dl-meta { color: var(--text-muted); font-size: 0.75rem; }
+
+  .terminal-code {
+    background: #000; color: #0f0; font-family: var(--font-mono);
+    padding: 15px; border-radius: 5px; border: 1px solid #333;
+    overflow-x: auto; font-size: 0.83rem; margin-bottom: 14px; line-height: 1.5;
+  }
+  .terminal-code .command { color: #fff; }
+  .terminal-code .highlight { color: var(--accent); font-weight: bold; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<!-- ENCABEZADO FLOTANTE TIPO TERMINAL -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity">
+      <div class="terminal-prompt">
+        <span class="prompt-user">root@cno-iv</span><span class="prompt-char">:~$</span> cd /opt/parcial_3/act_19
+      </div>
+      <span class="identity-name">
+        Alejandro García Morales<span class="alias-green">[xXAGMXx]</span> <span class="blink-cursor">_</span>
+      </span>
+      <div class="identity-meta">
+        <span class="meta-item">> Asignatura: CNO IV (T37A) - Seguridad Informática</span>
+        <span class="meta-item">> Docente: Mtro. Servando López Contreras</span>
+        <span class="meta-item">> Institución: Universidad Politécnica de San Luis Potosí</span>
+      </div>
+    </div>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-list">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Abrir menú</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        <li><a href="../../index.html">/Inicio</a></li>
+        
+        <li class="nav-column-item">
+          <div class="parciales-stack">
+            <a href="../../parcial_1.html">> Parcial 1</a>
+            <a href="../../parcial_2.html">> Parcial 2</a>
+            <a href="../../parcial_3.html" class="is-active">> Parcial 3</a>
+          </div>
+        </li>
+
+        <li><a href="../../Proyectos/proyecto_1.html">/Proyectos</a></li>
+        <li><a href="../../hall_of_fame.html">/Hall of Fame</a></li>
+        <li><a href="#">/Certificados</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <div style="margin-top: 40px;">
+    <a href="../../parcial_3.html" class="btn-action" style="border: none; padding: 0;">
+       &lt;- Volver al Parcial 3
+    </a>
+  </div>
+
+  <!-- [DOC_01] FICHA TÉCNICA -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DOC_01]</span>
+      <h2>Ficha Técnica</h2>
+    </div>
+    <div class="row-content data-module">
+      <h3 class="activity-title" style="color: var(--accent);">Actividad 19: Los primeros minutos cuentan: adquisición forense en escenas del crimen digital</h3>
+      <p class="lede">
+        Actuación como primer respondiente e investigador forense digital para la recolección de evidencia volátil y no volátil en un sistema Windows en caliente (Live Response), documentando el uso técnico y el valor pericial de 20 comandos de triaje.
+      </p>
+      
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="spec-tag">ENTORNO AUDITADO</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            <strong>Host:</strong> DESKTOP-93L4892 (HP ZBook 17 G3)<br>
+            <strong>SO:</strong> Microsoft Windows 10 Pro (Compilación 19045)<br>
+            <strong>Fecha de Intervención:</strong> 04/11/2026 — 07:13:50 p. m.
+          </p>
+        </div>
+        <div class="spec-item">
+          <span class="spec-tag">HERRAMIENTAS Y ALCANCE</span>
+          <p style="font-size: 0.9rem; color: var(--text);">
+            <strong>Intérpretes:</strong> Windows PowerShell y CMD (Símbolo del sistema)<br>
+            <strong>Utilidades:</strong> tasklist, sc, netstat, arp, netsh, wevtutil, systeminfo, schtasks y binario estático NetUsers.exe
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [EXEC_02] PROCEDIMIENTO DE ADQUISICIÓN EN VIVO -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[EXEC_02]</span>
+      <h2>Adquisición</h2>
+    </div>
+    <div class="row-content data-module">
+      
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 15px;">Fase 1: Marca Temporal, Procesos, Servicios y Sesiones (Puntos 1 al 5)</h4>
+
+      <div class="control-card-sub">
+        <div class="control-title">1. Fecha y hora del sistema</div>
+        <div class="terminal-code">
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; date &gt; FechaSistema.txt</span><br>
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; more FechaSistema.txt</span><br>
+          <span class="highlight">miércoles, 4 de noviembre de 2026 07:13:50 p. m.</span>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Importancia Forense:</strong> Es el primer paso en una adquisición en vivo. Establece la marca de tiempo exacta del inicio de la intervención y permite calcular el desfase horario (skew) entre el reloj de la máquina comprometida y el tiempo real.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">2. Listado de procesos en ejecución</div>
+        <div class="terminal-code">
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; tasklist</span><br>
+          System                        4 Services      0         152 KB<br>
+          smss.exe                    496 Services      0       1,268 KB<br>
+          lsass.exe                   912 Services      0      27,404 KB<br>
+          winlogon.exe               1004 Console       1       9,916 KB<br>
+          dwm.exe                    1496 Console       1     119,704 KB
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Importancia Forense:</strong> Analizar el PID, consumo de RAM y tipo de sesión (Sesión 0 aislada para servicios del sistema frente a Sesión 1 interactiva de consola) permite detectar procesos maliciosos activos, inyecciones de memoria o binarios que intentan camuflarse con nombres del sistema.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">3. Servicios del dispositivo (PowerShell vs. CMD)</div>
+        <div class="terminal-code">
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; get-service</span><br>
+          Stopped  AarSvc_26e019      Agent Activation Runtime_26e019<br>
+          Running  Appinfo            Información de la aplicación<br>
+          Running  BFE                Motor de filtrado de base<br>
+          Stopped  BEService          BattlEye Service<br><br>
+          <span class="command">C:\Users\Usuario\Desktop\Act19&gt; sc query</span><br>
+          NOMBRE_SERVICIO: BFE<br>
+          TIPO               : 20  WIN32_SHARE_PROCESS<br>
+          ESTADO             : 4  RUNNING (STOPPABLE, NOT_PAUSABLE, IGNORES_SHUTDOWN)
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Análisis y Diferencias:</strong> <code>Get-Service</code> entrega una tabla resumida de objetos que incluye servicios activos y detenidos (facilitando un barrido rápido de nombres con sufijos de sesión como <code>_26e019</code>). Por su parte, <code>sc query</code> muestra por defecto los servicios activos pero expone metadatos de bajo nivel del SCM: si el servicio corre en proceso propio (<code>WIN32_OWN_PROCESS</code>) o compartido en un <code>svchost.exe</code> (<code>WIN32_SHARE_PROCESS</code>), y si fue configurado como <code>NOT_STOPPABLE</code> por un atacante para mantener persistencia con privilegios SYSTEM.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">4 y 5. Usuarios logueados actual e históricamente</div>
+        <div class="terminal-code">
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; .\NetUsers.exe &gt; UsuariosLogueados.txt</span><br>
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; more UsuariosLogueados.txt</span><br>
+          Current users logged on locally at <span class="highlight">DESKTOP-93L4892</span>:<br>
+          The command completed successfully.
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Justificación e Importancia Forense:</strong> Ante restricciones de comandos nativos en ediciones cliente, se emplea el binario forense estático <code>NetUsers.exe</code> para consultar directamente las APIs locales y el registro del sistema sobre las sesiones en <code>DESKTOP-93L4892</code>. Permite verificar si el atacante mantiene una sesión activa (consola/RDP) o si utilizó cuentas secundarias comprometidas.
+        </p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 15px;">Fase 2: Configuración de Red, Conexiones, DNS, ARP y Wi-Fi (Puntos 6 al 12)</h4>
+
+      <div class="control-card-sub">
+        <div class="control-title">6 y 7. Información de red y sesiones NetBIOS</div>
+        <div class="terminal-code">
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; ipconfig \all &gt; InfoRed.txt</span><br>
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; nbtstat -S &gt; "Conexiones NetBios.txt"</span><br>
+          Ethernet 2: Dirección IP del nodo: [169.254.204.190] — No hay conexiones<br>
+          Wi-Fi 2:    Dirección IP del nodo: [<span class="highlight">172.16.120.154</span>] — No hay conexiones
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Importancia Forense:</strong> Documentar las interfaces y direcciones IP permite correlacionar el host con logs de firewalls e IDS/IPS. Asimismo, verificar la tabla de sesiones NetBIOS (<code>nbtstat -S</code>) descarta transferencias activas o movimiento lateral por compartición SMB en el instante de la captura.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">8 y 9. Conexiones establecidas y binarios asociados a cada puerto</div>
+        <div class="terminal-code">
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; netstat -an</span><br>
+          <span class="command">PS C:\Windows\system32&gt; netstat -anob</span><br>
+          TCP    0.0.0.0:135       0.0.0.0:0    LISTENING    1196   [svchost.exe / RpcSs]<br>
+          TCP    0.0.0.0:445       0.0.0.0:0    LISTENING       4   [System]<br>
+          TCP    0.0.0.0:623       0.0.0.0:0    LISTENING    6480   [<span class="highlight">LMS.exe</span>]<br>
+          TCP    0.0.0.0:2343      0.0.0.0:0    LISTENING    6472   [lkads.exe]<br>
+          TCP    0.0.0.0:3580      0.0.0.0:0    LISTENING    6740   [nisvcloc.exe]<br>
+          TCP    0.0.0.0:3582      0.0.0.0:0    LISTENING   10540   [<span class="highlight">SystemWebServer.exe</span>]<br>
+          TCP    0.0.0.0:8080      0.0.0.0:0    LISTENING    7184   [<span class="highlight">ApplicationWebServer.exe</span>]<br>
+          TCP    0.0.0.0:8090      0.0.0.0:0    LISTENING   16692   [<span class="highlight">WsToastNotification.exe</span>]<br>
+          TCP    0.0.0.0:16992     0.0.0.0:0    LISTENING    6480   [<span class="highlight">LMS.exe</span>]
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Importancia Forense:</strong> Mientras <code>netstat -an</code> lista numéricamente los puertos en escucha y conexiones establecidas en loopback, ejecutar <code>netstat -anob</code> con privilegios de administrador vincula cada socket con su PID y el binario exacto en disco, revelando servidores web locales activos y servicios de terceros expuestos.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">10, 11 y 12. Caché DNS, Tabla ARP y Perfiles Wi-Fi</div>
+        <div class="terminal-code">
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; ipconfig /displaydns</span><br>
+          DESKTOP-93L4892.mshome.net  -&gt;  172.25.224.1<br><br>
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; arp -a</span><br>
+          Interfaz: 172.16.120.154 --- 0x15<br>
+          172.16.120.1          2c-33-11-98-49-00     dinámico<br>
+          <span class="highlight">172.16.120.127        e0-85-4d-09-b6-ec     dinámico</span><br><br>
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; netsh wlan sh profile "CNT_UPSLP" key=clear</span><br>
+          SSID: "CNT_UPSLP" | Autenticación: WPA2-Personal | Contenido de la clave: <span class="highlight">Upslp2025</span>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Importancia Forense:</strong> La caché DNS preserva dominios resueltos aunque se borre el historial del navegador; la tabla ARP demuestra intercambio reciente de tramas de Capa 2 con el host vecino <code>172.16.120.127</code>; y la auditoría de perfiles WLAN permite identificar el entorno físico de conexión y la exposición de credenciales inalámbricas almacenadas.
+        </p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 15px;">Fase 3: Historial, Recursos, Especificaciones, Persistencia y Logs (Puntos 13 al 20)</h4>
+
+      <div class="control-card-sub">
+        <div class="control-title">13, 14 y 15. Historial de consola, Unidades mapeadas y Recursos compartidos</div>
+        <div class="terminal-code">
+          <span class="command">C:\Users\Usuario&gt; doskey /history</span><br>
+          <span class="command">C:\Users\Usuario&gt; net use</span>   -&gt; No hay entradas en la lista.<br>
+          <span class="command">C:\Users\Usuario&gt; net share</span> -&gt; C$ (C:\), IPC$ (IPC remota), ADMIN$ (C:\Windows)
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Importancia Forense:</strong> <code>doskey /history</code> recupera instrucciones tecleadas en consolas interactivas abiertas; <code>net use</code> descarta unidades de red montadas para exfiltración; y <code>net share</code> confirma que únicamente están activos los recursos administrativos por defecto.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">16 y 17. Información del sistema y Tareas programadas</div>
+        <div class="terminal-code">
+          <span class="command">C:\Users\Usuario\Desktop\Act19&gt; systeminfo</span><br>
+          Host: DESKTOP-93L4892 | SO: Windows 10 Pro (10.0.19045) | Modelo: HP ZBook 17 G3<br>
+          Fecha de instalación original: 08/08/2023 | <span class="highlight">Tiempo de arranque: 04/11/2026, 07:08:39 p. m.</span><br><br>
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; schtasks</span><br>
+          Carpeta: \ -&gt; <span class="highlight">Activation-Renewal</span> (08/11/2026 12:00:00 p. m.), USER_ESRV_SVC_QUEENCREEK, NIUpdateService...
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Importancia Forense:</strong> <code>systeminfo</code> revela que el equipo fue reiniciado apenas 5 minutos antes de la adquisición (<code>07:08:39 p. m.</code>), explicando el estado limpio de cachés volátiles. Por su parte, <code>schtasks</code> permite auditar mecanismos de persistencia (MITRE ATT&amp;CK T1053.005) como la tarea <code>Activation-Renewal</code>.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">18, 19 y 20. Exportación de Eventos (.evtx), Fichero Hosts y Línea de Tiempo de Archivos</div>
+        <div class="terminal-code">
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; wevtutil epl System C:\Users\Usuario\Desktop\LogsSistema.evtx</span><br>
+          04/11/2026 07:48 p. m.   21041152 <span class="highlight">LogsSistema.evtx</span><br><br>
+          <span class="command">PS C:\Users\Usuario\Desktop\Act19&gt; copy C:\Windows\System32\drivers\etc\hosts .\FicheroHost.txt</span><br><br>
+          <span class="command">C:\Users\Usuario\Desktop\Act19&gt; cmd.exe /c "dir C:\ /T:C /O:D /S &gt; .\ArbolDirectorios.txt"</span><br>
+          15/05/2024  &lt;DIR&gt;  xampplite | 28/05/2025  &lt;DIR&gt;  xampp_lite_8_4<br>
+          <span class="highlight">15/04/2026 11:15 a. m.   112,552 appverifUI.dll</span><br>
+          <span class="highlight">15/04/2026 11:15 a. m.    68,216 vfcompat.dll</span>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          <strong>Importancia Forense:</strong> Se exportaron ~21 MB de registros del sistema (<code>LogsSistema.evtx</code>) para auditar eventos históricos, se comprobó que el archivo <code>hosts</code> no presenta secuestros de resolución DNS (Pharming), y se construyó el árbol cronológico por fecha de creación (<code>/T:C /O:D /S</code>), detectando instalaciones de servidores locales y librerías DLL sueltas en la raíz <code>C:\</code>.
+        </p>
+      </div>
+
+      <div class="evidence-box">
+        <img src="Archivos/Actividad_19/evidencia_01.png" alt="Exportación de LogsSistema.evtx mediante wevtutil en PowerShell">
+        <p class="evidence-caption">&gt;_ Evidencia: Exportación del registro de eventos del sistema (LogsSistema.evtx) en el Escritorio del equipo analizado.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [COMP_03] ANÁLISIS COMPARATIVO CMD VS POWERSHELL -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[COMP_03]</span>
+      <h2>CMD vs. PS</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 10px;">Comparativa Técnica en Adquisición Forense</h4>
+      <p style="color: var(--text-muted); margin-bottom: 15px;">
+        Evaluación de las diferencias operativas y de impacto forense entre el Símbolo del Sistema (<code>cmd.exe</code>) y Windows PowerShell durante la respuesta a incidentes en vivo.
+      </p>
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Criterio</th>
+            <th>Símbolo del Sistema (CMD)</th>
+            <th>Windows PowerShell</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Naturaleza de los datos</strong></td>
+            <td>Procesa y devuelve texto plano no estructurado, lo que requiere filtrado por cadenas.</td>
+            <td>Procesa y devuelve objetos (.NET) con propiedades y métodos, permitiendo filtrar campos exactos (<code>Select-Object</code>, <code>Where-Object</code>).</td>
+          </tr>
+          <tr>
+            <td><strong>Detalle técnico en servicios y procesos</strong></td>
+            <td>Utilidades nativas como <code>sc query</code> o <code>netstat -anob</code> exponen banderas de bajo nivel de la API Win32 de forma directa.</td>
+            <td>Cmdlets como <code>Get-Service</code> ofrecen vistas tabulares limpias por defecto, pero requieren parámetros adicionales (<code>Select-Object *</code>) para mostrar rutas de binarios o PIDs asociados.</td>
+          </tr>
+          <tr>
+            <td><strong>Sintaxis y redirección</strong></td>
+            <td>Utiliza modificadores con diagonal (<code>/T:C</code>, <code>/O:D</code>, <code>/all</code>) y redirección directa en codificación ANSI/OEM, siendo sumamente veloz para barridos masivos como <code>dir /S</code>.</td>
+            <td>Utiliza parámetros con guion (<code>-Recurse</code>, <code>-Force</code>) e interpreta alias (como <code>ls</code> o <code>more</code>), pero puede presentar conflictos con barras invertidas o mayor consumo de memoria en recorridos extensos de disco.</td>
+          </tr>
+          <tr>
+            <td><strong>Huella forense y registro</strong></td>
+            <td>Deja menor rastro en los registros de eventos si no hay auditoría de creación de procesos habilitada.</td>
+            <td>Genera registros detallados en el visor de eventos, lo cual altera ligeramente más los logs del sistema durante una adquisición en vivo.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- [RESULTS_04] HALLAZGOS, ANOMALÍAS Y SIGUIENTES PASOS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[RESULTS_04]</span>
+      <h2>Hallazgos</h2>
+    </div>
+    <div class="row-content data-module">
+      <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 15px;">Indicios de Actividad Maliciosa y Anomalías Detectadas</h4>
+
+      <div class="control-card-sub">
+        <div class="control-title">1. Exposición de Servicios Web Locales y Puertos de Terceros</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Se detectaron servidores web escuchando en todas las interfaces (<code>0.0.0.0</code>): <code>SystemWebServer.exe</code> (puerto 3582) y <code>ApplicationWebServer.exe</code> (puerto 8080), además de dos instalaciones de XAMPP (<code>xampplite</code> y <code>xampp_lite_8_4</code>) en <code>C:\</code>. Asimismo, <code>WsToastNotification.exe</code> (PID 16692) mantiene abierto el puerto 8090 y <code>LMS.exe</code> (PID 6480) escucha en los puertos 623 y 16992 (Intel AMT), ampliando la superficie de ataque en red.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">2. Tareas Programadas Sospechosas de Persistencia</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          En la raíz del programador de tareas se identificó la tarea <code>Activation-Renewal</code>. Fuera de un entorno de dominio corporativo con servidor KMS oficial, este tipo de tareas suele asociarse a activadores no oficiales que frecuentemente operan como puertas traseras o troyanos.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">3. Archivos DLL en el Directorio Raíz (C:\)</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          El barrido cronológico reveló la creación reciente (<code>15/04/2026</code>) de las bibliotecas <code>appverifUI.dll</code> y <code>vfcompat.dll</code> directamente en <code>C:\</code>. La presencia de librerías dinámicas sueltas fuera de <code>System32</code> debe auditarse mediante firmas hash para descartar técnicas de <em>DLL Hijacking</em>.
+        </p>
+      </div>
+
+      <div class="control-card-sub">
+        <div class="control-title">4. Reinicio Reciente e Interacción con Nodos Vecinos</div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          El sistema fue reiniciado apenas 5 minutos antes de la adquisición (<code>07:08:39 p. m.</code>), purgando la memoria volátil previa. Pese a ello, la tabla ARP registró comunicación directa en la red <code>CNT_UPSLP</code> con el nodo interno <code>172.16.120.127</code> (MAC <code>e0-85-4d-09-b6-ec</code>), el cual debe investigarse como posible origen de escaneo o movimiento lateral.
+        </p>
+      </div>
+
+      <h4 style="color: #fff; font-size: 1.1rem; margin: 30px 0 15px;">Propuesta de Siguientes Pasos en una Investigación Real</h4>
+      <ul class="tag-list" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+        <li><strong style="color: var(--accent);">1. Volcado Completo de Memoria RAM:</strong> Ejecutar una herramienta de adquisición de memoria física hacia una unidad externa limpia antes de apagar el equipo para buscar inyecciones en <code>lsass.exe</code> y <code>svchost.exe</code> con Volatility.</li>
+        <li><strong style="color: var(--accent);">2. Contención y Aislamiento de Red:</strong> Desconectar el host de la red inalámbrica <code>CNT_UPSLP</code> para cortar cualquier canal con <code>172.16.120.127</code> o servidores externos.</li>
+        <li><strong style="color: var(--accent);">3. Exportación de Logs Críticos y Colmenas del Registro:</strong> Complementar <code>LogsSistema.evtx</code> exportando <code>Security.evtx</code> (Event IDs 4624, 4625, 4672), <code>Application.evtx</code>, logs de PowerShell y las colmenas <code>SAM, SYSTEM, SOFTWARE, NTUSER.DAT</code>.</li>
+        <li><strong style="color: var(--accent);">4. Cálculo de Hashes SHA-256 y Cadena de Custodia:</strong> Generar las firmas criptográficas de todos los archivos recolectados para garantizar su integridad e inmutabilidad legal.</li>
+        <li><strong style="color: var(--accent);">5. Imagen Forense Bit a Bit y Análisis en Frío:</strong> Realizar un clonado del disco con bloqueador de escritura para analizar la tabla maestra de archivos (<code>$MFT</code>), la tarea <code>Activation-Renewal</code>, <code>WsToastNotification.exe</code> y las librerías DLL halladas en <code>C:\</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- [DWN_05] RECURSOS -->
+  <section class="row">
+    <div class="row-label">
+      <span class="row-index">[DWN_05]</span>
+      <h2>Recursos</h2>
+    </div>
+    <div class="row-content">
+      
+      <div class="downloads-grid" style="margin-bottom: 30px;">
+        <a href="Archivos/Actividad_19/GarciaMoralesAlejandro-Act19.pdf" download class="download-card">
+          <div class="dl-icon">[PDF]</div>
+          <span class="dl-title">Informe Ejecutivo Forense</span>
+          <span class="dl-meta">GarciaMoralesAlejandro-Act19.pdf</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+  
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p>© 2026 Alejandro García Morales. Todos los derechos reservados.</p>
+    <p>CNO IV (T37A) — Seguridad Informática | UPSLP</p>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>
